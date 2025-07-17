@@ -1391,8 +1391,10 @@
             document.body.classList.toggle('mobile', isMobile);
             
             if (!isMobile) {
-                document.getElementById('sidebar').classList.remove('active');
-                document.getElementById('overlay').classList.remove('active');
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) sidebar.classList.remove('active');
+                const overlay = document.getElementById('overlay');
+                if (overlay) overlay.classList.remove('active');
             }
         }
 
