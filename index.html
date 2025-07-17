@@ -897,6 +897,41 @@
                 decrypted: 'HELLO WORLD',
                 hint: '文字が逆順になっています',
                 difficulty: 'easy'
+            },
+            6: {
+                type: 'anagram',
+                encrypted: 'DROW OLLEH',
+                decrypted: 'HELLO WORLD',
+                hint: '文字の順番が入れ替わっています（アナグラム）',
+                difficulty: 'medium'
+            },
+            7: {
+                type: 'vigenere',
+                encrypted: 'RIJVS UYVJN',
+                decrypted: 'HELLO WORLD',
+                hint: 'キーワード「KEY」でヴィジュネル暗号化されています',
+                difficulty: 'hard'
+            },
+            8: {
+                type: 'number',
+                encrypted: '8 5 12 12 15 0 23 15 18 12 4',
+                decrypted: 'HELLO WORLD',
+                hint: 'A=1, B=2... Z=26, スペースは0です',
+                difficulty: 'medium'
+            },
+            9: {
+                type: 'base64',
+                encrypted: 'SEVMTE8gV09STEQ=',
+                decrypted: 'HELLO WORLD',
+                hint: 'Base64でエンコードされています',
+                difficulty: 'medium'
+            },
+            10: {
+                type: 'rot13',
+                encrypted: 'URYYB JBEYQ',
+                decrypted: 'HELLO WORLD',
+                hint: 'アルファベットを13文字ずらす暗号です（ROT13）',
+                difficulty: 'easy'
             }
         };
 
@@ -1083,7 +1118,12 @@
                 caesar: gameState.language === 'ja' ? 'シーザー暗号' : 'Caesar Cipher',
                 substitution: gameState.language === 'ja' ? '換字式暗号' : 'Substitution Cipher',
                 morse: gameState.language === 'ja' ? 'モールス信号' : 'Morse Code',
-                reverse: gameState.language === 'ja' ? '逆順暗号' : 'Reverse Cipher'
+                reverse: gameState.language === 'ja' ? '逆順暗号' : 'Reverse Cipher',
+                anagram: gameState.language === 'ja' ? 'アナグラム' : 'Anagram',
+                vigenere: gameState.language === 'ja' ? 'ヴィジュネル暗号' : 'Vigenere Cipher',
+                number: gameState.language === 'ja' ? '数字変換' : 'Number Conversion',
+                base64: gameState.language === 'ja' ? 'Base64' : 'Base64',
+                rot13: gameState.language === 'ja' ? 'ROT13' : 'ROT13'
             };
             return names[type] || type;
         }
