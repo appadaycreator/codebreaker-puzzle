@@ -406,6 +406,46 @@
         .font-md { font-size: 16px; }
         .font-lg { font-size: 18px; }
         .font-xl { font-size: 20px; }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #222;
+            border-radius: 12px;
+            padding: 2rem;
+            min-width: 320px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: -1;
+        }
+        .settings-btn {
+            background: none;
+            border: none;
+            color: #ffd700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .settings-btn:hover {
+            color: #fffbe0;
+        }
     </style>
 </head>
 <body class="bg-pattern">
@@ -457,19 +497,18 @@
         </div>
     </header>
 
-    <!-- サイドバー -->
-    <aside class="sidebar" id="sidebar">
-        <div class="p-6">
+    <!-- 設定モーダル -->
+    <div id="settingsModal" class="modal" style="display:none;">
+        <div class="modal-content">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg font-semibold orbitron">
                     <span data-lang="ja">設定</span>
                     <span data-lang="en" style="display: none;">Settings</span>
                 </h2>
-                <button class="text-yellow-400 hover:text-yellow-300 md:hidden" id="closeSidebar">
+                <button class="text-yellow-400 hover:text-yellow-300" id="closeSettingsModal">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            
             <!-- 言語切り替え -->
             <div class="mb-6">
                 <h3 class="text-sm font-semibold mb-3 text-gray-400">
@@ -481,7 +520,6 @@
                     <button class="language-btn" data-lang-btn="en">English</button>
                 </div>
             </div>
-            
             <!-- フォントサイズ -->
             <div class="mb-6">
                 <h3 class="text-sm font-semibold mb-3 text-gray-400">
@@ -496,7 +534,6 @@
                     <button class="font-size-btn" data-font-size="xl">特大</button>
                 </div>
             </div>
-            
             <!-- 統計情報 -->
             <div class="mb-6">
                 <h3 class="text-sm font-semibold mb-3 text-gray-400">
@@ -511,7 +548,6 @@
                     </div>
                 </div>
             </div>
-            
             <!-- 実績バッジ -->
             <div class="mb-6">
                 <h3 class="text-sm font-semibold mb-3 text-gray-400">
@@ -526,7 +562,6 @@
                     </div>
                 </div>
             </div>
-            
             <!-- シェアボタン -->
             <div class="share-buttons">
                 <button class="share-btn" onclick="shareToTwitter()">
@@ -543,7 +578,8 @@
                 </button>
             </div>
         </div>
-    </aside>
+        <div class="modal-overlay" id="modalOverlay"></div>
+    </div>
 
     <!-- メインコンテンツ -->
     <main class="main-content">
@@ -912,6 +948,17 @@
             document.getElementById('hamburger').addEventListener('click', toggleSidebar);
             document.getElementById('closeSidebar').addEventListener('click', toggleSidebar);
             document.getElementById('overlay').addEventListener('click', toggleSidebar);
+
+            // 設定モーダル
+            document.getElementById('openSettingsModal').addEventListener('click', function() {
+                document.getElementById('settingsModal').style.display = 'block';
+            });
+            document.getElementById('closeSettingsModal').addEventListener('click', function() {
+                document.getElementById('settingsModal').style.display = 'none';
+            });
+            document.getElementById('modalOverlay').addEventListener('click', function() {
+                document.getElementById('settingsModal').style.display = 'none';
+            });
 
             // 言語切り替え
             document.querySelectorAll('[data-lang-btn]').forEach(btn => {
