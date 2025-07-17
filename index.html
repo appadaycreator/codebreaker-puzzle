@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コードブレイカー - 暗号解読パズルゲーム</title>
+    <meta name="description" content="暗号解読で論理的思考力を鍛える本格謎解きパズルゲーム。シーザー暗号から高度な暗号まで段階的に挑戦。無料でプレイ可能。">
+    <meta name="keywords" content="暗号解読,パズルゲーム,謎解き,シーザー暗号,論理的思考,無料ゲーム">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="AppADayCreator">
+    
+    <!-- OGP設定 -->
+    <meta property="og:title" content="コードブレイカー - 暗号解読パズルゲーム">
+    <meta property="og:description" content="暗号解読で論理的思考力を鍛える本格謎解きパズルゲーム">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://appadaycreator.github.io/codebreaker-puzzle/">
+    <meta property="og:image" content="https://appadaycreator.github.io/codebreaker-puzzle/ogp.png">
+    <meta property="og:site_name" content="コードブレイカー">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="コードブレイカー - 暗号解読パズルゲーム">
+    <meta name="twitter:description" content="暗号解読で論理的思考力を鍛える本格謎解きパズルゲーム">
+    <meta name="twitter:image" content="https://appadaycreator.github.io/codebreaker-puzzle/ogp.png">
+    
+    <!-- PWA設定 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="コードブレイカー">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- 外部ライブラリ -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TXQGZRF9');</script>
+    <!-- End Google Tag Manager -->
+    
+    <style>
+        :root {
+            --primary-dark: #0f172a;
+            --primary-blue: #1e293b;
+            --primary-light: #334155;
+            --accent-gold: #fbbf24;
+            --accent-gold-dark: #d97706;
+            --text-light: #f1f5f9;
+            --text-gray: #cbd5e1;
+            --success-green: #10b981;
+            --error-red: #ef4444;
+            --warning-yellow: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', monospace;
+        }
+
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+        }
+
+        .cipher-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .cipher-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-gold-dark));
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+
+        .progress-bar {
+            background: rgba(30, 41, 59, 0.8);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-gold-dark));
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .game-area {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .cipher-input {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--text-light);
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .cipher-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+        }
+
+        .hint-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid var(--accent-gold);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent-gold);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .stats-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .difficulty-easy {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .difficulty-medium {
+            background: var(--warning-yellow);
+            color: var(--primary-dark);
+        }
+
+        .difficulty-hard {
+            background: var(--error-red);
+            color: white;
+        }
+
+        .font-size-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin: 16px 0;
+        }
+
+        .font-size-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--text-light);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .font-size-btn:hover,
+        .font-size-btn.active {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .language-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover,
+        .language-btn.active {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .share-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--text-light);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-btn:hover {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+
+        .achievement-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-gold-dark));
+            color: var(--primary-dark);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 4px;
+        }
+
+        .cipher-animation {
+            animation: cipher-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes cipher-glow {
+            from { text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+            to { text-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(251, 191, 36, 0.3);
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .game-area {
+                padding: 16px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .sidebar {
+                position: static;
+                width: 250px;
+                height: auto;
+                background: transparent;
+                transform: none;
+            }
+            
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+
+        /* フォントサイズ調整 */
+        .font-xs { font-size: 12px; }
+        .font-sm { font-size: 14px; }
+        .font-md { font-size: 16px; }
+        .font-lg { font-size: 18px; }
+        .font-xl { font-size: 20px; }
+    </style>
+</head>
+<body class="bg-pattern">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXQGZRF9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- オーバーレイ -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ヘッダー -->
+    <header class="bg-gray-900 bg-opacity-80 backdrop-blur-md border-b border-yellow-400 border-opacity-30 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-key text-gray-900"></i>
+                    </div>
+                    <h1 class="text-xl font-bold orbitron cipher-animation">
+                        <span data-lang="ja">コードブレイカー</span>
+                        <span data-lang="en" style="display: none;">CodeBreaker</span>
+                    </h1>
+                </div>
+                
+                <!-- デスクトップナビゲーション -->
+                <nav class="desktop-nav hidden md:flex space-x-6">
+                    <a href="#game" class="text-gray-300 hover:text-yellow-400 transition-colors">
+                        <span data-lang="ja">ゲーム</span>
+                        <span data-lang="en" style="display: none;">Game</span>
+                    </a>
+                    <a href="#how-to" class="text-gray-300 hover:text-yellow-400 transition-colors">
+                        <span data-lang="ja">使い方</span>
+                        <span data-lang="en" style="display: none;">How to</span>
+                    </a>
+                    <a href="#about" class="text-gray-300 hover:text-yellow-400 transition-colors">
+                        <span data-lang="ja">について</span>
+                        <span data-lang="en" style="display: none;">About</span>
+                    </a>
+                </nav>
+                
+                <!-- ハンバーガーメニュー -->
+                <div class="hamburger md:hidden" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- サイドバー -->
+    <aside class="sidebar" id="sidebar">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-semibold orbitron">
+                    <span data-lang="ja">設定</span>
+                    <span data-lang="en" style="display: none;">Settings</span>
+                </h2>
+                <button class="text-yellow-400 hover:text-yellow-300 md:hidden" id="closeSidebar">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- 言語切り替え -->
+            <div class="mb-6">
+                <h3 class="text-sm font-semibold mb-3 text-gray-400">
+                    <span data-lang="ja">言語</span>
+                    <span data-lang="en" style="display: none;">Language</span>
+                </h3>
+                <div class="language-switcher">
+                    <button class="language-btn active" data-lang-btn="ja">日本語</button>
+                    <button class="language-btn" data-lang-btn="en">English</button>
+                </div>
+            </div>
+            
+            <!-- フォントサイズ -->
+            <div class="mb-6">
+                <h3 class="text-sm font-semibold mb-3 text-gray-400">
+                    <span data-lang="ja">文字サイズ</span>
+                    <span data-lang="en" style="display: none;">Font Size</span>
+                </h3>
+                <div class="font-size-controls">
+                    <button class="font-size-btn" data-font-size="xs">極小</button>
+                    <button class="font-size-btn" data-font-size="sm">小</button>
+                    <button class="font-size-btn active" data-font-size="md">標準</button>
+                    <button class="font-size-btn" data-font-size="lg">大</button>
+                    <button class="font-size-btn" data-font-size="xl">特大</button>
+                </div>
+            </div>
+            
+            <!-- 統計情報 -->
+            <div class="mb-6">
+                <h3 class="text-sm font-semibold mb-3 text-gray-400">
+                    <span data-lang="ja">統計</span>
+                    <span data-lang="en" style="display: none;">Statistics</span>
+                </h3>
+                <div class="stats-card">
+                    <div class="text-2xl font-bold text-yellow-400" id="totalSolved">0</div>
+                    <div class="text-xs text-gray-400">
+                        <span data-lang="ja">解読済み</span>
+                        <span data-lang="en" style="display: none;">Solved</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 実績バッジ -->
+            <div class="mb-6">
+                <h3 class="text-sm font-semibold mb-3 text-gray-400">
+                    <span data-lang="ja">実績</span>
+                    <span data-lang="en" style="display: none;">Achievements</span>
+                </h3>
+                <div id="achievements">
+                    <div class="achievement-badge">
+                        <i class="fas fa-baby"></i>
+                        <span data-lang="ja">初心者</span>
+                        <span data-lang="en" style="display: none;">Beginner</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- シェアボタン -->
+            <div class="share-buttons">
+                <button class="share-btn" onclick="shareToTwitter()">
+                    <i class="fab fa-twitter"></i>
+                </button>
+                <button class="share-btn" onclick="shareToFacebook()">
+                    <i class="fab fa-facebook"></i>
+                </button>
+                <button class="share-btn" onclick="shareToLine()">
+                    <i class="fab fa-line"></i>
+                </button>
+                <button class="share-btn" onclick="copyToClipboard()">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <!-- ヒーローセクション -->
+        <section class="container mx-auto px-4 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-6xl font-bold orbitron mb-4 cipher-animation">
+                    <span data-lang="ja">暗号を解読せよ</span>
+                    <span data-lang="en" style="display: none;">Decode the Mystery</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8">
+                    <span data-lang="ja">シーザー暗号から高度な暗号まで、段階的に挑戦する本格謎解きパズルゲーム</span>
+                    <span data-lang="en" style="display: none;">From Caesar cipher to advanced cryptography, challenge yourself with authentic puzzle games</span>
+                </p>
+                <button class="btn-primary mr-4" onclick="startGame()">
+                    <span data-lang="ja">今すぐプレイ</span>
+                    <span data-lang="en" style="display: none;">Play Now</span>
+                </button>
+                <button class="btn-secondary" onclick="showTutorial()">
+                    <span data-lang="ja">チュートリアル</span>
+                    <span data-lang="en" style="display: none;">Tutorial</span>
+                </button>
+            </div>
+            
+            <!-- 進行状況 -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm text-gray-400">
+                        <span data-lang="ja">進行状況</span>
+                        <span data-lang="en" style="display: none;">Progress</span>
+                    </span>
+                    <span class="text-sm text-yellow-400" id="progressText">0/10</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ゲームエリア -->
+        <section id="game" class="container mx-auto px-4 py-8">
+            <div class="game-area">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold orbitron mb-4">
+                        <span data-lang="ja">現在の暗号</span>
+                        <span data-lang="en" style="display: none;">Current Cipher</span>
+                    </h3>
+                    <div class="flex flex-wrap items-center gap-4 mb-4">
+                        <span class="difficulty-badge difficulty-easy" id="difficultyBadge">
+                            <span data-lang="ja">初級</span>
+                            <span data-lang="en" style="display: none;">Easy</span>
+                        </span>
+                        <span class="text-sm text-gray-400">
+                            <span data-lang="ja">タイプ:</span>
+                            <span data-lang="en" style="display: none;">Type:</span>
+                            <span id="cipherType">シーザー暗号</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2 text-gray-400">
+                        <span data-lang="ja">暗号文</span>
+                        <span data-lang="en" style="display: none;">Encrypted Text</span>
+                    </label>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30">
+                        <p class="text-lg orbitron text-yellow-400" id="cipherText">KHOOR ZRUOG</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2 text-gray-400">
+                        <span data-lang="ja">解読文を入力</span>
+                        <span data-lang="en" style="display: none;">Enter Decrypted Text</span>
+                    </label>
+                    <input type="text" 
+                           class="cipher-input" 
+                           id="userAnswer" 
+                           placeholder="解読した文章を入力してください">
+                </div>
+                
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button class="btn-primary" onclick="checkAnswer()">
+                        <span data-lang="ja">解答チェック</span>
+                        <span data-lang="en" style="display: none;">Check Answer</span>
+                    </button>
+                    <button class="btn-secondary" onclick="getHint()">
+                        <span data-lang="ja">ヒント</span>
+                        <span data-lang="en" style="display: none;">Hint</span>
+                        <span class="ml-2" id="hintsLeft">(5)</span>
+                    </button>
+                    <button class="btn-secondary" onclick="skipCipher()">
+                        <span data-lang="ja">スキップ</span>
+                        <span data-lang="en" style="display: none;">Skip</span>
+                    </button>
+                </div>
+                
+                <div id="hintArea" class="hint-box" style="display: none;">
+                    <h4 class="font-semibold mb-2">
+                        <i class="fas fa-lightbulb text-yellow-400"></i>
+                        <span data-lang="ja">ヒント</span>
+                        <span data-lang="en" style="display: none;">Hint</span>
+                    </h4>
+                    <p id="hintText"></p>
+                </div>
+                
+                <div id="resultArea" class="mt-6" style="display: none;">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4" id="resultIcon">🎉</div>
+                        <h3 class="text-2xl font-bold mb-2" id="resultTitle">正解！</h3>
+                        <p class="text-gray-300 mb-4" id="resultMessage">よくできました！</p>
+                        <button class="btn-primary" onclick="nextCipher()">
+                            <span data-lang="ja">次の暗号</span>
+                            <span data-lang="en" style="display: none;">Next Cipher</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 暗号タイプ説明 -->
+        <section id="about" class="container mx-auto px-4 py-12">
+            <h2 class="text-3xl font-bold orbitron mb-8 text-center">
+                <span data-lang="ja">暗号の種類</span>
+                <span data-lang="en" style="display: none;">Cipher Types</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="cipher-card p-6 rounded-lg">
+                    <div class="text-2xl mb-4">🔐</div>
+                    <h3 class="text-xl font-semibold mb-2">
+                        <span data-lang="ja">シーザー暗号</span>
+                        <span data-lang="en" style="display: none;">Caesar Cipher</span>
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        <span data-lang="ja">文字を一定数シフトする古典的な暗号</span>
+                        <span data-lang="en" style="display: none;">Classic cipher that shifts letters by a fixed number</span>
+                    </p>
+                </div>
+                
+                <div class="cipher-card p-6 rounded-lg">
+                    <div class="text-2xl mb-4">🔄</div>
+                    <h3 class="text-xl font-semibold mb-2">
+                        <span data-lang="ja">換字式暗号</span>
+                        <span data-lang="en" style="display: none;">Substitution Cipher</span>
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        <span data-lang="ja">文字を別の文字に置き換える暗号</span>
+                        <span data-lang="en" style="display: none;">Cipher that replaces letters with other letters</span>
+                    </p>
+                </div>
+                
+                <div class="cipher-card p-6 rounded-lg">
+                    <div class="text-2xl mb-4">📡</div>
+                    <h3 class="text-xl font-semibold mb-2">
+                        <span data-lang="ja">モールス信号</span>
+                        <span data-lang="en" style="display: none;">Morse Code</span>
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        <span data-lang="ja">点と線で文字を表現する通信方式</span>
+                        <span data-lang="en" style="display: none;">Communication method using dots and dashes</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coming Soon セクション -->
+        <section class="container mx-auto px-4 py-12">
+            <h2 class="text-3xl font-bold orbitron mb-8 text-center">
+                <span data-lang="ja">近日公開予定</span>
+                <span data-lang="en" style="display: none;">Coming Soon</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="cipher-card p-6 rounded-lg opacity-50">
+                    <div class="text-2xl mb-4">🏆</div>
+                    <h3 class="text-xl font-semibold mb-2">
+                        <span data-lang="ja">対戦モード</span>
+                        <span data-lang="en" style="display: none;">Battle Mode</span>
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        <span data-lang="ja">他のプレイヤーと暗号解読スピードを競う</span>
+                        <span data-lang="en" style="display: none;">Compete with other players in cipher decoding speed</span>
+                    </p>
+                </div>
+                
+                <div class="cipher-card p-6 rounded-lg opacity-50">
+                    <div class="text-2xl mb-4">📚</div>
+                    <h3 class="text-xl font-semibold mb-2">
+                        <span data-lang="ja">暗号作成</span>
+                        <span data-lang="en" style="display: none;">Cipher Creator</span>
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        <span data-lang="ja">オリジナルの暗号を作成・共有</span>
+                        <span data-lang="en" style="display: none;">Create and share original ciphers</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- フッター -->
+        <footer class="bg-gray-900 bg-opacity-80 border-t border-yellow-400 border-opacity-30 py-8">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold orbitron mb-4">
+                            <span data-lang="ja">コードブレイカー</span>
+                            <span data-lang="en" style="display: none;">CodeBreaker</span>
+                        </h3>
+                        <p class="text-gray-400 text-sm">
+                            <span data-lang="ja">暗号解読で論理的思考力を鍛える本格パズルゲーム</span>
+                            <span data-lang="en" style="display: none;">Train logical thinking with authentic cipher puzzles</span>
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-sm font-semibold mb-4 text-gray-400">
+                            <span data-lang="ja">リンク</span>
+                            <span data-lang="en" style="display: none;">Links</span>
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                                <span data-lang="ja">使い方</span>
+                                <span data-lang="en" style="display: none;">How to Play</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                                <span data-lang="ja">利用規約</span>
+                                <span data-lang="en" style="display: none;">Terms of Service</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                                <span data-lang="ja">プライバシーポリシー</span>
+                                <span data-lang="en" style="display: none;">Privacy Policy</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                                <span data-lang="ja">お問い合わせ</span>
+                                <span data-lang="en" style="display: none;">Contact</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-sm font-semibold mb-4 text-gray-400">
+                            <span data-lang="ja">おすすめ</span>
+                            <span data-lang="en" style="display: none;">Recommended</span>
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <a href="#" class="block text-gray-400 hover:text-yellow-400">
+                                <span data-lang="ja">謎解き本・推理小説</span>
+                                <span data-lang="en" style="display: none;">Mystery Books</span>
+                            </a>
+                            <a href="#" class="block text-gray-400 hover:text-yellow-400">
+                                <span data-lang="ja">パズル・脳トレグッズ</span>
+                                <span data-lang="en" style="display: none;">Puzzle Games</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+                    <p>&copy; 2024 CodeBreaker. All rights reserved. Created by AppADayCreator</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // ゲーム状態管理
+        let gameState = {
+            currentLevel: 1,
+            totalSolved: 0,
+            hintsUsed: 0,
+            hintsLeft: 5,
+            currentCipher: null,
+            language: 'ja',
+            fontSize: 'md',
+            progress: 0
+        };
+
+        // 暗号データ
+        const ciphers = {
+            1: {
+                type: 'caesar',
+                shift: 3,
+                encrypted: 'KHOOR ZRUOG',
+                decrypted: 'HELLO WORLD',
+                hint: 'アルファベットを3文字分後ろにずらしてみてください',
+                difficulty: 'easy'
+            },
+            2: {
+                type: 'caesar',
+                shift: 5,
+                encrypted: 'MJQQT BTWQI',
+                decrypted: 'HELLO WORLD',
+                hint: 'アルファベットを5文字分後ろにずらしてみてください',
+                difficulty: 'easy'
+            },
+            3: {
+                type: 'substitution',
+                key: {'H': 'A', 'E': 'B', 'L': 'C', 'O': 'D', 'W': 'E', 'R': 'F', 'D': 'G'},
+                encrypted: 'ABCCD EDFCG',
+                decrypted: 'HELLO WORLD',
+                hint: 'H→A, E→B, L→C, O→D のように文字が置き換わっています',
+                difficulty: 'medium'
+            },
+            4: {
+                type: 'morse',
+                encrypted: '.... . .-.. .-.. --- / .-- --- .-. .-.. -..',
+                decrypted: 'HELLO WORLD',
+                hint: 'モールス信号です。点(.)と線(-)で文字を表現します',
+                difficulty: 'medium'
+            },
+            5: {
+                type: 'reverse',
+                encrypted: 'DLROW OLLEH',
+                decrypted: 'HELLO WORLD',
+                hint: '文字が逆順になっています',
+                difficulty: 'easy'
+            }
+        };
+
+        // 翻訳データ
+        const translations = {
+            ja: {
+                'HELLO WORLD': 'こんにちは世界',
+                'difficulty_easy': '初級',
+                'difficulty_medium': '中級',
+                'difficulty_hard': '上級',
+                'correct_answer': '正解！',
+                'wrong_answer': '不正解',
+                'try_again': 'もう一度挑戦してください',
+                'congratulations': 'おめでとうございます！',
+                'hint_used': 'ヒントを使用しました',
+                'no_hints_left': 'ヒントがありません',
+                'level_complete': 'レベルクリア！',
+                'game_complete': 'ゲームクリア！'
+            },
+            en: {
+                'HELLO WORLD': 'HELLO WORLD',
+                'difficulty_easy': 'Easy',
+                'difficulty_medium': 'Medium',
+                'difficulty_hard': 'Hard',
+                'correct_answer': 'Correct!',
+                'wrong_answer': 'Wrong',
+                'try_again': 'Please try again',
+                'congratulations': 'Congratulations!',
+                'hint_used': 'Hint used',
+                'no_hints_left': 'No hints left',
+                'level_complete': 'Level Complete!',
+                'game_complete': 'Game Complete!'
+            }
+        };
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('CodeBreaker initialized');
+            loadGameState();
+            setupEventListeners();
+            loadCipher(gameState.currentLevel);
+            updateUI();
+            registerServiceWorker();
+        });
+
+        // イベントリスナー設定
+        function setupEventListeners() {
+            // ハンバーガーメニュー
+            document.getElementById('hamburger').addEventListener('click', toggleSidebar);
+            document.getElementById('closeSidebar').addEventListener('click', toggleSidebar);
+            document.getElementById('overlay').addEventListener('click', toggleSidebar);
+
+            // 言語切り替え
+            document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    switchLanguage(this.dataset.langBtn);
+                });
+            });
+
+            // フォントサイズ
+            document.querySelectorAll('[data-font-size]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    changeFontSize(this.dataset.fontSize);
+                });
+            });
+
+            // Enter キーでの解答チェック
+            document.getElementById('userAnswer').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkAnswer();
+                }
+            });
+
+            console.log('Event listeners setup complete');
+        }
+
+        // サイドバー切り替え
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const isActive = sidebar.classList.contains('active');
+            
+            if (isActive) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            } else {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            }
+            
+            console.log('Sidebar toggled:', !isActive);
+        }
+
+        // 言語切り替え
+        function switchLanguage(lang) {
+            gameState.language = lang;
+            
+            // 言語ボタンの状態更新
+            document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang-btn="${lang}"]`).classList.add('active');
+            
+            // 表示言語の切り替え
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                element.style.display = element.dataset.lang === lang ? 'inline' : 'none';
+            });
+            
+            saveGameState();
+            console.log('Language switched to:', lang);
+        }
+
+        // フォントサイズ変更
+        function changeFontSize(size) {
+            gameState.fontSize = size;
+            
+            // フォントサイズボタンの状態更新
+            document.querySelectorAll('[data-font-size]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-font-size="${size}"]`).classList.add('active');
+            
+            // bodyクラスの更新
+            document.body.className = document.body.className.replace(/font-\w+/g, '');
+            document.body.classList.add(`font-${size}`);
+            
+            saveGameState();
+            console.log('Font size changed to:', size);
+        }
+
+        // ゲーム開始
+        function startGame() {
+            console.log('Game started');
+            document.getElementById('game').scrollIntoView({ behavior: 'smooth' });
+            loadCipher(gameState.currentLevel);
+        }
+
+        // チュートリアル表示
+        function showTutorial() {
+            console.log('Tutorial shown');
+            alert('チュートリアル機能は準備中です！');
+        }
+
+        // 暗号読み込み
+        function loadCipher(level) {
+            const cipher = ciphers[level];
+            if (!cipher) {
+                console.log('Game complete - no more ciphers');
+                showGameComplete();
+                return;
+            }
+
+            gameState.currentCipher = cipher;
+            
+            // UI更新
+            document.getElementById('cipherText').textContent = cipher.encrypted;
+            document.getElementById('cipherType').textContent = getCipherTypeName(cipher.type);
+            document.getElementById('userAnswer').value = '';
+            document.getElementById('hintArea').style.display = 'none';
+            document.getElementById('resultArea').style.display = 'none';
+            
+            // 難易度バッジ更新
+            const badge = document.getElementById('difficultyBadge');
+            badge.className = `difficulty-badge difficulty-${cipher.difficulty}`;
+            
+            updateProgress();
+            console.log('Cipher loaded:', level, cipher);
+        }
+
+        // 暗号タイプ名取得
+        function getCipherTypeName(type) {
+            const names = {
+                caesar: gameState.language === 'ja' ? 'シーザー暗号' : 'Caesar Cipher',
+                substitution: gameState.language === 'ja' ? '換字式暗号' : 'Substitution Cipher',
+                morse: gameState.language === 'ja' ? 'モールス信号' : 'Morse Code',
+                reverse: gameState.language === 'ja' ? '逆順暗号' : 'Reverse Cipher'
+            };
+            return names[type] || type;
+        }
+
+        // 解答チェック
+        function checkAnswer() {
+            const userAnswer = document.getElementById('userAnswer').value.trim().toUpperCase();
+            const correctAnswer = gameState.currentCipher.decrypted;
+            
+            console.log('Answer check:', userAnswer, 'vs', correctAnswer);
+            
+            if (userAnswer === correctAnswer) {
+                showResult(true);
+                gameState.totalSolved++;
+                updateStats();
+                console.log('Correct answer!');
+            } else {
+                showResult(false);
+                console.log('Wrong answer');
+            }
+        }
+
+        // 結果表示
+        function showResult(isCorrect) {
+            const resultArea = document.getElementById('resultArea');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+            
+            if (isCorrect) {
+                resultIcon.textContent = '🎉';
+                resultTitle.textContent = translations[gameState.language]['correct_answer'];
+                resultMessage.textContent = translations[gameState.language]['congratulations'];
+            } else {
+                resultIcon.textContent = '😞';
+                resultTitle.textContent = translations[gameState.language]['wrong_answer'];
+                resultMessage.textContent = translations[gameState.language]['try_again'];
+            }
+            
+            resultArea.style.display = 'block';
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ヒント表示
+        function getHint() {
+            if (gameState.hintsLeft <= 0) {
+                alert(translations[gameState.language]['no_hints_left']);
+                return;
+            }
+            
+            gameState.hintsLeft--;
+            gameState.hintsUsed++;
+            
+            const hintArea = document.getElementById('hintArea');
+            const hintText = document.getElementById('hintText');
+            
+            hintText.textContent = gameState.currentCipher.hint;
+            hintArea.style.display = 'block';
+            
+            document.getElementById('hintsLeft').textContent = `(${gameState.hintsLeft})`;
+            
+            console.log('Hint used:', gameState.hintsUsed, 'Left:', gameState.hintsLeft);
+        }
+
+        // 暗号スキップ
+        function skipCipher() {
+            if (confirm('この暗号をスキップしますか？')) {
+                nextCipher();
+            }
+        }
+
+        // 次の暗号
+        function nextCipher() {
+            gameState.currentLevel++;
+            loadCipher(gameState.currentLevel);
+            saveGameState();
+        }
+
+        // 進行状況更新
+        function updateProgress() {
+            const totalCiphers = Object.keys(ciphers).length;
+            const currentProgress = Math.min(gameState.currentLevel - 1, totalCiphers);
+            const progressPercent = (currentProgress / totalCiphers) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            document.getElementById('progressText').textContent = `${currentProgress}/${totalCiphers}`;
+            
+            console.log('Progress updated:', currentProgress, '/', totalCiphers);
+        }
+
+        // 統計更新
+        function updateStats() {
+            document.getElementById('totalSolved').textContent = gameState.totalSolved;
+            updateAchievements();
+        }
+
+        // 実績更新
+        function updateAchievements() {
+            const achievements = document.getElementById('achievements');
+            achievements.innerHTML = '';
+            
+            const badges = [];
+            
+            if (gameState.totalSolved >= 1) {
+                badges.push({
+                    icon: 'fa-star',
+                    name: gameState.language === 'ja' ? '初回解読' : 'First Decode'
+                });
+            }
+            
+            if (gameState.totalSolved >= 5) {
+                badges.push({
+                    icon: 'fa-trophy',
+                    name: gameState.language === 'ja' ? '熟練者' : 'Expert'
+                });
+            }
+            
+            if (gameState.hintsUsed === 0 && gameState.totalSolved >= 3) {
+                badges.push({
+                    icon: 'fa-brain',
+                    name: gameState.language === 'ja' ? '天才' : 'Genius'
+                });
+            }
+            
+            badges.forEach(badge => {
+                const badgeElement = document.createElement('div');
+                badgeElement.className = 'achievement-badge';
+                badgeElement.innerHTML = `<i class="fas ${badge.icon}"></i> ${badge.name}`;
+                achievements.appendChild(badgeElement);
+            });
+        }
+
+        // ゲーム完了
+        function showGameComplete() {
+            const gameArea = document.querySelector('.game-area');
+            gameArea.innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-6">🏆</div>
+                    <h2 class="text-3xl font-bold orbitron mb-4">${translations[gameState.language]['game_complete']}</h2>
+                    <p class="text-xl text-gray-300 mb-6">すべての暗号を解読しました！</p>
+                    <div class="stats-grid grid grid-cols-2 gap-4 mb-8">
+                        <div class="stats-card">
+                            <div class="text-2xl font-bold text-yellow-400">${gameState.totalSolved}</div>
+                            <div class="text-sm text-gray-400">解読済み</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="text-2xl font-bold text-yellow-400">${gameState.hintsUsed}</div>
+                            <div class="text-sm text-gray-400">ヒント使用</div>
+                        </div>
+                    </div>
+                    <div class="share-buttons justify-center">
+                        <button class="btn-primary mr-4" onclick="shareResult()">結果をシェア</button>
+                        <button class="btn-secondary" onclick="resetGame()">もう一度プレイ</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 結果シェア
+        function shareResult() {
+            const text = `コードブレイカーで${gameState.totalSolved}個の暗号を解読しました！🔐✨ #コードブレイカー #暗号解読 #謎解き`;
+            shareToTwitter(text);
+        }
+
+        // ゲームリセット
+        function resetGame() {
+            gameState.currentLevel = 1;
+            gameState.totalSolved = 0;
+            gameState.hintsUsed = 0;
+            gameState.hintsLeft = 5;
+            gameState.progress = 0;
+            
+            saveGameState();
+            loadCipher(1);
+            updateUI();
+            
+            console.log('Game reset');
+        }
+
+        // UI更新
+        function updateUI() {
+            updateProgress();
+            updateStats();
+            document.getElementById('hintsLeft').textContent = `(${gameState.hintsLeft})`;
+            
+            // 言語とフォントサイズの復元
+            switchLanguage(gameState.language);
+            changeFontSize(gameState.fontSize);
+        }
+
+        // SNSシェア機能
+        function shareToTwitter(text = null) {
+            const defaultText = `暗号解読パズルゲーム「コードブレイカー」で論理的思考力を鍛えよう！🔐✨ #コードブレイカー #暗号解読 #謎解き`;
+            const shareText = text || defaultText;
+            const url = encodeURIComponent(window.location.href);
+            const tweetText = encodeURIComponent(shareText);
+            window.open(`https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`, '_blank');
+        }
+
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareToLine() {
+            const text = encodeURIComponent('暗号解読パズルゲーム「コードブレイカー」');
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://line.me/R/msg/text/?${text}%20${url}`, '_blank');
+        }
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('URLをコピーしました！');
+            });
+        }
+
+        // ローカルストレージ機能
+        function saveGameState() {
+            localStorage.setItem('codebreaker-gamestate', JSON.stringify(gameState));
+            console.log('Game state saved');
+        }
+
+        function loadGameState() {
+            const saved = localStorage.getItem('codebreaker-gamestate');
+            if (saved) {
+                gameState = { ...gameState, ...JSON.parse(saved) };
+                console.log('Game state loaded:', gameState);
+            }
+        }
+
+        // PWA Service Worker登録
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(function(registration) {
+                            console.log('ServiceWorker registration successful');
+                        })
+                        .catch(function(err) {
+                            console.log('ServiceWorker registration failed: ', err);
+                        });
+                });
+            }
+        }
+
+        // レスポンシブ対応
+        function checkScreenSize() {
+            const isMobile = window.innerWidth <= 768;
+            document.body.classList.toggle('mobile', isMobile);
+            
+            if (!isMobile) {
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
+            }
+        }
+
+        window.addEventListener('resize', checkScreenSize);
+        checkScreenSize();
+
+        // パフォーマンス監視
+        window.addEventListener('load', function() {
+            console.log('Page loaded in', performance.now(), 'ms');
+        });
+
+        // エラーハンドリング
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+        });
+
+        console.log('CodeBreaker script loaded successfully');
+    </script>
+</body>
+</html>
