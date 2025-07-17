@@ -349,6 +349,14 @@
 
         .cipher-animation {
             animation: cipher-glow 2s ease-in-out infinite alternate;
+            color: #ffe066;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.45), 0 1px 0 #222;
+        }
+
+        /* サブタイトルの視認性向上 */
+        .cipher-animation + p {
+            color: #fff;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.35);
         }
 
         @keyframes cipher-glow {
