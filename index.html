@@ -1062,18 +1062,24 @@
         // イベントリスナー設定
         function setupEventListeners() {
             // ハンバーガーメニュー
-            document.getElementById('hamburger').addEventListener('click', toggleSidebar);
-            document.getElementById('closeSidebar').addEventListener('click', toggleSidebar);
-            document.getElementById('overlay').addEventListener('click', toggleSidebar);
+            const hamburger = document.getElementById('hamburger');
+            if (hamburger) hamburger.addEventListener('click', toggleSidebar);
+            const closeSidebar = document.getElementById('closeSidebar');
+            if (closeSidebar) closeSidebar.addEventListener('click', toggleSidebar);
+            const overlay = document.getElementById('overlay');
+            if (overlay) overlay.addEventListener('click', toggleSidebar);
 
             // 設定モーダル
-            document.getElementById('openSettingsModal').addEventListener('click', function() {
+            const openSettingsModal = document.getElementById('openSettingsModal');
+            if (openSettingsModal) openSettingsModal.addEventListener('click', function() {
                 document.getElementById('settingsModal').style.display = 'block';
             });
-            document.getElementById('closeSettingsModal').addEventListener('click', function() {
+            const closeSettingsModal = document.getElementById('closeSettingsModal');
+            if (closeSettingsModal) closeSettingsModal.addEventListener('click', function() {
                 document.getElementById('settingsModal').style.display = 'none';
             });
-            document.getElementById('modalOverlay').addEventListener('click', function() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            if (modalOverlay) modalOverlay.addEventListener('click', function() {
                 document.getElementById('settingsModal').style.display = 'none';
             });
 
@@ -1092,7 +1098,8 @@
             });
 
             // Enter キーでの解答チェック
-            document.getElementById('userAnswer').addEventListener('keypress', function(e) {
+            const userAnswer = document.getElementById('userAnswer');
+            if (userAnswer) userAnswer.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     checkAnswer();
                 }
