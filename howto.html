@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使い方 | CodeBreaker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #18181b 0%, #23234a 100%);
+            color: #fffbe0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem 1rem;
+        }
+        h1, h2, h3 {
+            font-family: 'Orbitron', monospace;
+            color: #ffe066;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.45), 0 1px 0 #222;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5em;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.5em;
+            margin-bottom: 0.3em;
+        }
+        p, li {
+            color: #fff;
+            line-height: 1.8;
+        }
+        ul {
+            padding-left: 1.5em;
+        }
+        .step {
+            background: rgba(30,41,59,0.8);
+            border-left: 4px solid #ffe066;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5em 0;
+            padding: 1em 1.5em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 2em;
+            color: #ffe066;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #fffbe0;
+        }
+        footer {
+            width: 100vw;
+            left: 0;
+            right: 0;
+            background: #18181b;
+            color: #fffbe0;
+            text-align: center;
+            padding: 2rem 0 0.5rem 0;
+            margin: 0;
+            border-top: 2px solid #ffe066;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>使い方 <span style="font-size:1.2rem; color:#fffbe0;">How to Play</span></h1>
+        <p>CodeBreakerは、さまざまな暗号を解読して楽しむパズルゲームです。初心者から上級者まで、論理的思考力を鍛えながら遊べます。</p>
+
+        <h2>1. ゲームの目的</h2>
+        <div class="step">
+            <p>出題される暗号文を解読し、正しい「解読文」を入力してください。すべての暗号をクリアするとゲームクリアです。</p>
+        </div>
+
+        <h2>2. 基本操作</h2>
+        <div class="step">
+            <ul>
+                <li>「今すぐプレイ」ボタンでゲームを開始</li>
+                <li>画面に表示された暗号文を解読</li>
+                <li>解読した答えを入力欄に入力し、「解答チェック」ボタンを押す</li>
+                <li>正解なら次の問題へ進みます</li>
+            </ul>
+        </div>
+
+        <h2>3. ヒントの使い方</h2>
+        <div class="step">
+            <ul>
+                <li>「ヒント」ボタンを押すと、暗号ごとに用意されたヒントが表示されます</li>
+                <li>ヒントの回数には制限があります</li>
+            </ul>
+        </div>
+
+        <h2>4. 設定・カスタマイズ</h2>
+        <div class="step">
+            <ul>
+                <li>画面右上の「設定」ボタンから、言語や文字サイズを変更できます</li>
+                <li>進行状況や実績も確認できます</li>
+            </ul>
+        </div>
+
+        <h2>5. よくある質問</h2>
+        <div class="step">
+            <h3>Q. 答えが分からないときは？</h3>
+            <p>A. ヒントを活用しましょう。それでも分からない場合は「スキップ」も可能です。</p>
+            <h3>Q. 進行状況は保存されますか？</h3>
+            <p>A. ブラウザのローカルストレージに自動保存されます。</p>
+        </div>
+
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> トップページへ戻る</a>
+    </div>
+    <footer>
+        <p>&copy; 2024 CodeBreaker. All rights reserved. Created by AppADayCreator</p>
+    </footer>
+</body>
+</html> 
