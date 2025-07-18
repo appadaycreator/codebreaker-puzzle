@@ -604,6 +604,13 @@
             transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
             overflow: hidden;
         }
+        #toggleTypeBtn {
+            min-width: 120px;
+        }
+        #cipherTypeArea {
+            transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="bg-pattern">
@@ -790,7 +797,11 @@
                             <span data-lang="ja">初級</span>
                             <span data-lang="en" style="display: none;">Easy</span>
                         </span>
-                        <span class="text-sm text-gray-400">
+                        <button id="toggleTypeBtn" class="btn-secondary" type="button" style="margin-left:8px;">
+                            <span data-lang="ja">暗号タイプを見る</span>
+                            <span data-lang="en" style="display: none;">Show Cipher Type</span>
+                        </button>
+                        <span class="text-sm text-gray-400" id="cipherTypeArea" style="display:none;">
                             <span data-lang="ja">タイプ:</span>
                             <span data-lang="en" style="display: none;">Type:</span>
                             <span id="cipherType">シーザー暗号</span>
@@ -1206,21 +1217,34 @@
             }
 
             // 暗号タイプアコーディオン
-            document.querySelectorAll('#cipherTypeAccordion .accordion-title').forEach(function(title) {
-                title.addEventListener('click', function() {
-                    const content = this.parentElement.querySelector('.accordion-content');
-                    const isOpen = content.style.display === 'block';
-                    content.style.display = isOpen ? 'none' : 'block';
-                    this.classList.toggle('active', !isOpen);
-                });
-                // キーボード操作対応
-                title.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        this.click();
+            const toggleTypeBtn = document.getElementById('toggleTypeBtn');
+            const cipherTypeArea = document.getElementById('cipherTypeArea');
+            if (toggleTypeBtn && cipherTypeArea) {
+                toggleTypeBtn.addEventListener('click', function() {
+                    const isOpen = cipherTypeArea.style.display === 'inline-block';
+                    cipherTypeArea.style.display = isOpen ? 'none' : 'inline-block';
+                    // ボタンのテキストも切り替え
+                    const ja = toggleTypeBtn.querySelector('[data-lang="ja"]');
+                    const en = toggleTypeBtn.querySelector('[data-lang="en"]');
+                    if (isOpen) {
+                        if (ja) ja.textContent = '暗号タイプを見る';
+                        if (en) en.textContent = 'Show Cipher Type';
+                    } else {
+                        if (ja) ja.textContent = '暗号タイプを隠す';
+                        if (en) en.textContent = 'Hide Cipher Type';
                     }
                 });
-            });
+            }
+            // 年齢判定（13歳未満は暗号タイプ非表示）
+            let userAge = localStorage.getItem('user-age');
+            if (!userAge) {
+                userAge = prompt('あなたの年齢を入力してください（数字のみ）');
+                if (userAge) localStorage.setItem('user-age', userAge);
+            }
+            if (userAge && parseInt(userAge) < 13) {
+                if (toggleTypeBtn) toggleTypeBtn.style.display = 'none';
+                if (cipherTypeArea) cipherTypeArea.style.display = 'none';
+            }
 
             console.log('Event listeners setup complete');
         }
