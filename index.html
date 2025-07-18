@@ -1235,16 +1235,6 @@
                     }
                 });
             }
-            // 年齢判定（13歳未満は暗号タイプ非表示）
-            let userAge = localStorage.getItem('user-age');
-            if (!userAge) {
-                userAge = prompt('あなたの年齢を入力してください（数字のみ）');
-                if (userAge) localStorage.setItem('user-age', userAge);
-            }
-            if (userAge && parseInt(userAge) < 13) {
-                if (toggleTypeBtn) toggleTypeBtn.style.display = 'none';
-                if (cipherTypeArea) cipherTypeArea.style.display = 'none';
-            }
 
             console.log('Event listeners setup complete');
         }
