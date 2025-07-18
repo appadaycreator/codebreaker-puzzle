@@ -591,6 +591,19 @@
             opacity: 0;
             max-height: 0;
         }
+        .accordion-title:after {
+            content: '▼';
+            font-size: 0.9em;
+            margin-left: 0.5em;
+            transition: transform 0.2s;
+        }
+        .accordion-title.active:after {
+            transform: rotate(-180deg);
+        }
+        .accordion-content {
+            transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="bg-pattern">
@@ -856,14 +869,14 @@
                 <span data-lang="en" style="display: none;">Cipher Types</span>
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cipherTypeAccordion">
                 <div class="cipher-card p-6 rounded-lg">
                     <div class="text-2xl mb-4">🔐</div>
-                    <h3 class="text-xl font-semibold mb-2">
+                    <h3 class="text-xl font-semibold mb-2 accordion-title" tabindex="0" style="cursor:pointer;">
                         <span data-lang="ja">シーザー暗号</span>
                         <span data-lang="en" style="display: none;">Caesar Cipher</span>
                     </h3>
-                    <p class="text-gray-300 text-sm">
+                    <p class="text-gray-300 text-sm accordion-content" style="display:none;">
                         <span data-lang="ja">文字を一定数シフトする古典的な暗号</span>
                         <span data-lang="en" style="display: none;">Classic cipher that shifts letters by a fixed number</span>
                     </p>
@@ -871,11 +884,11 @@
                 
                 <div class="cipher-card p-6 rounded-lg">
                     <div class="text-2xl mb-4">🔄</div>
-                    <h3 class="text-xl font-semibold mb-2">
+                    <h3 class="text-xl font-semibold mb-2 accordion-title" tabindex="0" style="cursor:pointer;">
                         <span data-lang="ja">換字式暗号</span>
                         <span data-lang="en" style="display: none;">Substitution Cipher</span>
                     </h3>
-                    <p class="text-gray-300 text-sm">
+                    <p class="text-gray-300 text-sm accordion-content" style="display:none;">
                         <span data-lang="ja">文字を別の文字に置き換える暗号</span>
                         <span data-lang="en" style="display: none;">Cipher that replaces letters with other letters</span>
                     </p>
@@ -883,11 +896,11 @@
                 
                 <div class="cipher-card p-6 rounded-lg">
                     <div class="text-2xl mb-4">📡</div>
-                    <h3 class="text-xl font-semibold mb-2">
+                    <h3 class="text-xl font-semibold mb-2 accordion-title" tabindex="0" style="cursor:pointer;">
                         <span data-lang="ja">モールス信号</span>
                         <span data-lang="en" style="display: none;">Morse Code</span>
                     </h3>
-                    <p class="text-gray-300 text-sm">
+                    <p class="text-gray-300 text-sm accordion-content" style="display:none;">
                         <span data-lang="ja">点と線で文字を表現する通信方式</span>
                         <span data-lang="en" style="display: none;">Communication method using dots and dashes</span>
                     </p>
@@ -1191,6 +1204,23 @@
                     }
                 });
             }
+
+            // 暗号タイプアコーディオン
+            document.querySelectorAll('#cipherTypeAccordion .accordion-title').forEach(function(title) {
+                title.addEventListener('click', function() {
+                    const content = this.parentElement.querySelector('.accordion-content');
+                    const isOpen = content.style.display === 'block';
+                    content.style.display = isOpen ? 'none' : 'block';
+                    this.classList.toggle('active', !isOpen);
+                });
+                // キーボード操作対応
+                title.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
 
             console.log('Event listeners setup complete');
         }
