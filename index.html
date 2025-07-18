@@ -810,11 +810,7 @@
                         <span data-lang="ja">暗号文</span>
                         <span data-lang="en" style="display: none;">Encrypted Text</span>
                     </label>
-                    <button id="toggleCipherBtn" class="btn-secondary mb-2" type="button" style="width:100%;">
-                        <span data-lang="ja">暗号文を見る</span>
-                        <span data-lang="en" style="display: none;">Show Encrypted Text</span>
-                    </button>
-                    <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30 accordion-cipher" id="cipherAccordion" style="display:none;">
+                    <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30">
                         <p class="text-lg orbitron text-yellow-400" id="cipherText">KHOOR ZRUOG</p>
                     </div>
                 </div>
@@ -1195,26 +1191,6 @@
                     checkAnswer();
                 }
             });
-
-            // アコーディオン（暗号文表示）
-            const toggleCipherBtn = document.getElementById('toggleCipherBtn');
-            const cipherAccordion = document.getElementById('cipherAccordion');
-            if (toggleCipherBtn && cipherAccordion) {
-                toggleCipherBtn.addEventListener('click', function() {
-                    const isOpen = cipherAccordion.style.display === 'block';
-                    cipherAccordion.style.display = isOpen ? 'none' : 'block';
-                    // ボタンのテキストも切り替え
-                    const ja = toggleCipherBtn.querySelector('[data-lang="ja"]');
-                    const en = toggleCipherBtn.querySelector('[data-lang="en"]');
-                    if (isOpen) {
-                        if (ja) ja.textContent = '暗号文を見る';
-                        if (en) en.textContent = 'Show Encrypted Text';
-                    } else {
-                        if (ja) ja.textContent = '暗号文を隠す';
-                        if (en) en.textContent = 'Hide Encrypted Text';
-                    }
-                });
-            }
 
             // 暗号タイプアコーディオン
             const toggleTypeBtn = document.getElementById('toggleTypeBtn');
