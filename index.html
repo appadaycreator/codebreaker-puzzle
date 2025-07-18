@@ -1161,6 +1161,7 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('overlay');
+            if (!sidebar || !overlay) return;
             const isActive = sidebar.classList.contains('active');
             
             if (isActive) {
