@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://appadaycreator.github.io/codebreaker-puzzle/sitemap.xml
