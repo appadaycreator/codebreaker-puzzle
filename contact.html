@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ | コードブレイカー</title>
+    <link rel="canonical" href="https://appadaycreator.github.io/codebreaker-puzzle/contact.html">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif;background:#f8fafc;color:#333;line-height:1.8;}
+        .container{max-width:640px;margin:0 auto;padding:20px;}
+        .card{background:#fff;border-radius:16px;padding:32px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.06);}
+        h1{font-size:1.8rem;margin-bottom:16px;color:#1e293b;}
+        p{font-size:0.95rem;color:#475569;margin-bottom:12px;}
+        .form-group{margin-bottom:20px;}
+        label{display:block;font-weight:600;margin-bottom:6px;color:#334155;font-size:0.9rem;}
+        input,textarea,select{width:100%;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:1rem;font-family:inherit;outline:none;transition:.2s;}
+        input:focus,textarea:focus{border-color:#667eea;}
+        textarea{min-height:150px;resize:vertical;}
+        .btn{display:block;width:100%;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:14px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px;text-align:center;}
+        .btn:hover{opacity:.9;}
+        .note{font-size:0.82rem;color:#94a3b8;margin-top:12px;}
+        .nav{display:flex;gap:16px;flex-wrap:wrap;padding:12px 0;margin-bottom:16px;}
+        .nav a{color:#667eea;text-decoration:none;font-size:0.9rem;font-weight:600;}
+        .success{display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px;color:#166534;font-weight:600;}
+        @media(max-width:600px){.card{padding:20px;}h1{font-size:1.4rem;}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="nav">
+            <a href="index.html">← コードブレイカー</a>
+            <a href="usage.html">使い方</a>
+            <a href="privacy-policy.html">プライバシーポリシー</a>
+        </div>
+        <h1>お問い合わせ</h1>
+        <p>コードブレイカーに関するご意見・ご要望・不具合報告をお送りいただけます。通常2〜5営業日以内にご回答いたします。</p>
+
+        <div id="success" class="success">✅ お問い合わせを受け付けました。ご連絡ありがとうございます。</div>
+
+        <form id="contactForm" action="https://formspree.io/f/xdkodpqg" method="POST">
+            <input type="hidden" name="_subject" value="[コードブレイカー] お問い合わせ">
+            <input type="hidden" name="_language" value="ja">
+            <div class="form-group">
+                <label for="name">お名前 <span style="color:#ef4444">*</span></label>
+                <input type="text" id="name" name="name" required placeholder="山田 太郎">
+            </div>
+            <div class="form-group">
+                <label for="email">メールアドレス <span style="color:#ef4444">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label for="category">お問い合わせ種別</label>
+                <select id="category" name="category">
+                    <option value="bug">不具合・エラー報告</option>
+                    <option value="feature">機能改善のご要望</option>
+                    <option value="question">使い方のご質問</option>
+                    <option value="other">その他</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">内容 <span style="color:#ef4444">*</span></label>
+                <textarea id="message" name="message" required placeholder="具体的な内容をご記入ください（使用デバイス、ブラウザ、発生状況等）"></textarea>
+            </div>
+            <button type="submit" class="btn">送信する</button>
+            <p class="note">※個人情報は返答のためのみ使用し、第三者に提供しません。<br>
+            直接メール: <a href="mailto:tokunaga.g@gmail.com">tokunaga.g@gmail.com</a></p>
+        </form>
+
+        <script>
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            btn.textContent = '送信中...';
+            btn.disabled = true;
+            try {
+                const res = await fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {'Accept': 'application/json'}
+                });
+                if (res.ok) {
+                    this.style.display = 'none';
+                    document.getElementById('success').style.display = 'block';
+                } else {
+                    btn.textContent = '送信する';
+                    btn.disabled = false;
+                    alert('送信に失敗しました。直接メールでご連絡ください。');
+                }
+            } catch(err) {
+                btn.textContent = '送信する';
+                btn.disabled = false;
+            }
+        });
+        </script>
+    </div>
+</div>
+</body>
+</html>
