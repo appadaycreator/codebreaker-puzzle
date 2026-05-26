@@ -1256,7 +1256,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('CodeBreaker initialized');
             loadGameState();
             setupEventListeners();
             loadCipher(gameState.currentLevel);
@@ -1330,7 +1329,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 });
             }
 
-            console.log('Event listeners setup complete');
         }
 
         // サイドバー切り替え
@@ -1348,7 +1346,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 overlay.classList.add('active');
             }
             
-            console.log('Sidebar toggled:', !isActive);
         }
 
         // 言語切り替え
@@ -1367,7 +1364,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             });
             
             saveGameState();
-            console.log('Language switched to:', lang);
         }
 
         // フォントサイズ変更
@@ -1385,19 +1381,16 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             document.body.classList.add(`font-${size}`);
             
             saveGameState();
-            console.log('Font size changed to:', size);
         }
 
         // ゲーム開始
         function startGame() {
-            console.log('Game started');
             document.getElementById('game').scrollIntoView({ behavior: 'smooth' });
             loadCipher(gameState.currentLevel);
         }
 
         // チュートリアル表示
         function showTutorial() {
-            console.log('Tutorial shown');
             alert('チュートリアル機能は準備中です！');
         }
 
@@ -1405,7 +1398,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         function loadCipher(level) {
             const cipher = ciphers[level];
             if (!cipher) {
-                console.log('Game complete - no more ciphers');
                 showGameComplete();
                 return;
             }
@@ -1424,7 +1416,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             badge.className = `difficulty-badge difficulty-${cipher.difficulty}`;
             
             updateProgress();
-            console.log('Cipher loaded:', level, cipher);
         }
 
         // 暗号タイプ名取得
@@ -1448,16 +1439,13 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             const userAnswer = document.getElementById('userAnswer').value.trim().toUpperCase();
             const correctAnswer = gameState.currentCipher.decrypted;
             
-            console.log('Answer check:', userAnswer, 'vs', correctAnswer);
             
             if (userAnswer === correctAnswer) {
                 showResult(true);
                 gameState.totalSolved++;
                 updateStats();
-                console.log('Correct answer!');
             } else {
                 showResult(false);
-                console.log('Wrong answer');
             }
         }
 
@@ -1500,7 +1488,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             
             document.getElementById('hintsLeft').textContent = `(${gameState.hintsLeft})`;
             
-            console.log('Hint used:', gameState.hintsUsed, 'Left:', gameState.hintsLeft);
         }
 
         // 暗号スキップ
@@ -1526,7 +1513,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             document.getElementById('progressFill').style.width = `${progressPercent}%`;
             document.getElementById('progressText').textContent = `${currentProgress}/${totalCiphers}`;
             
-            console.log('Progress updated:', currentProgress, '/', totalCiphers);
         }
 
         // 統計更新
@@ -1615,7 +1601,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             loadCipher(1);
             updateUI();
             
-            console.log('Game reset');
             location.reload();
         }
 
@@ -1659,14 +1644,12 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         // ローカルストレージ機能
         function saveGameState() {
             localStorage.setItem('codebreaker-gamestate', JSON.stringify(gameState));
-            console.log('Game state saved');
         }
 
         function loadGameState() {
             const saved = localStorage.getItem('codebreaker-gamestate');
             if (saved) {
                 gameState = { ...gameState, ...JSON.parse(saved) };
-                console.log('Game state loaded:', gameState);
             }
         }
 
@@ -1676,10 +1659,8 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 window.addEventListener('load', function() {
                     navigator.serviceWorker.register('sw.js')
                         .then(function(registration) {
-                            console.log('ServiceWorker registration successful');
                         })
                         .catch(function(err) {
-                            console.log('ServiceWorker registration failed: ', err);
                         });
                 });
             }
@@ -1703,7 +1684,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 
         // パフォーマンス監視
         window.addEventListener('load', function() {
-            console.log('Page loaded in', performance.now(), 'ms');
         });
 
         // エラーハンドリング
@@ -1711,7 +1691,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             console.error('JavaScript error:', e.error);
         });
 
-        console.log('CodeBreaker script loaded successfully');
     </script>
 
     <div style="background:#fff8ee;border:1px solid #fde68a;border-radius:12px;padding:14px;margin:12px;text-align:center;">
