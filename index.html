@@ -378,6 +378,8 @@
             text-shadow: 0 1px 6px rgba(0,0,0,0.35);
         }
 
+        @keyframes cb-shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+        .cb-shake { animation: cb-shake 0.35s ease; }
         @keyframes cipher-glow {
             from { text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
             to { text-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
@@ -1446,6 +1448,9 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 updateStats();
             } else {
                 showResult(false);
+                // K6横展開: 不正解時に入力欄をシェイク
+                const ua = document.getElementById('userAnswer');
+                if (ua) { ua.classList.add('cb-shake'); setTimeout(() => ua.classList.remove('cb-shake'), 350); }
             }
         }
 
