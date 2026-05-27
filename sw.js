@@ -1,4 +1,4 @@
-const CACHE_NAME = 'codebreaker-v1';
+const CACHE_NAME = 'codebreaker-v2';
 const urlsToCache = [
   './',
   './index.html',
