@@ -1506,10 +1506,9 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         }
 
         // 暗号スキップ
-        function skipCipher() {
-            if (confirm('この暗号をスキップしますか？')) {
-                nextCipher();
-            }
+        async function skipCipher() {
+            if (!await showCustomConfirm('この暗号をスキップしますか？')) return;
+            nextCipher();
         }
 
         // 次の暗号
@@ -1790,6 +1789,22 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
   window.showSuccess=function(m){showToast(m,'success');};
   window.showError=function(m){showToast(m,'error');};
   window.showInfo=function(m){showToast(m,'info');};
+  // カスタム確認ダイアログ（confirm代替）
+  window.showCustomConfirm=function(msg){
+    return new Promise(function(resolve){
+      var ov=document.createElement('div');
+      ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;';
+      ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:340px;width:90%;box-shadow:0 10px 40px rgba(0,0,0,0.15);">'+
+        '<p style="margin:0 0 20px;font-size:15px;color:#1f2937;line-height:1.6;">'+msg+'</p>'+
+        '<div style="display:flex;gap:8px;justify-content:flex-end;">'+
+        '<button id="_cc-cancel" style="padding:8px 16px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;cursor:pointer;font-size:14px;">キャンセル</button>'+
+        '<button id="_cc-ok" style="padding:8px 16px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;">OK</button>'+
+        '</div></div>';
+      document.body.appendChild(ov);
+      ov.querySelector('#_cc-ok').addEventListener('click',function(){document.body.removeChild(ov);resolve(true);});
+      ov.querySelector('#_cc-cancel').addEventListener('click',function(){document.body.removeChild(ov);resolve(false);});
+    });
+  };
   // ローディング
   window.showLoading=function(){var el=document.getElementById('loadingOverlay');if(el)el.classList.add('active');};
   window.hideLoading=function(){var el=document.getElementById('loadingOverlay');if(el)el.classList.remove('active');};
