@@ -1742,8 +1742,6 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
   <select name="cb_sel" required><option value="a">A</option><option value="b">B</option></select>
 </div>
 <script>
-window.onerror=function(m,s,l){try{console.error("[cb]",m,s,l);}catch(e){}return false;};
-window.addEventListener("unhandledrejection",function(e){try{console.warn("[cb] unhandled",e.reason);}catch(e){}});
 window.cbSafeGet=function(k,d){try{var v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch(e){return d;}};
 window.cbSafeSet=function(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}};
 window.cbSafeRm=function(k){try{localStorage.removeItem(k);return true;}catch(e){return false;}};
