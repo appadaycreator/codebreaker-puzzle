@@ -41,7 +41,6 @@
         
     <!-- 外部ライブラリ -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -755,7 +754,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                     <span data-lang="en" style="display: none;">Settings</span>
                 </h2>
                 <button class="text-yellow-400 hover:text-yellow-300" id="closeSettingsModal">
-                    <i class="fas fa-times text-xl"></i>
+                    <span class="text-xl">✕</span>
                 </button>
             </div>
             <!-- 言語切り替え -->
@@ -805,7 +804,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 </h3>
                 <div id="achievements">
                     <div class="achievement-badge">
-                        <i class="fas fa-baby"></i>
+                        <span>👶</span>
                         <span data-lang="ja">初心者</span>
                         <span data-lang="en" style="display: none;">Beginner</span>
                     </div>
@@ -814,16 +813,16 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             <!-- シェアボタン -->
             <div class="share-buttons">
                 <button class="share-btn" onclick="shareToTwitter()">
-                    <i class="fab fa-twitter"></i>
+                    <span>𝕏</span>
                 </button>
                 <button class="share-btn" onclick="shareToFacebook()">
-                    <i class="fab fa-facebook"></i>
+                    <span>f</span>
                 </button>
                 <button class="share-btn" onclick="shareToLine()">
-                    <i class="fab fa-line"></i>
+                    <span>💬</span>
                 </button>
                 <button class="share-btn" onclick="copyToClipboard()">
-                    <i class="fas fa-copy"></i>
+                    <span>📋</span>
                 </button>
             </div>
         </div>
@@ -932,7 +931,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 
                 <div id="hintArea" class="hint-box" style="display: none;">
                     <h4 class="font-semibold mb-2">
-                        <i class="fas fa-lightbulb text-yellow-400"></i>
+                        <span class="text-yellow-400">💡</span>
                         <span data-lang="ja">ヒント</span>
                         <span data-lang="en" style="display: none;">Hint</span>
                     </h4>
