@@ -13,7 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#6366F1">
+<meta name="theme-color" content="#ffe066">
     <meta name="description" content="シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。">
     <meta name="keywords" content="暗号解読,パズルゲーム,謎解き,シーザー暗号,論理的思考,無料ゲーム">
     <meta name="robots" content="index, follow">
@@ -579,7 +579,7 @@
                 min-width: 0;
                 max-width: 98vw;
             }
-            img, svg, .fa-key, .fa-star, .fa-trophy, .fa-brain {
+            img, svg {
                 max-width: 48px;
                 height: auto;
             }
@@ -711,7 +711,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-key text-gray-900"></i>
+                        <span style="font-size:1.1rem;line-height:1;">🔑</span>
                     </div>
                     <h1 class="text-xl font-bold orbitron cipher-animation">
                         <span data-lang="ja">コードブレイカー</span>
@@ -1545,29 +1545,29 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             
             if (gameState.totalSolved >= 1) {
                 badges.push({
-                    icon: 'fa-star',
+                    icon: '⭐',
                     name: gameState.language === 'ja' ? '初回解読' : 'First Decode'
                 });
             }
-            
+
             if (gameState.totalSolved >= 5) {
                 badges.push({
-                    icon: 'fa-trophy',
+                    icon: '🏆',
                     name: gameState.language === 'ja' ? '熟練者' : 'Expert'
                 });
             }
-            
+
             if (gameState.hintsUsed === 0 && gameState.totalSolved >= 3) {
                 badges.push({
-                    icon: 'fa-brain',
+                    icon: '🧠',
                     name: gameState.language === 'ja' ? '天才' : 'Genius'
                 });
             }
-            
+
             badges.forEach(badge => {
                 const badgeElement = document.createElement('div');
                 badgeElement.className = 'achievement-badge';
-                badgeElement.innerHTML = `<i class="fas ${badge.icon}"></i> ${badge.name}`;
+                badgeElement.innerHTML = `${badge.icon} ${badge.name}`;
                 achievements.appendChild(badgeElement);
             });
         }
