@@ -696,7 +696,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 @media(max-width:480px){button,[class*=btn]{min-height:48px!important;font-size:15px!important;}input,select,textarea{font-size:16px!important;min-height:44px!important;}[class*=card],[class*=max-w]{padding:16px!important;}}
 </style>
 
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HowTo", "name": "暗号解読パズルの使い方", "step": [{"@type": "HowToStep", "position": 1, "name": "ステップ1", "text": "記録したい項目を入力フォームに入力する"}, {"@type": "HowToStep", "position": 2, "name": "ステップ2", "text": "「追加」または「記録」ボタンをクリックする"}, {"@type": "HowToStep", "position": 3, "name": "ステップ3", "text": "記録一覧で過去のデータを確認する"}, {"@type": "HowToStep", "position": 4, "name": "ステップ4", "text": "グラフや集計で傾向を把握する"}, {"@type": "HowToStep", "position": 5, "name": "ステップ5", "text": "継続的に記録して変化を追跡する"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HowTo", "name": "暗号解読パズルの遊び方", "step": [{"@type": "HowToStep", "position": 1, "name": "暗号文を読む", "text": "画面に表示された暗号文を確認し、難易度バッジで問題レベルを把握する"}, {"@type": "HowToStep", "position": 2, "name": "暗号の種類を推測する", "text": "「暗号タイプを見る」ボタンで暗号の種類を確認し、解読方針を立てる"}, {"@type": "HowToStep", "position": 3, "name": "ヒントを活用する", "text": "わからない場合は「ヒント」ボタンを押して解読のコツを得る（全5回まで）"}, {"@type": "HowToStep", "position": 4, "name": "解読した文章を入力する", "text": "解読した文章を入力フィールドに大文字で入力してEnterキーを押す"}, {"@type": "HowToStep", "position": 5, "name": "次の暗号に挑戦する", "text": "正解したら「次の暗号」ボタンで次のステージへ。全10問クリアを目指そう"}]}</script>
 </head>
 <body class="bg-pattern"><a href="#main" class="sr-only">本文へスキップ</a>
     <!-- Google Tag Manager (noscript) -->
@@ -706,6 +706,22 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 
     <!-- オーバーレイ -->
     <div class="overlay" id="overlay"></div>
+
+    <!-- サイドバー -->
+    <nav class="sidebar" id="sidebar" aria-label="モバイルメニュー">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-yellow-400 font-bold orbitron" style="font-size:1rem;">メニュー</span>
+                <button id="closeSidebar" class="text-gray-400 hover:text-yellow-400 text-xl" aria-label="メニューを閉じる">✕</button>
+            </div>
+            <ul style="list-style:none;padding:0;margin:0;">
+                <li style="margin-bottom:1rem;"><a href="#game" class="text-gray-300 hover:text-yellow-400" style="display:block;padding:0.5rem 0;font-size:1rem;" onclick="toggleSidebar()">🎮 ゲーム</a></li>
+                <li style="margin-bottom:1rem;"><a href="#about" class="text-gray-300 hover:text-yellow-400" style="display:block;padding:0.5rem 0;font-size:1rem;" onclick="toggleSidebar()">🔐 暗号の種類</a></li>
+                <li style="margin-bottom:1rem;"><a href="howto.html" class="text-gray-300 hover:text-yellow-400" style="display:block;padding:0.5rem 0;font-size:1rem;">📖 使い方</a></li>
+                <li style="margin-bottom:1rem;"><a href="contact.html" class="text-gray-300 hover:text-yellow-400" style="display:block;padding:0.5rem 0;font-size:1rem;">📧 お問い合わせ</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- ヘッダー -->
     <header class="bg-gray-900 bg-opacity-80 backdrop-blur-md border-b border-yellow-400 border-opacity-30 sticky top-0 z-50">
@@ -831,6 +847,43 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         <div class="modal-overlay" id="modalOverlay"></div>
     </div>
 
+    <!-- チュートリアルモーダル -->
+    <div id="tutorialModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-semibold orbitron" style="color:#ffe066;">🔐 チュートリアル</h2>
+                <button class="text-yellow-400 hover:text-yellow-300" id="closeTutorialModal"><span class="text-xl">✕</span></button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1rem;">
+                <div class="hint-box">
+                    <h3 class="font-bold mb-2" style="color:#ffe066;">シーザー暗号とは？</h3>
+                    <p style="font-size:0.9rem;">アルファベットを一定の数だけずらす暗号です。</p>
+                    <p style="font-size:0.9rem;margin-top:0.5rem;font-family:monospace;color:#fbbf24;">HELLO → KHOOR（3文字ずらし）</p>
+                    <p style="font-size:0.85rem;margin-top:0.3rem;color:#cbd5e1;">A→D, B→E, C→F … のようにずらします</p>
+                </div>
+                <div class="hint-box">
+                    <h3 class="font-bold mb-2" style="color:#ffe066;">🎮 遊び方</h3>
+                    <ol style="font-size:0.9rem;padding-left:1.2rem;line-height:2;">
+                        <li>画面の暗号文を読む</li>
+                        <li>「暗号タイプを見る」で種類を確認する</li>
+                        <li>「ヒント」ボタンを活用して推理する</li>
+                        <li>解読した文章を入力フィールドに入力（大文字）</li>
+                        <li>「解答チェック」または Enter で判定</li>
+                    </ol>
+                </div>
+                <div class="hint-box">
+                    <h3 class="font-bold mb-2" style="color:#ffe066;">💡 頻度分析のコツ</h3>
+                    <p style="font-size:0.9rem;">英語で最も頻出する文字: <span style="color:#fbbf24;font-weight:bold;">E &gt; T &gt; A &gt; O &gt; I</span></p>
+                    <p style="font-size:0.85rem;margin-top:0.3rem;color:#cbd5e1;">暗号文で一番多く出る文字が E である可能性が高いです。</p>
+                </div>
+            </div>
+            <button class="btn-primary" style="width:100%;margin-top:1.5rem;" onclick="document.getElementById('tutorialModal').style.display='none';startGame();">
+                ゲームを始める！
+            </button>
+        </div>
+        <div class="modal-overlay" onclick="document.getElementById('tutorialModal').style.display='none';"></div>
+    </div>
+
     <!-- メインコンテンツ -->
     <main role="main" class="main-content">
         <!-- ヒーローセクション -->
@@ -873,10 +926,15 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         <section id="game" class="container mx-auto px-4 py-8">
             <div class="game-area">
                 <div class="mb-6">
-                    <h3 class="text-2xl font-bold orbitron mb-4">
-                        <span data-lang="ja">現在の暗号</span>
-                        <span data-lang="en" style="display: none;">Current Cipher</span>
-                    </h3>
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-2xl font-bold orbitron mb-4">
+                            <span data-lang="ja">現在の暗号</span>
+                            <span data-lang="en" style="display: none;">Current Cipher</span>
+                        </h3>
+                        <div id="timerDisplay" style="font-family:monospace;font-size:1.1rem;color:#fbbf24;font-weight:700;background:rgba(30,41,59,0.8);border:1px solid rgba(251,191,36,0.3);border-radius:8px;padding:4px 12px;display:flex;align-items:center;gap:6px;">
+                            ⏱ <span id="timerValue">0:00</span>
+                        </div>
+                    </div>
                     <div class="flex flex-wrap items-center gap-4 mb-4">
                         <span class="difficulty-badge difficulty-easy" id="difficultyBadge">
                             <span data-lang="ja">初級</span>
@@ -1060,19 +1118,19 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                             <span data-lang="en" style="display: none;">Links</span>
                         </h4>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                            <li><a href="howto.html" class="text-gray-400 hover:text-yellow-400">
                                 <span data-lang="ja">使い方</span>
                                 <span data-lang="en" style="display: none;">How to Play</span>
                             </a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                            <li><a href="terms.html" class="text-gray-400 hover:text-yellow-400">
                                 <span data-lang="ja">利用規約</span>
                                 <span data-lang="en" style="display: none;">Terms of Service</span>
                             </a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                            <li><a href="privacy-policy.html" class="text-gray-400 hover:text-yellow-400">
                                 <span data-lang="ja">プライバシーポリシー</span>
                                 <span data-lang="en" style="display: none;">Privacy Policy</span>
                             </a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-yellow-400">
+                            <li><a href="contact.html" class="text-gray-400 hover:text-yellow-400">
                                 <span data-lang="ja">お問い合わせ</span>
                                 <span data-lang="en" style="display: none;">Contact</span>
                             </a></li>
@@ -1098,7 +1156,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 </div>
                 
                 <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
-                    <p>&copy; 2024 CodeBreaker. All rights reserved. Created by AppADayCreator</p>
+                    <p>&copy; 2026 CodeBreaker. All rights reserved. Created by AppADayCreator</p>
                 </div>
             </div>
         <div style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:12px 16px;margin:0;font-size:11px;color:#64748b;text-align:center;line-height:1.7;">
@@ -1138,11 +1196,11 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
   <h2 id="faq-h" style="font-size:1.15rem;font-weight:700;margin-bottom:10px;border-left:4px solid #7c3aed;padding-left:10px;">よくある質問</h2>
   <dl style="line-height:1.8;">
     <dt style="font-weight:600;margin-top:12px;">Q: 暗号解読パズルは無料ですか？</dt>
-    <dd style="margin-left:16px;color:#374151;">はい、完全無料・登録不要でご利用いただけます。</dd>
+    <dd style="margin-left:16px;color:#d1d5db;">はい、完全無料・登録不要でご利用いただけます。</dd>
     <dt style="font-weight:600;margin-top:12px;">Q: スマートフォンでも使えますか？</dt>
-    <dd style="margin-left:16px;color:#374151;">はい、PC・スマートフォン・タブレットすべてに対応しています。</dd>
+    <dd style="margin-left:16px;color:#d1d5db;">はい、PC・スマートフォン・タブレットすべてに対応しています。</dd>
     <dt style="font-weight:600;margin-top:12px;">Q: 入力データはサーバーに送信されますか？</dt>
-    <dd style="margin-left:16px;color:#374151;">いいえ。すべての処理はブラウザ内で完結し、データの外部送信は行いません。</dd>
+    <dd style="margin-left:16px;color:#d1d5db;">いいえ。すべての処理はブラウザ内で完結し、データの外部送信は行いません。</dd>
   </dl>
 </section></main>
 
@@ -1158,6 +1216,34 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             fontSize: 'md',
             progress: 0
         };
+
+        // タイマー管理
+        let timerInterval = null;
+        let timerSeconds = 0;
+
+        function startTimer() {
+            stopTimer();
+            timerSeconds = 0;
+            updateTimerDisplay();
+            timerInterval = setInterval(function() {
+                timerSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            const el = document.getElementById('timerValue');
+            if (el) el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
 
         // 暗号データ
         const ciphers = {
@@ -1194,9 +1280,9 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             },
             5: {
                 type: 'reverse',
-                encrypted: 'YGOLYPTOCRC',
+                encrypted: 'YGOLOTPYRC',
                 decrypted: 'CRYPTOLOGY',
-                hint: '文字が逆順になっています',
+                hint: '文字が逆順になっています。暗号文を後ろから読んでみてください',
                 difficulty: 'easy'
             },
             6: {
@@ -1208,9 +1294,9 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             },
             7: {
                 type: 'vigenere',
-                encrypted: 'LFSZI FZQZQZQ',
-                decrypted: 'HAPPY BIRTHDAY',
-                hint: 'キーワード「KEY」でヴィジュネル暗号化されています',
+                encrypted: 'MSBO FPOEIOV',
+                decrypted: 'CODE BREAKER',
+                hint: 'キーワード「KEY」でヴィジュネル暗号化されています。各文字をK=10,E=4,Y=24だけ逆方向にずらしてください',
                 difficulty: 'hard'
             },
             8: {
@@ -1323,6 +1409,12 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 }
             });
 
+            // チュートリアルモーダルクローズ
+            const closeTutorialModal = document.getElementById('closeTutorialModal');
+            if (closeTutorialModal) closeTutorialModal.addEventListener('click', function() {
+                document.getElementById('tutorialModal').style.display = 'none';
+            });
+
             // 暗号タイプアコーディオン
             const toggleTypeBtn = document.getElementById('toggleTypeBtn');
             const cipherTypeArea = document.getElementById('cipherTypeArea');
@@ -1405,7 +1497,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 
         // チュートリアル表示
         function showTutorial() {
-            alert('チュートリアル機能は準備中です！');
+            document.getElementById('tutorialModal').style.display = 'flex';
         }
 
         // 暗号読み込み
@@ -1417,19 +1509,20 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             }
 
             gameState.currentCipher = cipher;
-            
+
             // UI更新
             document.getElementById('cipherText').textContent = cipher.encrypted;
             document.getElementById('cipherType').textContent = getCipherTypeName(cipher.type);
             document.getElementById('userAnswer').value = '';
             document.getElementById('hintArea').style.display = 'none';
             document.getElementById('resultArea').style.display = 'none';
-            
+
             // 難易度バッジ更新
             const badge = document.getElementById('difficultyBadge');
             badge.className = `difficulty-badge difficulty-${cipher.difficulty}`;
-            
+
             updateProgress();
+            startTimer();
         }
 
         // 暗号タイプ名取得
@@ -1452,18 +1545,33 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         function checkAnswer() {
             const userAnswer = document.getElementById('userAnswer').value.trim().toUpperCase();
             const correctAnswer = gameState.currentCipher.decrypted;
-            
-            
+
             if (userAnswer === correctAnswer) {
+                stopTimer();
                 showResult(true);
                 gameState.totalSolved++;
                 updateStats();
             } else {
                 showResult(false);
-                // K6横展開: 不正解時に入力欄をシェイク
                 const ua = document.getElementById('userAnswer');
                 if (ua) { ua.classList.add('cb-shake'); setTimeout(() => ua.classList.remove('cb-shake'), 350); }
             }
+        }
+
+        // 暗号の解説文を取得
+        function getCipherExplanation(type) {
+            const explanations = {
+                caesar: 'シーザー暗号: アルファベットを一定数ずらす古典的な暗号。Julius Caesarが使用したことで有名。',
+                substitution: '換字式暗号: 各文字を別の文字に置き換える暗号。鍵となる対応表が必要。',
+                morse: 'モールス信号: 点(.)と線(-)の組み合わせで文字を表す通信方式。19世紀から利用されている。',
+                reverse: '逆順暗号: 文字列を逆向きに並べるだけのシンプルな暗号。一番わかりやすい暗号のひとつ。',
+                anagram: 'アナグラム: 文字の順番を入れ替える暗号。同じ文字セットで別の意味になる。',
+                vigenere: 'ヴィジュネル暗号: キーワードを使ってシーザー暗号を複数組み合わせた暗号。16世紀に考案された。',
+                number: '数字変換: A=1, B=2... と数字で文字を表す暗号。単純だが見た目が大きく変わる。',
+                base64: 'Base64: バイナリデータをASCII文字で表現するエンコード方式。現代のWebでも広く使われる。',
+                rot13: 'ROT13: アルファベットを13文字ずらすシーザー暗号の特殊版。同じ操作で暗号化・復号できる。'
+            };
+            return explanations[type] || '';
         }
 
         // 結果表示
@@ -1472,17 +1580,25 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             const resultIcon = document.getElementById('resultIcon');
             const resultTitle = document.getElementById('resultTitle');
             const resultMessage = document.getElementById('resultMessage');
-            
+
             if (isCorrect) {
+                const mins = Math.floor(timerSeconds / 60);
+                const secs = timerSeconds % 60;
+                const timeStr = mins > 0 ? `${mins}分${secs}秒` : `${secs}秒`;
                 resultIcon.textContent = '🎉';
                 resultTitle.textContent = translations[gameState.language]['correct_answer'];
-                resultMessage.textContent = translations[gameState.language]['congratulations'];
+                const explanation = getCipherExplanation(gameState.currentCipher.type);
+                resultMessage.innerHTML = `
+                    <span style="color:#fbbf24;font-weight:700;">⏱ ${timeStr}で解読！</span><br>
+                    <span style="font-size:0.9rem;color:#cbd5e1;display:block;margin-top:0.5rem;">正解: <strong style="color:#4ade80;font-family:monospace;">${gameState.currentCipher.decrypted}</strong></span>
+                    ${explanation ? `<span style="font-size:0.8rem;color:#94a3b8;display:block;margin-top:0.5rem;">💡 ${explanation}</span>` : ''}
+                `;
             } else {
                 resultIcon.textContent = '😞';
                 resultTitle.textContent = translations[gameState.language]['wrong_answer'];
                 resultMessage.textContent = translations[gameState.language]['try_again'];
             }
-            
+
             resultArea.style.display = 'block';
             resultArea.scrollIntoView({ behavior: 'smooth' });
         }
@@ -1510,6 +1626,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         // 暗号スキップ
         async function skipCipher() {
             if (!await showCustomConfirm('この暗号をスキップしますか？')) return;
+            stopTimer();
             nextCipher();
         }
 
@@ -1575,6 +1692,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 
         // ゲーム完了
         function showGameComplete() {
+            stopTimer();
             const gameArea = document.querySelector('.game-area');
             gameArea.innerHTML = `
                 <div class="text-center">
@@ -1731,7 +1849,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 <a class="js-track-affiliate" href="https://www.amazon.co.jp/s?k=謎解き+パズル+暗号+本&tag=appadaycrea0f-22" target="_blank" rel="noopener" style="background:#16a34a;color:#fff;padding:8px 14px;border-radius:8px;font-size:0.82em;font-weight:bold;text-decoration:none;" data-platform="Amazon" data-item-name="謎解きパズル暗号" data-link-type="affiliate_link">📚 Amazon関連書籍を見る →</a><a class="js-track-affiliate" href="https://www.amazon.co.jp/s?k=謎解き+パズル+暗号+本&tag=appadaycrea0f-22" target="_blank" rel="noopener" style="background:#0369a1;color:#fff;padding:8px 14px;border-radius:8px;font-size:0.82em;font-weight:bold;text-decoration:none;" data-platform="Amazon" data-item-name="謎解きパズル暗号" data-link-type="affiliate_link">📚 おすすめ商品を見る →</a></div>
 </div>
 <div id="page-loader-cb" class="loading" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.95);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;">
-  <div class="spinner" style="width:40px;height:40px;border:4px solid #e5e7eb;border-top-color:#7c3aed;border-radius:50%;animation:spin-cb 0.8s linear infinite;"></div>
+  <div class="spinner" style="width:40px;height:40px;border:4px solid #e5e7eb;border-top-color:#10b981;border-radius:50%;animation:spin-cb 0.8s linear infinite;"></div>
   <p class="loading-text" style="margin-top:12px;font-size:0.85rem;color:#6b7280;">読み込み中...</p>
 </div>
 <div class="skeleton" style="display:none;height:3px;background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%);background-size:200% 100%;animation:skeleton-cb 1.5s infinite;"></div>
@@ -1769,7 +1887,7 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
 .toast-info{background:#7c3aed;}
 .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;opacity:0;pointer-events:none;transition:opacity 0.2s;}
 .loading-overlay.active{opacity:1;pointer-events:all;}
-.loading-spinner{width:40px;height:40px;border:3px solid #e5e7eb;border-top-color:#7c3aed;border-radius:50%;animation:spin 0.7s linear infinite;}
+.loading-spinner{width:40px;height:40px;border:3px solid #e5e7eb;border-top-color:#10b981;border-radius:50%;animation:spin 0.7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 </style>
 <div class="toast-container" id="toastContainer"></div>
@@ -1861,8 +1979,8 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
       <a href="https://appadaycreator.com/chemical-quest/" class="block text-sm text-indigo-600 hover:underline py-1">→ 化学式パズル元素記号で遊んで理科が得意になる</a>
     </div>
     <!-- rakuten-affiliate-block -->
-    <div class="card p-4 mb-4 text-center" style="border:1px solid #BF0000;background:#fff9f9;">
-      <p class="text-sm text-gray-600 mb-2">🛒 関連商品を楽天市場で探す</p>
+    <div class="card" style="border:1px solid #BF0000;background:#fff9f9;padding:16px;margin-bottom:16px;text-align:center;">
+      <p style="font-size:0.85rem;color:#4b5563;margin-bottom:8px;">🛒 関連商品を楽天市場で探す</p>
       <a href="https://hb.afl.rakuten.co.jp/ichiba/541ad0d2.ce2bed12.541ad0d3.a1a2318c/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2Fcodebreaker%2520%25E3%2582%25B2%25E3%2583%25BC%25E3%2583%25A0%2F&link_type=text" target="_blank" rel="nofollow sponsored noopener"
          style="display:inline-block;background:#BF0000;color:white;padding:10px 24px;border-radius:8px;font-weight:bold;font-size:14px;text-decoration:none;">
         楽天市場で「codebreaker ゲーム」を検索 →
