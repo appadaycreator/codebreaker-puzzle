@@ -13,7 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ffe066">
+<meta name="theme-color" content="#0f172a">
     <meta name="description" content="シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。">
     <meta name="keywords" content="暗号解読,パズルゲーム,謎解き,シーザー暗号,論理的思考,無料ゲーム">
     <meta name="robots" content="index, follow">
@@ -1782,9 +1782,14 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             document.getElementById('hintArea').style.display = 'none';
             document.getElementById('resultArea').style.display = 'none';
 
-            // 難易度バッジ更新
+            // 難易度バッジ更新（クラスとテキストの両方を更新）
             const badge = document.getElementById('difficultyBadge');
             badge.className = `difficulty-badge difficulty-${cipher.difficulty}`;
+            const diffNames = { easy: {ja:'初級', en:'Easy'}, medium: {ja:'中級', en:'Medium'}, hard: {ja:'上級', en:'Hard'} };
+            const badgeJa = badge.querySelector('[data-lang="ja"]');
+            const badgeEn = badge.querySelector('[data-lang="en"]');
+            if (badgeJa && diffNames[cipher.difficulty]) badgeJa.textContent = diffNames[cipher.difficulty].ja;
+            if (badgeEn && diffNames[cipher.difficulty]) badgeEn.textContent = diffNames[cipher.difficulty].en;
 
             updateProgress();
             updateLevelSelect();
@@ -1924,24 +1929,35 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             resultArea.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ヒント表示
+        // ヒント表示（段階的）
         function getHint() {
             if (gameState.hintsLeft <= 0) {
-                alert(translations[gameState.language]['no_hints_left']);
+                if (typeof showToast === 'function') {
+                    showToast(translations[gameState.language]['no_hints_left'], 'error');
+                } else {
+                    alert(translations[gameState.language]['no_hints_left']);
+                }
                 return;
             }
-            
+
+            // デクリメント前のインデックスで段階的ヒントを選択
+            const hintIndex = 3 - gameState.hintsLeft;
             gameState.hintsLeft--;
             gameState.hintsUsed++;
-            
+
             const hintArea = document.getElementById('hintArea');
             const hintText = document.getElementById('hintText');
-            
-            hintText.textContent = gameState.currentCipher.hint;
+
+            // hints[] 配列があれば段階的に表示、なければ hint にフォールバック
+            const cipher = gameState.currentCipher;
+            const hintMessage = (cipher.hints && cipher.hints[hintIndex])
+                ? cipher.hints[hintIndex]
+                : cipher.hint;
+
+            hintText.textContent = hintMessage;
             hintArea.style.display = 'block';
-            
+
             document.getElementById('hintsLeft').textContent = `(${gameState.hintsLeft})`;
-            
         }
 
         // レベル選択セレクトボックスの更新
@@ -2217,7 +2233,7 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8427583028015858" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-<section style="max-width:800px;margin:0 auto 14px;padding:12px;background:#f0f9ff;border-radius:12px;"><h2 style="font-size:0.85rem;font-weight:bold;color:#0369a1;margin-bottom:8px;text-align:center;">🔐 パズル・プログラミングサービス</h2><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"><a href="https://appadaycreator.com/nanpure-quest/" style="background:#fff;border:2px solid #bae6fd;border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#0369a1'" onmouseout="this.style.borderColor='#bae6fd'"><div style="font-size:1.2rem;">🔢</div><div style="font-size:0.72rem;font-weight:bold;color:#374151;margin-top:2px;">数独ゲーム</div></a><a href="https://appadaycreator.com/chemical-quest/" style="background:#fff;border:2px solid #bae6fd;border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#0369a1'" onmouseout="this.style.borderColor='#bae6fd'"><div style="font-size:1.2rem;">🔬</div><div style="font-size:0.72rem;font-weight:bold;color:#374151;margin-top:2px;">化学クエスト</div></a><a href="https://appadaycreator.com/math-maze-puzzle/" style="background:#fff;border:2px solid #bae6fd;border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#0369a1'" onmouseout="this.style.borderColor='#bae6fd'"><div style="font-size:1.2rem;">🧮</div><div style="font-size:0.72rem;font-weight:bold;color:#374151;margin-top:2px;">計算ゲーム</div></a></div></section>
+<section style="max-width:800px;margin:0 auto 14px;padding:12px;background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.3);border-radius:12px;"><h2 style="font-size:0.85rem;font-weight:bold;color:#fbbf24;margin-bottom:8px;text-align:center;">🔐 パズル・プログラミングサービス</h2><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"><a href="https://appadaycreator.com/nanpure-quest/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🔢</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">数独ゲーム</div></a><a href="https://appadaycreator.com/chemical-quest/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🔬</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">化学クエスト</div></a><a href="https://appadaycreator.com/math-maze-puzzle/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🧮</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">計算ゲーム</div></a></div></section>
 <div style="text-align:center;margin:14px auto;max-width:800px;padding:0 16px;">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8427583028015858" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -2336,7 +2352,8 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
 'use strict';
 function init(){
   // ローディング状態
-  document.querySelectorAll('button:not([type=reset]):not([data-ux]),input[type=submit]').forEach(function(b){
+  // onclick属性を持つゲームボタンは即時応答のため除外
+  document.querySelectorAll('button:not([type=reset]):not([data-ux]):not([onclick]),input[type=submit]').forEach(function(b){
     b.dataset.ux='1';
     var orig=b.tagName==='BUTTON'?b.textContent:(b.value||'実行');
     b.addEventListener('click',function(){
