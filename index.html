@@ -380,6 +380,8 @@
 
         @keyframes cb-shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
         .cb-shake { animation: cb-shake 0.35s ease; }
+        @keyframes cb-success-flash { 0%{border-color:var(--success-green);box-shadow:0 0 0 3px rgba(16,185,129,0.3);background:rgba(16,185,129,0.1);} 100%{border-color:rgba(251,191,36,0.3);box-shadow:none;background:rgba(30,41,59,0.8);} }
+        .cb-success { animation: cb-success-flash 0.8s ease forwards; }
         @keyframes cipher-glow {
             from { text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
             to { text-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
@@ -756,6 +758,10 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                     </a>
                 </nav>
                 
+                <!-- 設定ボタン -->
+                <button id="openSettingsModal" class="settings-btn mr-2" aria-label="設定・統計を開く" title="設定・統計">
+                    ⚙️ <span class="hidden md:inline text-sm">統計</span>
+                </button>
                 <!-- ハンバーガーメニュー -->
                 <div class="hamburger md:hidden" id="hamburger">
                     <span></span>
@@ -928,6 +934,15 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         <!-- ゲームエリア -->
         <section id="game" class="container mx-auto px-4 py-8">
             <div class="game-area">
+                <!-- レベル選択 -->
+                <div class="mb-4 flex items-center gap-3 flex-wrap">
+                    <label class="text-sm text-gray-400 font-semibold" for="levelSelect">
+                        <span data-lang="ja">レベル選択:</span>
+                        <span data-lang="en" style="display:none;">Level:</span>
+                    </label>
+                    <select id="levelSelect" class="cipher-input" style="width:auto;font-family:'Noto Sans JP',sans-serif;font-size:14px;padding:6px 10px;" aria-label="レベル選択">
+                    </select>
+                </div>
                 <div class="mb-6">
                     <div class="flex justify-between items-start">
                         <h3 class="text-2xl font-bold orbitron mb-4">
@@ -1006,7 +1021,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                         <div class="text-4xl mb-4" id="resultIcon">🎉</div>
                         <h3 class="text-2xl font-bold mb-2" id="resultTitle">正解！</h3>
                         <p class="text-gray-300 mb-4" id="resultMessage">よくできました！</p>
-                        <button class="btn-primary" onclick="nextCipher()">
+                        <button class="btn-primary" id="nextCipherBtn" onclick="nextCipher()">
                             <span data-lang="ja">次の暗号</span>
                             <span data-lang="en" style="display: none;">Next Cipher</span>
                         </button>
@@ -1146,11 +1161,11 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                             <span data-lang="en" style="display: none;">Recommended</span>
                         </h4>
                         <div class="space-y-2 text-sm">
-                            <a href="#" class="block text-gray-400 hover:text-yellow-400">
+                            <a href="https://www.amazon.co.jp/s?k=謎解き+推理小説&tag=appadaycrea0f-22" target="_blank" rel="noopener" class="block text-gray-400 hover:text-yellow-400 js-track-affiliate" data-platform="Amazon" data-item-name="謎解き推理小説" data-link-type="affiliate_link">
                                 <span data-lang="ja">謎解き本・推理小説</span>
                                 <span data-lang="en" style="display: none;">Mystery Books</span>
                             </a>
-                            <a href="#" class="block text-gray-400 hover:text-yellow-400">
+                            <a href="https://www.amazon.co.jp/s?k=パズル+脳トレ+ゲーム&tag=appadaycrea0f-22" target="_blank" rel="noopener" class="block text-gray-400 hover:text-yellow-400 js-track-affiliate" data-platform="Amazon" data-item-name="パズル脳トレ" data-link-type="affiliate_link">
                                 <span data-lang="ja">パズル・脳トレグッズ</span>
                                 <span data-lang="en" style="display: none;">Puzzle Games</span>
                             </a>
@@ -1360,9 +1375,11 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
             loadGameState();
+            if (!gameState.clearedLevels) gameState.clearedLevels = [];
             setupEventListeners();
             loadCipher(gameState.currentLevel);
             updateUI();
+            updateLevelSelect();
             registerServiceWorker();
         });
 
@@ -1417,6 +1434,16 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             if (closeTutorialModal) closeTutorialModal.addEventListener('click', function() {
                 document.getElementById('tutorialModal').style.display = 'none';
             });
+
+            // レベル選択
+            const levelSelect = document.getElementById('levelSelect');
+            if (levelSelect) {
+                levelSelect.addEventListener('change', function() {
+                    gameState.currentLevel = parseInt(this.value);
+                    loadCipher(gameState.currentLevel);
+                    saveGameState();
+                });
+            }
 
             // 暗号タイプアコーディオン
             const toggleTypeBtn = document.getElementById('toggleTypeBtn');
@@ -1513,10 +1540,16 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 
             gameState.currentCipher = cipher;
 
+            // ヒントを問題ごとにリセット
+            gameState.hintsLeft = 3;
+            document.getElementById('hintsLeft').textContent = '(3)';
+
             // UI更新
             document.getElementById('cipherText').textContent = cipher.encrypted;
             document.getElementById('cipherType').textContent = getCipherTypeName(cipher.type);
-            document.getElementById('userAnswer').value = '';
+            const ua = document.getElementById('userAnswer');
+            ua.value = '';
+            ua.classList.remove('cb-success', 'cb-shake');
             document.getElementById('hintArea').style.display = 'none';
             document.getElementById('resultArea').style.display = 'none';
 
@@ -1525,6 +1558,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             badge.className = `difficulty-badge difficulty-${cipher.difficulty}`;
 
             updateProgress();
+            updateLevelSelect();
             startTimer();
         }
 
@@ -1546,19 +1580,50 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 
         // 解答チェック
         function checkAnswer() {
-            const userAnswer = document.getElementById('userAnswer').value.trim().toUpperCase();
+            const userAnswerEl = document.getElementById('userAnswer');
+            const userAnswer = userAnswerEl.value.trim().toUpperCase();
             const correctAnswer = gameState.currentCipher.decrypted;
 
             if (userAnswer === correctAnswer) {
                 stopTimer();
-                showResult(true);
+                // 正解フラッシュ
+                userAnswerEl.classList.remove('cb-shake');
+                userAnswerEl.classList.add('cb-success');
+                setTimeout(() => userAnswerEl.classList.remove('cb-success'), 800);
+                // ベストタイム保存
+                saveBestTime(gameState.currentLevel, timerSeconds);
                 gameState.totalSolved++;
+                // クリア済みレベルを記録
+                if (!gameState.clearedLevels) gameState.clearedLevels = [];
+                if (!gameState.clearedLevels.includes(gameState.currentLevel)) {
+                    gameState.clearedLevels.push(gameState.currentLevel);
+                }
+                saveGameState();
                 updateStats();
+                showResult(true);
             } else {
                 showResult(false);
-                const ua = document.getElementById('userAnswer');
-                if (ua) { ua.classList.add('cb-shake'); setTimeout(() => ua.classList.remove('cb-shake'), 350); }
+                userAnswerEl.classList.remove('cb-success');
+                userAnswerEl.classList.add('cb-shake');
+                setTimeout(() => userAnswerEl.classList.remove('cb-shake'), 350);
             }
+        }
+
+        // ベストタイム保存
+        function saveBestTime(level, seconds) {
+            const key = `codebreaker-best-${level}`;
+            const prev = localStorage.getItem(key);
+            if (prev === null || seconds < parseInt(prev)) {
+                localStorage.setItem(key, String(seconds));
+                return true; // 新記録
+            }
+            return false;
+        }
+
+        // ベストタイム取得
+        function getBestTime(level) {
+            const v = localStorage.getItem(`codebreaker-best-${level}`);
+            return v !== null ? parseInt(v) : null;
         }
 
         // 暗号の解説文を取得
@@ -1583,23 +1648,31 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             const resultIcon = document.getElementById('resultIcon');
             const resultTitle = document.getElementById('resultTitle');
             const resultMessage = document.getElementById('resultMessage');
+            const nextBtn = document.getElementById('nextCipherBtn');
 
             if (isCorrect) {
                 const mins = Math.floor(timerSeconds / 60);
                 const secs = timerSeconds % 60;
                 const timeStr = mins > 0 ? `${mins}分${secs}秒` : `${secs}秒`;
-                resultIcon.textContent = '🎉';
+                const isNewRecord = saveBestTime(gameState.currentLevel, timerSeconds);
+                const best = getBestTime(gameState.currentLevel);
+                const bestStr = best !== null ? (best >= 60 ? `${Math.floor(best/60)}分${best%60}秒` : `${best}秒`) : '-';
+                resultIcon.textContent = isNewRecord ? '🏆' : '🎉';
                 resultTitle.textContent = translations[gameState.language]['correct_answer'];
                 const explanation = getCipherExplanation(gameState.currentCipher.type);
                 resultMessage.innerHTML = `
-                    <span style="color:#fbbf24;font-weight:700;">⏱ ${timeStr}で解読！</span><br>
+                    <span style="color:#fbbf24;font-weight:700;">⏱ ${timeStr}で解読！</span>
+                    ${isNewRecord ? '<span style="color:#4ade80;font-weight:700;margin-left:8px;">🏅 新記録！</span>' : `<span style="font-size:0.85rem;color:#94a3b8;margin-left:8px;">ベスト: ${bestStr}</span>`}<br>
                     <span style="font-size:0.9rem;color:#cbd5e1;display:block;margin-top:0.5rem;">正解: <strong style="color:#4ade80;font-family:monospace;">${gameState.currentCipher.decrypted}</strong></span>
                     ${explanation ? `<span style="font-size:0.8rem;color:#94a3b8;display:block;margin-top:0.5rem;">💡 ${explanation}</span>` : ''}
                 `;
+                if (nextBtn) nextBtn.style.display = 'inline-block';
             } else {
                 resultIcon.textContent = '😞';
                 resultTitle.textContent = translations[gameState.language]['wrong_answer'];
                 resultMessage.textContent = translations[gameState.language]['try_again'];
+                // 不正解時は「次の暗号」ボタンを非表示
+                if (nextBtn) nextBtn.style.display = 'none';
             }
 
             resultArea.style.display = 'block';
@@ -1624,6 +1697,24 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             
             document.getElementById('hintsLeft').textContent = `(${gameState.hintsLeft})`;
             
+        }
+
+        // レベル選択セレクトボックスの更新
+        function updateLevelSelect() {
+            const sel = document.getElementById('levelSelect');
+            if (!sel) return;
+            const total = Object.keys(ciphers).length;
+            const cleared = gameState.clearedLevels || [];
+            sel.innerHTML = '';
+            for (let i = 1; i <= total; i++) {
+                const opt = document.createElement('option');
+                const isCleared = cleared.includes(i);
+                const diffLabel = ciphers[i] ? ({'easy':'初級','medium':'中級','hard':'上級'}[ciphers[i].difficulty] || '') : '';
+                opt.value = i;
+                opt.textContent = `Lv.${i} ${diffLabel}${isCleared ? ' ✓' : ''}`;
+                if (i === gameState.currentLevel) opt.selected = true;
+                sel.appendChild(opt);
+            }
         }
 
         // 暗号スキップ
@@ -1731,13 +1822,11 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
             gameState.currentLevel = 1;
             gameState.totalSolved = 0;
             gameState.hintsUsed = 0;
-            gameState.hintsLeft = 5;
+            gameState.hintsLeft = 3;
             gameState.progress = 0;
-            
+            gameState.clearedLevels = [];
+
             saveGameState();
-            loadCipher(1);
-            updateUI();
-            
             location.reload();
         }
 
