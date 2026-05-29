@@ -4,7 +4,7 @@
   "description": "暗号解読パズルゲーム CodeBreaker",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#ffe066",
   "theme_color": "#ffe066",
   "icons": [
     {
