@@ -1487,13 +1487,13 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             3: {
                 type: 'substitution',
                 key: {'S': 'Q', 'E': 'R', 'C': 'D', 'R': 'S', 'T': 'U', 'O': 'P', 'D': 'E'},
-                encrypted: 'QRDSU DPRSR',
+                encrypted: 'QRDSRU DPER',
                 decrypted: 'SECRET CODE',
                 hint: 'S→Q, E→R, C→D, R→S, T→U, O→P, D→E のように文字が置き換わっています',
                 hints: [
                     '換字式暗号です。各文字が特定のルールで別の文字に一対一で置き換わっています',
-                    'Q=S, R=E という対応になっています。最初の単語 QRDSU を1文字ずつ解読してみましょう',
-                    '答えは「SECRET CODE」。対応表: Q→S, R→E, D→C, S→R, U→T, P→O, R→R'
+                    'Q=S, R=E という対応になっています。最初の単語 QRDSRU を1文字ずつ解読してみましょう',
+                    '復号: Q→S, R→E, D→C, S→R, R→E, U→T（QRDSRU→SECRET） / D→C, P→O, E→D, R→E（DPER→CODE）'
                 ],
                 difficulty: 'medium'
             },
@@ -1763,6 +1763,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     gameState.currentLevel = parseInt(this.value);
                     loadCipher(gameState.currentLevel);
                     saveGameState();
+                    document.getElementById('game').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             }
 
@@ -2240,12 +2241,24 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             }
             const starRating = totalStars + '/' + maxStars + ' ' + renderStars(Math.round(totalStars / totalCiphers));
 
+            // ベストタイム合計計算
+            let totalBestSeconds = 0;
+            let allHaveBest = true;
+            for (let i = 1; i <= totalCiphers; i++) {
+                const b = getBestTime(i);
+                if (b !== null) totalBestSeconds += b;
+                else allHaveBest = false;
+            }
+            const totalBestStr = allHaveBest
+                ? (totalBestSeconds >= 60 ? `${Math.floor(totalBestSeconds / 60)}分${totalBestSeconds % 60}秒` : `${totalBestSeconds}秒`)
+                : `${Math.floor(totalBestSeconds / 60)}分${totalBestSeconds % 60}秒+`;
+
             gameArea.innerHTML = `
                 <div class="text-center">
                     <div class="text-6xl mb-6">🏆</div>
                     <h2 class="text-3xl font-bold orbitron mb-4">${translations[gameState.language]['game_complete']}</h2>
                     <p class="text-xl text-gray-300 mb-4">すべての暗号を解読しました！</p>
-                    <div class="stats-grid grid grid-cols-3 gap-4 mb-6">
+                    <div class="stats-grid grid grid-cols-2 gap-4 mb-6" style="max-width:420px;margin:0 auto 1.5rem;">
                         <div class="stats-card">
                             <div class="text-2xl font-bold text-yellow-400">${gameState.totalSolved}</div>
                             <div class="text-sm text-gray-400">解読済み</div>
@@ -2257,6 +2270,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                         <div class="stats-card">
                             <div class="text-xl font-bold text-yellow-400">${totalStars}</div>
                             <div class="text-sm text-gray-400">★ 合計</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="text-base font-bold text-yellow-400" style="font-family:monospace;">⏱ ${totalBestStr}</div>
+                            <div class="text-sm text-gray-400">合計ベスト</div>
                         </div>
                     </div>
                     <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;">
@@ -2288,6 +2305,13 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             gameState.hintsLeft = 3;
             gameState.progress = 0;
             gameState.clearedLevels = [];
+
+            // ベストタイム・スター評価をLocalStorageから完全削除
+            const totalCiphers = Object.keys(ciphers).length;
+            for (let i = 1; i <= totalCiphers; i++) {
+                localStorage.removeItem(`codebreaker-best-${i}`);
+                localStorage.removeItem(`codebreaker-stars-${i}`);
+            }
 
             saveGameState();
             location.reload();
