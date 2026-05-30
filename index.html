@@ -892,6 +892,14 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <p style="font-size:0.9rem;">英語で最も頻出する文字: <span style="color:#fbbf24;font-weight:bold;">E &gt; T &gt; A &gt; O &gt; I</span></p>
                     <p style="font-size:0.85rem;margin-top:0.3rem;color:#cbd5e1;">暗号文で一番多く出る文字が E である可能性が高いです。</p>
                 </div>
+                <div class="hint-box">
+                    <h3 class="font-bold mb-2" style="color:#ffe066;">⌨️ キーボードショートカット</h3>
+                    <table style="font-size:0.85rem;width:100%;border-collapse:collapse;">
+                        <tr><td style="padding:3px 8px;color:#fbbf24;font-family:monospace;font-weight:bold;">Enter</td><td style="padding:3px 8px;color:#cbd5e1;">解答チェック</td></tr>
+                        <tr><td style="padding:3px 8px;color:#fbbf24;font-family:monospace;font-weight:bold;">H</td><td style="padding:3px 8px;color:#cbd5e1;">ヒントを表示</td></tr>
+                        <tr><td style="padding:3px 8px;color:#fbbf24;font-family:monospace;font-weight:bold;">ESC</td><td style="padding:3px 8px;color:#cbd5e1;">モーダルを閉じる</td></tr>
+                    </table>
+                </div>
             </div>
             <button class="btn-primary" style="width:100%;margin-top:1.5rem;" onclick="document.getElementById('tutorialModal').style.display='none';startGame();">
                 ゲームを始める！
@@ -1216,36 +1224,81 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             </div>
         </section>
 
-        <!-- Coming Soon セクション -->
-        <section class="container mx-auto px-4 py-12">
+        <!-- 暗号攻略ガイドセクション -->
+        <section class="container mx-auto px-4 py-12" id="guide">
             <h2 class="text-3xl font-bold orbitron mb-8 text-center">
-                <span data-lang="ja">近日公開予定</span>
-                <span data-lang="en" style="display: none;">Coming Soon</span>
+                <span data-lang="ja">暗号攻略ガイド</span>
+                <span data-lang="en" style="display: none;">Cipher Strategy Guide</span>
             </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="cipher-card p-6 rounded-lg opacity-50">
-                    <div class="text-2xl mb-4">🏆</div>
-                    <h3 class="text-xl font-semibold mb-2">
-                        <span data-lang="ja">対戦モード</span>
-                        <span data-lang="en" style="display: none;">Battle Mode</span>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- 難易度別アドバイス -->
+                <div class="cipher-card p-6 rounded-lg">
+                    <div class="text-2xl mb-3">🟢</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color:#4ade80;">
+                        <span data-lang="ja">初級（Lv.1〜5）の攻略法</span>
+                        <span data-lang="en" style="display:none;">Easy (Lv.1–5) Strategy</span>
                     </h3>
-                    <p class="text-gray-300 text-sm">
-                        <span data-lang="ja">他のプレイヤーと暗号解読スピードを競う</span>
-                        <span data-lang="en" style="display: none;">Compete with other players in cipher decoding speed</span>
-                    </p>
+                    <ul style="font-size:0.85rem;color:#cbd5e1;line-height:2;padding-left:1rem;list-style:disc;">
+                        <li data-lang="ja">シーザー暗号はA〜Zを1〜3文字ずらして試す</li>
+                        <li data-lang="en" style="display:none;">Try shifting A–Z by 1–3 letters for Caesar cipher</li>
+                        <li data-lang="ja">逆順暗号は文字列を後ろから読むだけ</li>
+                        <li data-lang="en" style="display:none;">Reverse cipher: just read the string backwards</li>
+                        <li data-lang="ja">短い単語（3〜4文字）から推測する</li>
+                        <li data-lang="en" style="display:none;">Start guessing from short words (3–4 letters)</li>
+                    </ul>
                 </div>
-                
-                <div class="cipher-card p-6 rounded-lg opacity-50">
-                    <div class="text-2xl mb-4">📚</div>
-                    <h3 class="text-xl font-semibold mb-2">
-                        <span data-lang="ja">暗号作成</span>
-                        <span data-lang="en" style="display: none;">Cipher Creator</span>
+                <div class="cipher-card p-6 rounded-lg">
+                    <div class="text-2xl mb-3">🟡</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color:#fbbf24;">
+                        <span data-lang="ja">中級（Lv.6〜10）の攻略法</span>
+                        <span data-lang="en" style="display:none;">Medium (Lv.6–10) Strategy</span>
                     </h3>
-                    <p class="text-gray-300 text-sm">
-                        <span data-lang="ja">オリジナルの暗号を作成・共有</span>
-                        <span data-lang="en" style="display: none;">Create and share original ciphers</span>
-                    </p>
+                    <ul style="font-size:0.85rem;color:#cbd5e1;line-height:2;padding-left:1rem;list-style:disc;">
+                        <li data-lang="ja">モールス信号は「/」で単語が区切れる</li>
+                        <li data-lang="en" style="display:none;">Morse: "/" separates words</li>
+                        <li data-lang="ja">数字変換はA=1からZ=26の表に沿って変換</li>
+                        <li data-lang="en" style="display:none;">Number cipher: A=1 through Z=26</li>
+                        <li data-lang="ja">ROT13はブラウザコンソールで即確認できる</li>
+                        <li data-lang="en" style="display:none;">ROT13 can be tested instantly in browser console</li>
+                    </ul>
+                </div>
+                <div class="cipher-card p-6 rounded-lg">
+                    <div class="text-2xl mb-3">🔴</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color:#ef4444;">
+                        <span data-lang="ja">上級（Lv.11〜15）の攻略法</span>
+                        <span data-lang="en" style="display:none;">Hard (Lv.11–15) Strategy</span>
+                    </h3>
+                    <ul style="font-size:0.85rem;color:#cbd5e1;line-height:2;padding-left:1rem;list-style:disc;">
+                        <li data-lang="ja">バイナリは8桁ずつ10進数に変換してASCIIコード表と照合</li>
+                        <li data-lang="en" style="display:none;">Binary: convert each 8-bit group to decimal, then to ASCII</li>
+                        <li data-lang="ja">ヴィジュネルはKEYの各文字のアルファベット順番号分逆にずらす</li>
+                        <li data-lang="en" style="display:none;">Vigenère: shift each letter backward by the key letter's position</li>
+                        <li data-lang="ja">フォネティックコードは各単語の先頭文字だけ読む</li>
+                        <li data-lang="en" style="display:none;">Phonetic: take only the first letter of each word</li>
+                    </ul>
+                </div>
+                <!-- 頻度分析表 -->
+                <div class="cipher-card p-6 rounded-lg">
+                    <div class="text-2xl mb-3">📊</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color:#ffe066;">
+                        <span data-lang="ja">英語頻度分析表</span>
+                        <span data-lang="en" style="display:none;">English Letter Frequency</span>
+                    </h3>
+                    <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:8px;" data-lang="ja">暗号文で多く出る文字 → 元の文字の候補</p>
+                    <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:8px;" data-lang="en" style="display:none;">Frequent chars in cipher → candidates for original</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                        <span style="background:rgba(251,191,36,0.25);border:1px solid rgba(251,191,36,0.4);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#ffe066;">E 12.7%</span>
+                        <span style="background:rgba(251,191,36,0.2);border:1px solid rgba(251,191,36,0.3);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#fbbf24;">T 9.1%</span>
+                        <span style="background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.25);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#f1f5f9;">A 8.2%</span>
+                        <span style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.2);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#f1f5f9;">O 7.5%</span>
+                        <span style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.18);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#f1f5f9;">I 7.0%</span>
+                        <span style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.15);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#cbd5e1;">N 6.7%</span>
+                        <span style="background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.12);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#cbd5e1;">S 6.3%</span>
+                        <span style="border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:3px 9px;font-size:0.85rem;font-family:monospace;color:#94a3b8;">H 6.1%</span>
+                    </div>
+                    <p style="font-size:0.75rem;color:#6b7280;margin-top:10px;" data-lang="ja">※換字式暗号・シーザー暗号の解読に特に有効です</p>
+                    <p style="font-size:0.75rem;color:#6b7280;margin-top:10px;" data-lang="en" style="display:none;">*Especially useful for substitution and Caesar ciphers</p>
                 </div>
             </div>
         </section>
@@ -1685,6 +1738,24 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 document.getElementById('tutorialModal').style.display = 'none';
             });
 
+            // キーボードショートカット
+            document.addEventListener('keydown', function(e) {
+                // ESCキーでモーダルを閉じる
+                if (e.key === 'Escape') {
+                    document.getElementById('settingsModal').style.display = 'none';
+                    document.getElementById('tutorialModal').style.display = 'none';
+                    const sidebar = document.getElementById('sidebar');
+                    if (sidebar && sidebar.classList.contains('active')) toggleSidebar();
+                }
+                // Hキーでヒント（モーダルが開いていない時のみ）
+                const settingsOpen = document.getElementById('settingsModal').style.display === 'block';
+                const tutorialOpen = document.getElementById('tutorialModal').style.display === 'flex';
+                if (!settingsOpen && !tutorialOpen && e.key.toLowerCase() === 'h' && e.target.tagName !== 'INPUT') {
+                    e.preventDefault();
+                    getHint();
+                }
+            });
+
             // レベル選択
             const levelSelect = document.getElementById('levelSelect');
             if (levelSelect) {
@@ -1870,6 +1941,18 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             const userAnswer = userAnswerEl.value.trim().toUpperCase();
             const correctAnswer = gameState.currentCipher.decrypted;
 
+            // 空解答バリデーション
+            if (userAnswer === '') {
+                if (typeof showToast === 'function') {
+                    showToast('解読文を入力してください', 'info');
+                }
+                userAnswerEl.classList.remove('cb-shake');
+                userAnswerEl.classList.add('cb-shake');
+                setTimeout(() => userAnswerEl.classList.remove('cb-shake'), 350);
+                userAnswerEl.focus();
+                return;
+            }
+
             if (userAnswer === correctAnswer) {
                 stopTimer();
                 // 正解フラッシュ
@@ -1878,6 +1961,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 setTimeout(() => userAnswerEl.classList.remove('cb-success'), 800);
                 // ベストタイム保存（新記録かどうかをここで確定）
                 const isNewRecord = saveBestTime(gameState.currentLevel, timerSeconds);
+                // スター評価保存（ヒント使用数で判定）
+                const hintsUsedThisLevel = 3 - gameState.hintsLeft;
+                saveStar(gameState.currentLevel, hintsUsedThisLevel);
+                const stars = getStars(gameState.currentLevel);
                 gameState.totalSolved++;
                 // クリア済みレベルを記録
                 if (!gameState.clearedLevels) gameState.clearedLevels = [];
@@ -1886,13 +1973,36 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 }
                 saveGameState();
                 updateStats();
-                showResult(true, isNewRecord);
+                showResult(true, isNewRecord, stars);
             } else {
                 showResult(false);
                 userAnswerEl.classList.remove('cb-success');
                 userAnswerEl.classList.add('cb-shake');
                 setTimeout(() => userAnswerEl.classList.remove('cb-shake'), 350);
             }
+        }
+
+        // スター評価保存（ヒントなし→3星、1ヒント→2星、2-3ヒント→1星）
+        function saveStar(level, hintsUsed) {
+            const key = `codebreaker-stars-${level}`;
+            const stars = hintsUsed === 0 ? 3 : hintsUsed === 1 ? 2 : 1;
+            const prev = localStorage.getItem(key);
+            // より高い星評価のみ更新
+            if (prev === null || stars > parseInt(prev)) {
+                localStorage.setItem(key, String(stars));
+            }
+        }
+
+        // スター評価取得
+        function getStars(level) {
+            const v = localStorage.getItem(`codebreaker-stars-${level}`);
+            return v !== null ? parseInt(v) : null;
+        }
+
+        // スター表示文字列生成
+        function renderStars(stars) {
+            if (stars === null) return '';
+            return '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
         }
 
         // ベストタイム保存
@@ -1934,7 +2044,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
         }
 
         // 結果表示
-        function showResult(isCorrect, isNewRecord = false) {
+        function showResult(isCorrect, isNewRecord = false, stars = null) {
             const resultArea = document.getElementById('resultArea');
             const resultIcon = document.getElementById('resultIcon');
             const resultTitle = document.getElementById('resultTitle');
@@ -1947,12 +2057,16 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 const timeStr = mins > 0 ? `${mins}分${secs}秒` : `${secs}秒`;
                 const best = getBestTime(gameState.currentLevel);
                 const bestStr = best !== null ? (best >= 60 ? `${Math.floor(best/60)}分${best%60}秒` : `${best}秒`) : '-';
+                const starsHtml = stars !== null
+                    ? `<span style="font-size:1.2rem;display:block;margin-top:0.4rem;" title="${stars}星獲得">${renderStars(stars)}</span>`
+                    : '';
                 resultIcon.textContent = isNewRecord ? '🏆' : '🎉';
                 resultTitle.textContent = translations[gameState.language]['correct_answer'];
                 const explanation = getCipherExplanation(gameState.currentCipher.type);
                 resultMessage.innerHTML = `
                     <span style="color:#fbbf24;font-weight:700;">⏱ ${timeStr}で解読！</span>
-                    ${isNewRecord ? '<span style="color:#4ade80;font-weight:700;margin-left:8px;">🏅 新記録！</span>' : `<span style="font-size:0.85rem;color:#94a3b8;margin-left:8px;">ベスト: ${bestStr}</span>`}<br>
+                    ${isNewRecord ? '<span style="color:#4ade80;font-weight:700;margin-left:8px;">🏅 新記録！</span>' : `<span style="font-size:0.85rem;color:#94a3b8;margin-left:8px;">ベスト: ${bestStr}</span>`}
+                    ${starsHtml}
                     <span style="font-size:0.9rem;color:#cbd5e1;display:block;margin-top:0.5rem;">正解: <strong style="color:#4ade80;font-family:monospace;">${gameState.currentCipher.decrypted}</strong></span>
                     ${explanation ? `<span style="font-size:0.8rem;color:#94a3b8;display:block;margin-top:0.5rem;">💡 ${explanation}</span>` : ''}
                 `;
@@ -2021,8 +2135,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     ? {'easy':'Easy','medium':'Medium','hard':'Hard'}
                     : {'easy':'初級','medium':'中級','hard':'上級'};
                 const diffLabel = ciphers[i] ? (diffMap[ciphers[i].difficulty] || '') : '';
+                const stars = getStars(i);
+                const starLabel = stars !== null ? ' ' + '★'.repeat(stars) + '☆'.repeat(3 - stars) : '';
                 opt.value = i;
-                opt.textContent = `Lv.${i} ${diffLabel}${isCleared ? ' ✓' : ''}`;
+                opt.textContent = `Lv.${i} ${diffLabel}${isCleared ? ' ✓' : ''}${starLabel}`;
                 if (i === gameState.currentLevel) opt.selected = true;
                 sel.appendChild(opt);
             }
@@ -2107,18 +2223,29 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 const c = ciphers[i];
                 const diffLabel = c ? ({'easy':'初級','medium':'中級','hard':'上級'}[c.difficulty] || '') : '';
                 const diffClass = c ? `difficulty-${c.difficulty}` : '';
+                const levelStars = getStars(i);
+                const starsStr = levelStars !== null ? '★'.repeat(levelStars) + '☆'.repeat(3 - levelStars) : '---';
                 bestTimesRows += `<tr>
                     <td style="padding:5px 10px;color:#fbbf24;font-weight:600;font-family:monospace;">Lv.${i}</td>
                     <td style="padding:5px 10px;"><span class="difficulty-badge ${diffClass}">${diffLabel}</span></td>
                     <td style="padding:5px 10px;font-family:monospace;color:${best !== null ? '#4ade80' : '#6b7280'};">${bestStr}</td>
+                    <td style="padding:5px 10px;color:#fbbf24;font-size:0.9rem;">${starsStr}</td>
                 </tr>`;
             }
+            // スター合計計算
+            let totalStars = 0, maxStars = totalCiphers * 3;
+            for (let i = 1; i <= totalCiphers; i++) {
+                const s = getStars(i);
+                if (s !== null) totalStars += s;
+            }
+            const starRating = totalStars + '/' + maxStars + ' ' + renderStars(Math.round(totalStars / totalCiphers));
+
             gameArea.innerHTML = `
                 <div class="text-center">
                     <div class="text-6xl mb-6">🏆</div>
                     <h2 class="text-3xl font-bold orbitron mb-4">${translations[gameState.language]['game_complete']}</h2>
                     <p class="text-xl text-gray-300 mb-4">すべての暗号を解読しました！</p>
-                    <div class="stats-grid grid grid-cols-2 gap-4 mb-6">
+                    <div class="stats-grid grid grid-cols-3 gap-4 mb-6">
                         <div class="stats-card">
                             <div class="text-2xl font-bold text-yellow-400">${gameState.totalSolved}</div>
                             <div class="text-sm text-gray-400">解読済み</div>
@@ -2126,6 +2253,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                         <div class="stats-card">
                             <div class="text-2xl font-bold text-yellow-400">${gameState.hintsUsed}</div>
                             <div class="text-sm text-gray-400">ヒント使用</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="text-xl font-bold text-yellow-400">${totalStars}</div>
+                            <div class="text-sm text-gray-400">★ 合計</div>
                         </div>
                     </div>
                     <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;">
