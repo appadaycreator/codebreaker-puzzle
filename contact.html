@@ -13,27 +13,30 @@ j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/codebreaker-puzzle/manifest.json">
-    <meta name="theme-color" content="#ffe066">
+    <meta name="theme-color" content="#0f172a">
     <title>お問い合わせ | コードブレイカー</title>
     <link rel="canonical" href="https://appadaycreator.com/codebreaker-puzzle/contact.html">
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif;background:#f8fafc;color:#333;line-height:1.8;}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#f1f5f9;line-height:1.8;min-height:100vh;}
         .container{max-width:640px;margin:0 auto;padding:20px;}
-        .card{background:#fff;border-radius:16px;padding:32px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.06);}
-        h1{font-size:1.8rem;margin-bottom:16px;color:#1e293b;}
-        p{font-size:0.95rem;color:#475569;margin-bottom:12px;}
+        .card{background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.3);border-radius:16px;padding:32px;margin-bottom:20px;box-shadow:0 4px 24px rgba(0,0,0,0.4);}
+        h1{font-size:1.8rem;margin-bottom:16px;color:#ffe066;}
+        p{font-size:0.95rem;color:#cbd5e1;margin-bottom:12px;}
         .form-group{margin-bottom:20px;}
-        label{display:block;font-weight:600;margin-bottom:6px;color:#334155;font-size:0.9rem;}
-        input,textarea,select{width:100%;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:1rem;font-family:inherit;outline:none;transition:.2s;}
-        input:focus,textarea:focus{border-color:#667eea;}
+        label{display:block;font-weight:600;margin-bottom:6px;color:#fbbf24;font-size:0.9rem;}
+        input,textarea,select{width:100%;padding:12px 14px;border:1.5px solid rgba(251,191,36,0.3);border-radius:10px;font-size:1rem;font-family:inherit;outline:none;transition:.2s;background:rgba(15,23,42,0.8);color:#f1f5f9;}
+        input:focus,textarea:focus,select:focus{border-color:#fbbf24;box-shadow:0 0 0 3px rgba(251,191,36,0.1);}
+        select option{background:#1e293b;color:#f1f5f9;}
         textarea{min-height:150px;resize:vertical;}
-        .btn{display:block;width:100%;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:14px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px;text-align:center;}
-        .btn:hover{opacity:.9;}
+        .btn{display:block;width:100%;background:linear-gradient(45deg,#fbbf24,#d97706);color:#111;border:none;padding:14px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px;text-align:center;transition:all 0.3s;}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(251,191,36,0.3);}
         .note{font-size:0.82rem;color:#94a3b8;margin-top:12px;}
+        .note a{color:#fbbf24;}
         .nav{display:flex;gap:16px;flex-wrap:wrap;padding:12px 0;margin-bottom:16px;}
-        .nav a{color:#667eea;text-decoration:none;font-size:0.9rem;font-weight:600;}
-        .success{display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px;color:#166534;font-weight:600;}
+        .nav a{color:#fbbf24;text-decoration:none;font-size:0.9rem;font-weight:600;transition:color 0.2s;}
+        .nav a:hover{color:#ffe066;}
+        .success{display:none;background:rgba(16,185,129,0.15);border:1px solid #10b981;border-radius:10px;padding:16px;color:#4ade80;font-weight:600;}
         @media(max-width:600px){.card{padding:20px;}h1{font-size:1.4rem;}}
     </style>
 </head>

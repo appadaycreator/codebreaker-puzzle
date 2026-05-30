@@ -950,13 +950,23 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
         <section id="game" class="container mx-auto px-4 py-8">
             <div class="game-area">
                 <!-- レベル選択 -->
-                <div class="mb-4 flex items-center gap-3 flex-wrap">
-                    <label class="text-sm text-gray-400 font-semibold" for="levelSelect">
-                        <span data-lang="ja">レベル選択:</span>
-                        <span data-lang="en" style="display:none;">Level:</span>
-                    </label>
-                    <select id="levelSelect" class="cipher-input" style="width:auto;font-family:'Noto Sans JP',sans-serif;font-size:14px;padding:6px 10px;" aria-label="レベル選択">
-                    </select>
+                <div class="mb-4">
+                    <!-- 難易度フィルタ -->
+                    <div id="diffFilterRow" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
+                        <span style="font-size:0.8rem;color:#94a3b8;font-weight:600;">絞り込み:</span>
+                        <button class="diff-filter-btn active" data-diff="all" onclick="filterLevelsByDifficulty('all')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(251,191,36,0.5);background:rgba(251,191,36,0.2);color:#fbbf24;cursor:pointer;transition:all 0.2s;">全て</button>
+                        <button class="diff-filter-btn" data-diff="easy" onclick="filterLevelsByDifficulty('easy')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(16,185,129,0.5);background:transparent;color:#10b981;cursor:pointer;transition:all 0.2s;">初級</button>
+                        <button class="diff-filter-btn" data-diff="medium" onclick="filterLevelsByDifficulty('medium')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(245,158,11,0.5);background:transparent;color:#f59e0b;cursor:pointer;transition:all 0.2s;">中級</button>
+                        <button class="diff-filter-btn" data-diff="hard" onclick="filterLevelsByDifficulty('hard')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(239,68,68,0.5);background:transparent;color:#ef4444;cursor:pointer;transition:all 0.2s;">上級</button>
+                    </div>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <label class="text-sm text-gray-400 font-semibold" for="levelSelect">
+                            <span data-lang="ja">レベル選択:</span>
+                            <span data-lang="en" style="display:none;">Level:</span>
+                        </label>
+                        <select id="levelSelect" class="cipher-input" style="width:auto;font-family:'Noto Sans JP',sans-serif;font-size:14px;padding:6px 10px;" aria-label="レベル選択">
+                        </select>
+                    </div>
                 </div>
                 <div class="mb-6">
                     <div class="flex justify-between items-start">
@@ -1030,6 +1040,16 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                         <span data-lang="en" style="display: none;">Hint</span>
                     </h4>
                     <p id="hintText"></p>
+                </div>
+
+                <!-- Base64デコード補助ツール（Lv.9専用） -->
+                <div id="base64Tool" style="display:none;margin-top:12px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.4);border-radius:10px;padding:14px;">
+                    <h4 style="color:#fbbf24;font-weight:700;font-size:0.9rem;margin-bottom:8px;">🔧 Base64デコード補助</h4>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                        <input type="text" id="base64Input" placeholder="Base64文字列を入力" style="flex:1;min-width:160px;background:rgba(15,23,42,0.8);border:1px solid rgba(251,191,36,0.3);color:#f1f5f9;padding:8px 10px;border-radius:6px;font-size:14px;font-family:monospace;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        <button onclick="decodeBase64Tool()" style="background:linear-gradient(45deg,#fbbf24,#d97706);color:#111;border:none;padding:8px 14px;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">デコード</button>
+                    </div>
+                    <div id="base64Result" style="margin-top:8px;font-family:monospace;font-size:1rem;color:#4ade80;font-weight:700;letter-spacing:0.05em;display:none;"></div>
                 </div>
                 
                 <div id="resultArea" class="mt-6" style="display: none;">
@@ -1563,9 +1583,9 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 decrypted: 'SAFE JOURNEY',
                 hint: 'Base64でエンコードされています',
                 hints: [
-                    'Base64エンコードされています。ブラウザのコンソールで atob("...") を実行すると復号できます',
-                    'Base64は64種類のASCII文字でデータを表現します。末尾に「=」が付くことがあります。文字列をBase64デコードしてみましょう',
-                    'atob("U0FGRSBKT1VSTkVZ") を実行すると答えが出ます。旅行に関する英語フレーズです'
+                    'Base64エンコードされています。アルファベット大文字・小文字・数字・+・/ の64文字でデータを表現する方式です',
+                    '下の「Base64デコード補助」ツールに暗号文を貼り付けてデコードボタンを押してみてください。旅行に関する英語フレーズです',
+                    '旅行の安全を願うフレーズ（2単語・合計11文字）です。最初の単語は4文字（S_FE）、2番目は7文字（_O_RNEY）の形です'
                 ],
                 difficulty: 'medium'
             },
@@ -1901,6 +1921,16 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             document.getElementById('hintArea').style.display = 'none';
             document.getElementById('resultArea').style.display = 'none';
 
+            // Lv.9（Base64）専用ツールの表示切替
+            const base64Tool = document.getElementById('base64Tool');
+            if (base64Tool) {
+                base64Tool.style.display = (cipher.type === 'base64') ? 'block' : 'none';
+                const b64Input = document.getElementById('base64Input');
+                const b64Result = document.getElementById('base64Result');
+                if (b64Input) b64Input.value = '';
+                if (b64Result) { b64Result.textContent = ''; b64Result.style.display = 'none'; }
+            }
+
             // 難易度バッジ更新（クラスとテキストの両方を更新）
             const badge = document.getElementById('difficultyBadge');
             badge.className = `difficulty-badge difficulty-${cipher.difficulty}`;
@@ -2142,6 +2172,51 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 opt.textContent = `Lv.${i} ${diffLabel}${isCleared ? ' ✓' : ''}${starLabel}`;
                 if (i === gameState.currentLevel) opt.selected = true;
                 sel.appendChild(opt);
+            }
+        }
+
+        // Base64デコード補助ツール
+        function decodeBase64Tool() {
+            const input = document.getElementById('base64Input');
+            const result = document.getElementById('base64Result');
+            if (!input || !result) return;
+            const val = input.value.trim();
+            if (!val) return;
+            try {
+                const decoded = atob(val);
+                result.textContent = '解読結果: ' + decoded;
+                result.style.display = 'block';
+                result.style.color = '#4ade80';
+            } catch (e) {
+                result.textContent = '※ 正しいBase64文字列を入力してください';
+                result.style.display = 'block';
+                result.style.color = '#ef4444';
+            }
+        }
+
+        // 難易度フィルタ
+        function filterLevelsByDifficulty(diff) {
+            const sel = document.getElementById('levelSelect');
+            if (!sel) return;
+
+            // フィルタボタンのアクティブ状態更新
+            document.querySelectorAll('.diff-filter-btn').forEach(btn => {
+                const isActive = btn.dataset.diff === diff;
+                btn.style.background = isActive ? 'rgba(251,191,36,0.2)' : 'transparent';
+                btn.style.borderColor = isActive ? 'rgba(251,191,36,0.8)' : '';
+                if (isActive) btn.classList.add('active'); else btn.classList.remove('active');
+            });
+
+            // diffに合致する最初のレベルを選択
+            const total = Object.keys(ciphers).length;
+            for (let i = 1; i <= total; i++) {
+                if (!ciphers[i]) continue;
+                if (diff === 'all' || ciphers[i].difficulty === diff) {
+                    gameState.currentLevel = i;
+                    loadCipher(i);
+                    saveGameState();
+                    break;
+                }
             }
         }
 

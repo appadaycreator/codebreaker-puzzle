@@ -3,11 +3,18 @@
 ## 概要
 
 **サービス名**: Codebreaker Puzzle
-**バージョン**: 1.8.0
+**バージョン**: 1.9.0
 **更新日**: 2026-05-30
 **URL**: https://appadaycreator.com/codebreaker-puzzle/
 
 シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。
+
+## v1.9.0 変更点
+
+- **バグ修正（P1）**: contact.html / howto.html / lp.html / privacy-policy.html / terms.html / usage.html の PWA `theme-color` を `#ffe066`（旧値）→ `#0f172a`（ダーク）に修正
+- **改善（P2）**: contact.html / privacy-policy.html / terms.html の背景・テキスト・カードをライトテーマ（白背景）からダークテーマ（ネイビー/ゴールド）に統一
+- **改善（P3）**: Lv.9（Base64）のヒントをコンソール不要の内容に変更し、ゲーム内 Base64デコード補助ツールを追加（暗号文を貼り付けてデコードボタン→結果表示）
+- **新機能（P4）**: レベル選択セレクトの上に難易度フィルタボタン（全て/初級/中級/上級）を追加。選択した難易度の最初のレベルへ即ジャンプ
 
 ## v1.8.0 変更点
 
