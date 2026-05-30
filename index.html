@@ -1485,6 +1485,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: 'MSBO FPOEIOV',
                 decrypted: 'CODE BREAKER',
                 hint: 'キーワード「KEY」でヴィジュネル暗号化されています。各文字をK=10,E=4,Y=24だけ逆方向にずらしてください',
+                hints: [
+                    'ヴィジュネル暗号です。キーワードを繰り返し使って各文字を異なる量だけずらしています',
+                    'キーワードは「KEY」（K=10, E=4, Y=24）。1文字目はKの分（10）だけ逆にずらします。M を10戻すと C になります',
+                    '答えは「CODE BREAKER」。M-10=C, S-4=O, B-24=D, O-10=E … と各文字をKEYの順に逆ずらしします'
+                ],
                 difficulty: 'hard'
             },
             8: {
@@ -1492,6 +1497,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: '5 14 9 7 13 1',
                 decrypted: 'ENIGMA',
                 hint: 'A=1, B=2... Z=26, スペースは0です',
+                hints: [
+                    '各数字がアルファベットの順番を表しています。A=1, B=2, C=3 … の対応表で変換してください',
+                    '最初の数字「5」は何の文字に対応するか考えてください。A=1なので5番目の文字は…',
+                    '5=E, 14=N, 9=I, 7=G, 13=M, 1=A と変換すると「ENIGMA」（有名な暗号機の名前）になります'
+                ],
                 difficulty: 'medium'
             },
             9: {
@@ -1499,6 +1509,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: 'U0FGRSBKT1VSTkVZ',
                 decrypted: 'SAFE JOURNEY',
                 hint: 'Base64でエンコードされています',
+                hints: [
+                    'Base64エンコードされています。ブラウザのコンソールで atob("...") を実行すると復号できます',
+                    'Base64は64種類のASCII文字でデータを表現します。末尾に「=」が付くことがあります。文字列をBase64デコードしてみましょう',
+                    'atob("U0FGRSBKT1VSTkVZ") を実行すると答えが出ます。旅行に関する英語フレーズです'
+                ],
                 difficulty: 'medium'
             },
             10: {
@@ -1506,6 +1521,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: 'GUNAX LBH',
                 decrypted: 'THANK YOU',
                 hint: 'アルファベットを13文字ずらす暗号です（ROT13）',
+                hints: [
+                    'ROT13暗号です。アルファベットを13文字ずらすシーザー暗号の特殊版です',
+                    'G を13文字前に戻してみてください。A-Z の26文字の半分（13）だけずらします。G→T になります',
+                    'G→T, U→H, N→A, A→N, X→K / L→Y, B→O, H→U と変換すると「THANK YOU」になります'
+                ],
                 difficulty: 'easy'
             },
             11: {
@@ -1513,6 +1533,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: 'TIVZG QLY',
                 decrypted: 'GREAT JOB',
                 hint: 'アルファベットが鏡のように逆順になっています（A↔Z, B↔Y...）',
+                hints: [
+                    'アトバシュ暗号です。アルファベットを鏡のように逆にします。A↔Z, B↔Y, C↔X のように対応します',
+                    '最初の文字 T は逆順で何に対応するか考えましょう。A=Z, B=Y, …, G=T という対応です。T→G になります',
+                    'T→G, I→R, V→E, Z→A, G→T / Q→J, L→O, Y→B と変換すると「GREAT JOB」になります'
+                ],
                 difficulty: 'medium'
             },
             12: {
@@ -1520,6 +1545,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: '01010111 01001001 01001110',
                 decrypted: 'WIN',
                 hint: '2進数（バイナリ）で文字が表現されています。A=01000001 (65)',
+                hints: [
+                    'バイナリ（2進数）で文字が表現されています。8桁の01の並びが1文字に対応します。A=01000001（65）',
+                    '最初の8桁「01010111」を10進数に変換してください。64+16+4+2+1=87 → 87番目のASCII文字は…',
+                    '01010111=87=W, 01001001=73=I, 01001110=78=N。答えは勝利を意味する「WIN」です'
+                ],
                 difficulty: 'hard'
             },
             13: {
@@ -1527,6 +1557,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: 'ALPHA LIMA INDIA CHARLIE ECHO',
                 decrypted: 'ALICE',
                 hint: 'NATOフォネティックコードです。各単語の最初の文字を読んでください',
+                hints: [
+                    'NATOフォネティックコードです。無線通信で使われる標準的な英語の読み方です',
+                    '各単語の頭文字だけを取り出してください。ALPHA→A, LIMA→L, INDIA→I, CHARLIE→C, ECHO→E',
+                    'A・L・I・C・E を並べると有名な物語の主人公の名前「ALICE」になります'
+                ],
                 difficulty: 'medium'
             },
             14: {
@@ -1534,6 +1569,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: 'JVKL THZALY',
                 decrypted: 'CODE MASTER',
                 hint: 'アルファベットを7文字ずらすシーザー暗号の変形です',
+                hints: [
+                    'ROT7暗号です。シーザー暗号と同じ仕組みですが、ずらし数が7文字です',
+                    'J を7文字前に戻してみてください。J(10) - 7 = 3 → C になります。同じルールで全文字を変換してください',
+                    'J→C, V→O, K→D, L→E / T→M, H→A, Z→S, A→T, L→E, Y→R → 「CODE MASTER」になります'
+                ],
                 difficulty: 'hard'
             },
             15: {
@@ -1541,6 +1581,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 encrypted: '4 22 15 15 23 12 13 22',
                 decrypted: 'WELL DONE',
                 hint: 'Z=1, Y=2, X=3... A=26 の逆順で文字に対応する数字が割り当てられています',
+                hints: [
+                    '逆順数字暗号です。通常のA=1とは逆にZ=1, Y=2, X=3... A=26 で数字が対応しています',
+                    '最初の数字「4」はどの文字か考えましょう。Z=1, Y=2, X=3, W=4 なので 4 → W になります',
+                    '4=W, 22=E, 15=L, 15=L / 23=D, 12=O, 13=N, 22=E と変換すると「WELL DONE」になります'
+                ],
                 difficulty: 'medium'
             }
         };
@@ -1652,11 +1697,13 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
 
             // 「暗号の種類」セクションのアコーディオン
             document.querySelectorAll('.accordion-title').forEach(title => {
+                title.setAttribute('aria-expanded', 'false');
                 title.addEventListener('click', function() {
                     const content = this.nextElementSibling;
                     const isOpen = content && content.style.display !== 'none';
                     if (content) content.style.display = isOpen ? 'none' : 'block';
                     this.classList.toggle('active', !isOpen);
+                    this.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
                 });
                 title.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter' || e.key === ' ') {
@@ -1970,7 +2017,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             for (let i = 1; i <= total; i++) {
                 const opt = document.createElement('option');
                 const isCleared = cleared.includes(i);
-                const diffLabel = ciphers[i] ? ({'easy':'初級','medium':'中級','hard':'上級'}[ciphers[i].difficulty] || '') : '';
+                const diffMap = gameState.language === 'en'
+                    ? {'easy':'Easy','medium':'Medium','hard':'Hard'}
+                    : {'easy':'初級','medium':'中級','hard':'上級'};
+                const diffLabel = ciphers[i] ? (diffMap[ciphers[i].difficulty] || '') : '';
                 opt.value = i;
                 opt.textContent = `Lv.${i} ${diffLabel}${isCleared ? ' ✓' : ''}`;
                 if (i === gameState.currentLevel) opt.selected = true;
@@ -2094,7 +2144,8 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
 
         // 結果シェア
         function shareResult() {
-            const text = `コードブレイカーで${gameState.totalSolved}個の暗号を解読しました！🔐✨ #コードブレイカー #暗号解読 #謎解き`;
+            const hintMsg = gameState.hintsUsed === 0 ? 'ノーヒントで全制覇！🧠' : `ヒント${gameState.hintsUsed}回使用`;
+            const text = `🔐 コードブレイカー 全15暗号制覇！\n${hintMsg}\n解読数: ${gameState.totalSolved}問\n#コードブレイカー #暗号解読 #謎解き`;
             shareToTwitter(text);
         }
 
@@ -2144,7 +2195,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
 
         function copyToClipboard() {
             navigator.clipboard.writeText(window.location.href).then(() => {
-                alert('URLをコピーしました！');
+                if (typeof showToast === 'function') showToast('URLをコピーしました！', 'success');
             });
         }
 
@@ -2273,11 +2324,11 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
     return new Promise(function(resolve){
       var ov=document.createElement('div');
       ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;';
-      ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:340px;width:90%;box-shadow:0 10px 40px rgba(0,0,0,0.15);">'+
-        '<p style="margin:0 0 20px;font-size:15px;color:#1f2937;line-height:1.6;">'+msg+'</p>'+
+      ov.innerHTML='<div style="background:#1e293b;border:1px solid rgba(251,191,36,0.4);border-radius:12px;padding:24px;max-width:340px;width:90%;box-shadow:0 10px 40px rgba(0,0,0,0.5);">'+
+        '<p style="margin:0 0 20px;font-size:15px;color:#f1f5f9;line-height:1.6;">'+msg+'</p>'+
         '<div style="display:flex;gap:8px;justify-content:flex-end;">'+
-        '<button id="_cc-cancel" style="padding:8px 16px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;cursor:pointer;font-size:14px;">キャンセル</button>'+
-        '<button id="_cc-ok" style="padding:8px 16px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;">OK</button>'+
+        '<button id="_cc-cancel" style="padding:8px 16px;border:1px solid rgba(251,191,36,0.4);border-radius:8px;background:transparent;color:#cbd5e1;cursor:pointer;font-size:14px;">キャンセル</button>'+
+        '<button id="_cc-ok" style="padding:8px 16px;background:linear-gradient(45deg,#fbbf24,#d97706);color:#111;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;">OK</button>'+
         '</div></div>';
       document.body.appendChild(ov);
       ov.querySelector('#_cc-ok').addEventListener('click',function(){document.body.removeChild(ov);resolve(true);});
