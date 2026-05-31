@@ -836,13 +836,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <span data-lang="ja">実績</span>
                     <span data-lang="en" style="display: none;">Achievements</span>
                 </h3>
-                <div id="achievements">
-                    <div class="achievement-badge">
-                        <span>👶</span>
-                        <span data-lang="ja">初心者</span>
-                        <span data-lang="en" style="display: none;">Beginner</span>
-                    </div>
-                </div>
+                <div id="achievements"></div>
             </div>
             <!-- シェアボタン -->
             <div class="share-buttons">
@@ -996,8 +990,8 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                         <span data-lang="ja">暗号文</span>
                         <span data-lang="en" style="display: none;">Encrypted Text</span>
                     </label>
-                    <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30">
-                        <p class="text-lg orbitron text-yellow-400" id="cipherText">KHOOR ZRUOG</p>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30" style="overflow-x:auto;">
+                        <p class="text-lg orbitron text-yellow-400" id="cipherText" style="word-break:break-all;white-space:pre-wrap;">KHOOR ZRUOG</p>
                     </div>
                 </div>
                 
@@ -1448,6 +1442,9 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             progress: 0
         };
 
+        // ゲームエリアHTMLテンプレート（showGameComplete上書き前に保存）
+        let gameAreaTemplate = '';
+
         // タイマー管理
         let timerInterval = null;
         let timerSeconds = 0;
@@ -1697,6 +1694,9 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
+            // ゲームエリアHTMLをキャッシュ（showGameComplete上書き対応）
+            const ga = document.querySelector('.game-area');
+            if (ga) gameAreaTemplate = ga.innerHTML;
             loadGameState();
             if (!gameState.clearedLevels) gameState.clearedLevels = [];
             setupEventListeners();
@@ -1719,6 +1719,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             // 設定モーダル
             const openSettingsModal = document.getElementById('openSettingsModal');
             if (openSettingsModal) openSettingsModal.addEventListener('click', function() {
+                updateStats();
                 document.getElementById('settingsModal').style.display = 'block';
             });
             const closeSettingsModal = document.getElementById('closeSettingsModal');
@@ -2199,11 +2200,24 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             const sel = document.getElementById('levelSelect');
             if (!sel) return;
 
-            // フィルタボタンのアクティブ状態更新
+            // フィルタボタンのアクティブ状態更新（各難易度の色でハイライト）
+            const activeColors = {
+                all:    { bg: 'rgba(251,191,36,0.8)', border: 'rgba(251,191,36,1)',    color: '#111' },
+                easy:   { bg: '#10b981',              border: '#10b981',               color: '#fff' },
+                medium: { bg: '#f59e0b',              border: '#f59e0b',               color: '#111' },
+                hard:   { bg: '#ef4444',              border: '#ef4444',               color: '#fff' }
+            };
+            const defaultColors = {
+                all:    { bg: 'transparent', border: 'rgba(251,191,36,0.5)', color: '#fbbf24' },
+                easy:   { bg: 'transparent', border: 'rgba(16,185,129,0.5)', color: '#10b981' },
+                medium: { bg: 'transparent', border: 'rgba(245,158,11,0.5)', color: '#f59e0b' },
+                hard:   { bg: 'transparent', border: 'rgba(239,68,68,0.5)',  color: '#ef4444' }
+            };
             document.querySelectorAll('.diff-filter-btn').forEach(btn => {
-                const isActive = btn.dataset.diff === diff;
-                btn.style.background = isActive ? 'rgba(251,191,36,0.2)' : 'transparent';
-                btn.style.borderColor = isActive ? 'rgba(251,191,36,0.8)' : '';
+                const d = btn.dataset.diff;
+                const isActive = d === diff;
+                const c = isActive ? activeColors[d] : defaultColors[d];
+                if (c) { btn.style.background = c.bg; btn.style.borderColor = c.border; btn.style.color = c.color; }
                 if (isActive) btn.classList.add('active'); else btn.classList.remove('active');
             });
 
@@ -2229,6 +2243,9 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
 
         // 次の暗号
         function nextCipher() {
+            // 前の結果エリアを即非表示にしてちらつき防止
+            const ra = document.getElementById('resultArea');
+            if (ra) ra.style.display = 'none';
             gameState.currentLevel++;
             loadCipher(gameState.currentLevel);
             saveGameState();
@@ -2253,10 +2270,17 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
         // 実績更新
         function updateAchievements() {
             const achievements = document.getElementById('achievements');
+            if (!achievements) return;
             achievements.innerHTML = '';
-            
+
             const badges = [];
-            
+
+            // 初心者バッジ（常に表示）
+            badges.push({
+                icon: '👶',
+                name: gameState.language === 'ja' ? '初心者' : 'Beginner'
+            });
+
             if (gameState.totalSolved >= 1) {
                 badges.push({
                     icon: '⭐',
@@ -2268,6 +2292,13 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 badges.push({
                     icon: '🏆',
                     name: gameState.language === 'ja' ? '熟練者' : 'Expert'
+                });
+            }
+
+            if (gameState.totalSolved >= 15) {
+                badges.push({
+                    icon: '👑',
+                    name: gameState.language === 'ja' ? '全制覇' : 'Master'
                 });
             }
 
@@ -2389,7 +2420,19 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             }
 
             saveGameState();
-            location.reload();
+
+            // ゲームエリアHTMLをキャッシュから復元（location.reloadなし）
+            const ga = document.querySelector('.game-area');
+            if (ga && gameAreaTemplate) {
+                ga.innerHTML = gameAreaTemplate;
+                setupEventListeners();
+                loadCipher(1);
+                updateUI();
+                updateLevelSelect();
+                document.getElementById('game').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                location.reload();
+            }
         }
 
         // UI更新
