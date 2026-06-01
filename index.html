@@ -13,7 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#fbbf24">
     <meta name="description" content="シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。登録不要・完全無料でご利用いただけます。">
     <meta name="keywords" content="暗号解読,パズルゲーム,謎解き,シーザー暗号,論理的思考,無料ゲーム">
     <meta name="robots" content="index, follow">
@@ -990,8 +990,9 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                         <span data-lang="ja">暗号文</span>
                         <span data-lang="en" style="display: none;">Encrypted Text</span>
                     </label>
-                    <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30" style="overflow-x:auto;">
-                        <p class="text-lg orbitron text-yellow-400" id="cipherText" style="word-break:break-all;white-space:pre-wrap;">KHOOR ZRUOG</p>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30" style="overflow-x:auto;position:relative;">
+                        <p class="text-lg orbitron text-yellow-400" id="cipherText" style="word-break:break-all;white-space:pre-wrap;padding-right:2.5rem;">KHOOR ZRUOG</p>
+                        <button onclick="copyCipherText()" title="暗号文をコピー" aria-label="暗号文をクリップボードにコピー" style="position:absolute;top:8px;right:8px;background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;border-radius:6px;padding:4px 8px;font-size:0.75rem;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(251,191,36,0.2)'" onmouseout="this.style.background='rgba(30,41,59,0.9)'">📋</button>
                     </div>
                 </div>
                 
@@ -1003,8 +1004,9 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <input type="text"
                            class="cipher-input"
                            id="userAnswer"
-                           placeholder="解読した文章を入力してください" maxlength="50" aria-label="解読した文章を入力してください"
-                           autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text">
+                           placeholder="大文字で解読文を入力（例: HELLO WORLD）" maxlength="50" aria-label="解読した文章を大文字で入力してください"
+                           autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text"
+                           oninput="this.value = this.value.toUpperCase()">
                 </div>
                 
                 <div class="flex flex-wrap gap-4 mb-6">
@@ -1422,6 +1424,18 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
   <dl style="line-height:1.8;">
     <dt style="font-weight:600;margin-top:12px;">Q: 暗号解読パズルは無料ですか？</dt>
     <dd style="margin-left:16px;color:#d1d5db;">はい、完全無料・登録不要でご利用いただけます。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: 何人でプレイできますか？</dt>
+    <dd style="margin-left:16px;color:#d1d5db;">1人用のソロゲームです。ブラウザ上で動作するため、インストール不要で即プレイできます。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: どのような人が使っていますか？</dt>
+    <dd style="margin-left:16px;color:#d1d5db;">論理思考力を鍛えたい方、暗号や歴史に興味がある方、プログラミングの基礎を楽しく学びたい方に特におすすめです。小学生から大人まで幅広くご利用いただけます。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: クリア結果をシェアできますか？</dt>
+    <dd style="margin-left:16px;color:#d1d5db;">はい、全15問クリア後に結果をX（旧Twitter）・LINE・Facebookでシェアできます。ベストタイムも表示されます。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: 有料プランはありますか？</dt>
+    <dd style="margin-left:16px;color:#d1d5db;">いいえ、すべての機能を完全無料でご利用いただけます。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: スコアは保存されますか？</dt>
+    <dd style="margin-left:16px;color:#d1d5db;">各レベルのベストタイムとクリア状況がブラウザのローカルストレージに保存されます。ブラウザのデータを削除するとリセットされます。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: オフラインで遊べますか？</dt>
+    <dd style="margin-left:16px;color:#d1d5db;">はい、PWA対応のため初回アクセス後はオフラインでもプレイできます。ホーム画面に追加するとアプリのように使えます。</dd>
     <dt style="font-weight:600;margin-top:12px;">Q: スマートフォンでも使えますか？</dt>
     <dd style="margin-left:16px;color:#d1d5db;">はい、PC・スマートフォン・タブレットすべてに対応しています。</dd>
     <dt style="font-weight:600;margin-top:12px;">Q: 入力データはサーバーに送信されますか？</dt>
@@ -2186,6 +2200,24 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             }
         }
 
+        // 暗号文コピー
+        function copyCipherText() {
+            const text = document.getElementById('cipherText').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    if (typeof showToast === 'function') showToast('暗号文をコピーしました！', 'success');
+                });
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                if (typeof showToast === 'function') showToast('暗号文をコピーしました！', 'success');
+            }
+        }
+
         // Base64デコード補助ツール
         function decodeBase64Tool() {
             const input = document.getElementById('base64Input');
@@ -2739,8 +2771,6 @@ function init(){
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
 })();
 </script>
-
-<a href="https://px.a8.net/svt/ejp?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" rel="nofollow">小中学生対象の通信教育【デキタス】誕生♪</a><img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" alt="">
 
 <a href="https://px.a8.net/svt/ejp?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" rel="nofollow">小中学生対象の通信教育【デキタス】誕生♪</a><img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" alt="">
 
