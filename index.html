@@ -1706,7 +1706,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             registerServiceWorker();
         });
 
-        // イベントリスナー設定
+        // イベントリスナー設定（グローバル：初回のみ呼び出す）
         function setupEventListeners() {
             // ハンバーガーメニュー
             const hamburger = document.getElementById('hamburger');
@@ -1745,14 +1745,6 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 });
             });
 
-            // Enter キーでの解答チェック
-            const userAnswer = document.getElementById('userAnswer');
-            if (userAnswer) userAnswer.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkAnswer();
-                }
-            });
-
             // チュートリアルモーダルクローズ
             const closeTutorialModal = document.getElementById('closeTutorialModal');
             if (closeTutorialModal) closeTutorialModal.addEventListener('click', function() {
@@ -1777,18 +1769,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 }
             });
 
-            // レベル選択
-            const levelSelect = document.getElementById('levelSelect');
-            if (levelSelect) {
-                levelSelect.addEventListener('change', function() {
-                    gameState.currentLevel = parseInt(this.value);
-                    loadCipher(gameState.currentLevel);
-                    saveGameState();
-                    document.getElementById('game').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            }
-
-            // 「暗号の種類」セクションのアコーディオン
+            // 「暗号の種類」セクションのアコーディオン（ゲームエリア外の静的DOM）
             document.querySelectorAll('.accordion-title').forEach(title => {
                 title.setAttribute('aria-expanded', 'false');
                 title.addEventListener('click', function() {
@@ -1805,6 +1786,31 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     }
                 });
             });
+
+            // ゲームエリア固有のリスナーも初回設定
+            setupGameAreaListeners();
+        }
+
+        // ゲームエリア固有のイベントリスナー設定（resetGame後に再設定する）
+        function setupGameAreaListeners() {
+            // Enter キーでの解答チェック
+            const userAnswer = document.getElementById('userAnswer');
+            if (userAnswer) userAnswer.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkAnswer();
+                }
+            });
+
+            // レベル選択
+            const levelSelect = document.getElementById('levelSelect');
+            if (levelSelect) {
+                levelSelect.addEventListener('change', function() {
+                    gameState.currentLevel = parseInt(this.value);
+                    loadCipher(gameState.currentLevel);
+                    saveGameState();
+                    document.getElementById('game').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
 
             // 暗号タイプアコーディオン（ゲームエリア内）
             const toggleTypeBtn = document.getElementById('toggleTypeBtn');
@@ -1825,7 +1831,6 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     }
                 });
             }
-
         }
 
         // サイドバー切り替え
@@ -2153,14 +2158,19 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             document.getElementById('hintsLeft').textContent = `(${gameState.hintsLeft})`;
         }
 
-        // レベル選択セレクトボックスの更新
-        function updateLevelSelect() {
+        // レベル選択セレクトボックスの更新（diffFilter: 'all'|'easy'|'medium'|'hard'）
+        let currentDiffFilter = 'all';
+        function updateLevelSelect(diffFilter) {
+            if (diffFilter !== undefined) currentDiffFilter = diffFilter;
             const sel = document.getElementById('levelSelect');
             if (!sel) return;
             const total = Object.keys(ciphers).length;
             const cleared = gameState.clearedLevels || [];
             sel.innerHTML = '';
             for (let i = 1; i <= total; i++) {
+                if (!ciphers[i]) continue;
+                // 難易度フィルタが指定されている場合は絞り込み
+                if (currentDiffFilter !== 'all' && ciphers[i].difficulty !== currentDiffFilter) continue;
                 const opt = document.createElement('option');
                 const isCleared = cleared.includes(i);
                 const diffMap = gameState.language === 'en'
@@ -2221,7 +2231,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 if (isActive) btn.classList.add('active'); else btn.classList.remove('active');
             });
 
-            // diffに合致する最初のレベルを選択
+            // セレクトボックスを選択難易度で絞り込み
+            updateLevelSelect(diff);
+
+            // diffに合致する最初のレベルを選択してゲームに反映
             const total = Object.keys(ciphers).length;
             for (let i = 1; i <= total; i++) {
                 if (!ciphers[i]) continue;
@@ -2295,7 +2308,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 });
             }
 
-            if (gameState.totalSolved >= 15) {
+            if ((gameState.clearedLevels || []).length >= Object.keys(ciphers).length) {
                 badges.push({
                     icon: '👑',
                     name: gameState.language === 'ja' ? '全制覇' : 'Master'
@@ -2421,14 +2434,35 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
 
             saveGameState();
 
+            // 難易度フィルタをリセット
+            currentDiffFilter = 'all';
+            document.querySelectorAll('.diff-filter-btn').forEach(btn => {
+                const d = btn.dataset.diff;
+                const isAll = d === 'all';
+                if (isAll) {
+                    btn.style.background = 'rgba(251,191,36,0.8)';
+                    btn.style.borderColor = 'rgba(251,191,36,1)';
+                    btn.style.color = '#111';
+                    btn.classList.add('active');
+                } else {
+                    const defaultBg = { easy:'transparent', medium:'transparent', hard:'transparent' };
+                    const defaultBorder = { easy:'rgba(16,185,129,0.5)', medium:'rgba(245,158,11,0.5)', hard:'rgba(239,68,68,0.5)' };
+                    const defaultColor = { easy:'#10b981', medium:'#f59e0b', hard:'#ef4444' };
+                    btn.style.background = defaultBg[d] || 'transparent';
+                    btn.style.borderColor = defaultBorder[d] || '';
+                    btn.style.color = defaultColor[d] || '';
+                    btn.classList.remove('active');
+                }
+            });
+
             // ゲームエリアHTMLをキャッシュから復元（location.reloadなし）
             const ga = document.querySelector('.game-area');
             if (ga && gameAreaTemplate) {
                 ga.innerHTML = gameAreaTemplate;
-                setupEventListeners();
+                setupGameAreaListeners(); // ゲームエリア内のリスナーのみ再設定（グローバルリスナーは二重登録を防ぐため不要）
                 loadCipher(1);
                 updateUI();
-                updateLevelSelect();
+                updateLevelSelect('all');
                 document.getElementById('game').scrollIntoView({ behavior: 'smooth' });
             } else {
                 location.reload();

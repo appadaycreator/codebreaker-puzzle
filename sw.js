@@ -1,4 +1,4 @@
-const CACHE_NAME = 'codebreaker-v3';
+const CACHE_NAME = 'codebreaker-v4';
 const urlsToCache = [
   './',
   './index.html',
@@ -14,6 +14,9 @@ self.addEventListener('install', function(event) {
     caches.open(CACHE_NAME)
       .then(function(cache) {
         return cache.addAll(urlsToCache);
+      })
+      .then(function() {
+        return self.skipWaiting(); // 新バージョンを即座にアクティブ化
       })
   );
 });
@@ -41,6 +44,8 @@ self.addEventListener('activate', function(event) {
           }
         })
       );
+    }).then(function() {
+      return self.clients.claim(); // 即座に全クライアントを新SWに切り替え
     })
   );
 }); 
