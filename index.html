@@ -40,10 +40,12 @@
     <!-- Favicon -->
         
     <!-- 外部ライブラリ -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet"></noscript>
     
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -634,7 +636,38 @@
             transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
             overflow: hidden;
         }
-    
+
+/* Difficulty filter buttons */
+.diff-filter-btn {
+            padding: 3px 10px;
+            border-radius: 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border: 1px solid;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .diff-filter-btn[data-diff="all"] {
+            border-color: rgba(251, 191, 36, 0.5);
+            color: #fbbf24;
+        }
+        .diff-filter-btn[data-diff="all"].active {
+            background: rgba(251, 191, 36, 0.2);
+        }
+        .diff-filter-btn[data-diff="easy"] {
+            border-color: rgba(16, 185, 129, 0.5);
+            color: #10b981;
+        }
+        .diff-filter-btn[data-diff="medium"] {
+            border-color: rgba(245, 158, 11, 0.5);
+            color: #f59e0b;
+        }
+        .diff-filter-btn[data-diff="hard"] {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+        }
+
 /* Phase 8: Mobile Optimization */
 input, select, textarea { font-size: 16px !important; }
 button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min-width: 48px; touch-action: manipulation; }
@@ -770,24 +803,24 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     ⚙️ <span class="hidden md:inline text-sm">統計</span>
                 </button>
                 <!-- ハンバーガーメニュー -->
-                <div class="hamburger md:hidden" id="hamburger">
+                <button class="hamburger md:hidden" id="hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="sidebar">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </div>
     </header>
 
     <!-- 設定モーダル -->
-    <div id="settingsModal" class="modal" style="display:none;">
+    <div id="settingsModal" class="modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg font-semibold orbitron">
+                <h2 class="text-lg font-semibold orbitron" id="settingsModalTitle">
                     <span data-lang="ja">設定</span>
                     <span data-lang="en" style="display: none;">Settings</span>
                 </h2>
-                <button class="text-yellow-400 hover:text-yellow-300" id="closeSettingsModal">
+                <button class="text-yellow-400 hover:text-yellow-300" id="closeSettingsModal" aria-label="設定を閉じる">
                     <span class="text-xl">✕</span>
                 </button>
             </div>
@@ -858,11 +891,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
     </div>
 
     <!-- チュートリアルモーダル -->
-    <div id="tutorialModal" class="modal" style="display:none;">
+    <div id="tutorialModal" class="modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="tutorialModalTitle">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg font-semibold orbitron" style="color:#ffe066;">🔐 チュートリアル</h2>
-                <button class="text-yellow-400 hover:text-yellow-300" id="closeTutorialModal"><span class="text-xl">✕</span></button>
+                <h2 class="text-lg font-semibold orbitron" style="color:#ffe066;" id="tutorialModalTitle">🔐 チュートリアル</h2>
+                <button class="text-yellow-400 hover:text-yellow-300" id="closeTutorialModal" aria-label="チュートリアルを閉じる"><span class="text-xl">✕</span></button>
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem;">
                 <div class="hint-box">
@@ -948,10 +981,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <!-- 難易度フィルタ -->
                     <div id="diffFilterRow" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
                         <span style="font-size:0.8rem;color:#94a3b8;font-weight:600;">絞り込み:</span>
-                        <button class="diff-filter-btn active" data-diff="all" onclick="filterLevelsByDifficulty('all')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(251,191,36,0.5);background:rgba(251,191,36,0.2);color:#fbbf24;cursor:pointer;transition:all 0.2s;">全て</button>
-                        <button class="diff-filter-btn" data-diff="easy" onclick="filterLevelsByDifficulty('easy')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(16,185,129,0.5);background:transparent;color:#10b981;cursor:pointer;transition:all 0.2s;">初級</button>
-                        <button class="diff-filter-btn" data-diff="medium" onclick="filterLevelsByDifficulty('medium')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(245,158,11,0.5);background:transparent;color:#f59e0b;cursor:pointer;transition:all 0.2s;">中級</button>
-                        <button class="diff-filter-btn" data-diff="hard" onclick="filterLevelsByDifficulty('hard')" style="padding:3px 10px;border-radius:14px;font-size:0.78rem;font-weight:600;border:1px solid rgba(239,68,68,0.5);background:transparent;color:#ef4444;cursor:pointer;transition:all 0.2s;">上級</button>
+                        <button class="diff-filter-btn active" data-diff="all" onclick="filterLevelsByDifficulty('all')">全て</button>
+                        <button class="diff-filter-btn" data-diff="easy" onclick="filterLevelsByDifficulty('easy')">初級</button>
+                        <button class="diff-filter-btn" data-diff="medium" onclick="filterLevelsByDifficulty('medium')">中級</button>
+                        <button class="diff-filter-btn" data-diff="hard" onclick="filterLevelsByDifficulty('hard')">上級</button>
                     </div>
                     <div class="flex items-center gap-3 flex-wrap">
                         <label class="text-sm text-gray-400 font-semibold" for="levelSelect">
@@ -992,7 +1025,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     </label>
                     <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30" style="overflow-x:auto;position:relative;">
                         <p class="text-lg orbitron text-yellow-400" id="cipherText" style="word-break:break-all;white-space:pre-wrap;padding-right:2.5rem;">KHOOR ZRUOG</p>
-                        <button onclick="copyCipherText()" title="暗号文をコピー" aria-label="暗号文をクリップボードにコピー" style="position:absolute;top:8px;right:8px;background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;border-radius:6px;padding:4px 8px;font-size:0.75rem;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(251,191,36,0.2)'" onmouseout="this.style.background='rgba(30,41,59,0.9)'">📋</button>
+                        <button onclick="copyCipherText()" title="暗号文をコピー" aria-label="暗号文をクリップボードにコピー" style="position:absolute;top:8px;right:8px;background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;border-radius:6px;padding:6px 8px;font-size:0.75rem;cursor:pointer;transition:all 0.2s;min-height:32px;min-width:32px;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(251,191,36,0.2)'" onmouseout="this.style.background='rgba(30,41,59,0.9)'">📋</button>
                     </div>
                 </div>
                 
@@ -2772,23 +2805,19 @@ document.readyState==='loading'?document.addEventListener('DOMContentLoaded',ini
 })();
 </script>
 
-<a href="https://px.a8.net/svt/ejp?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" rel="nofollow">小中学生対象の通信教育【デキタス】誕生♪</a><img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" alt="">
+<div style="margin:24px auto;max-width:860px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;">
+  <p style="font-size:12px;font-weight:600;color:#94a3b8;text-align:center;margin:0 0 12px;letter-spacing:0.05em;">スポンサーリンク</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+    <a href="https://px.a8.net/svt/ejp?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">小中学生対象の通信教育【デキタス】誕生♪</a><img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4AX38J+4DU6NE+2MJW+HYV1E" alt="">
+    <a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ6+FQ9JMY+1LP8+BY642" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">日々の生活にハッピーをプラス！《ハピタス》</a><img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4B3WJ6+FQ9JMY+1LP8+BY642" alt="">
+    <a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ7+18PTPM+1O96+699KI" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">《ヨガ》をはじめてみませんか？ホットヨガスタジオLAVA</a><img border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B3WJ7+18PTPM+1O96+699KI" alt="">
+    <a href="https://px.a8.net/svt/ejp?a8mat=457C4C+C23BCA+0K+10FXXU" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">アフィリエイトならA8.net</a><img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=457C4C+C23BCA+0K+10FXXU" alt="">
+    <a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ5+C2OQY2+14CS+68EPE" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">【じゃらん】国内25,000軒の宿をネットで予約OK！2％ポイント還元！</a><img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4B3WJ5+C2OQY2+14CS+68EPE" alt="">
+    <a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ6+FIIWRU+1IRY+1TKOKI" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">ファイナンシャルアカデミー「お金の教養講座」</a><img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=4B3WJ6+FIIWRU+1IRY+1TKOKI" alt="">
+    <a href="https://px.a8.net/svt/ejp?a8mat=4B3WJA+86RVSA+3XCC+64C3M" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">松井証券</a><img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B3WJA+86RVSA+3XCC+64C3M" alt="">
+    <a href="https://px.a8.net/svt/ejp?a8mat=4B3VR6+G0ZCIY+1QM6+HZAGY" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">働くママを応援中♪栄養士の献立で簡単バランスごはん♪</a><img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B3VR6+G0ZCIY+1QM6+HZAGY" alt="">
+  </div>
+</div>
 
-<a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ6+FQ9JMY+1LP8+BY642" rel="nofollow">日々の生活にハッピーをプラス！《ハピタス》</a><img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4B3WJ6+FQ9JMY+1LP8+BY642" alt="">
-
-<a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ7+18PTPM+1O96+699KI" rel="nofollow">《ヨガ》をはじめてみませんか？ホットヨガスタジオLAVA</a><img border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B3WJ7+18PTPM+1O96+699KI" alt="">
-
-<a href="https://px.a8.net/svt/ejp?a8mat=457C4C+C23BCA+0K+10FXXU" rel="nofollow">アフィリエイトならA8.net</a><img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=457C4C+C23BCA+0K+10FXXU" alt="">
-
-<a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ5+C2OQY2+14CS+68EPE" rel="nofollow">【じゃらん】国内25,000軒の宿をネットで予約OK！2％ポイント還元！</a><img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4B3WJ5+C2OQY2+14CS+68EPE" alt="">
-
-<a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ6+FIIWRU+1IRY+1TKOKI" rel="nofollow">ファイナンシャルアカデミー「お金の教養講座」</a><img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=4B3WJ6+FIIWRU+1IRY+1TKOKI" alt="">
-
-<a href="https://px.a8.net/svt/ejp?a8mat=4B3WJA+86RVSA+3XCC+64C3M" rel="nofollow">松井証券</a><img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B3WJA+86RVSA+3XCC+64C3M" alt="">
-
-<a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ6+36YZ3E+3A66+5YRHE" rel="nofollow">ウイルスバスターのご購入はこちら</a>
-<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4B3WJ6+36YZ3E+3A66+5YRHE" alt="">
-
-<a href="https://px.a8.net/svt/ejp?a8mat=4B3VR6+G0ZCIY+1QM6+HZAGY" rel="nofollow">働くママを応援中♪栄養士の献立で簡単バランスごはん♪</a><img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B3VR6+G0ZCIY+1QM6+HZAGY" alt="">
 </body>
 </html>
