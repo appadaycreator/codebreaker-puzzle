@@ -2,7 +2,7 @@
   "name": "CodeBreaker",
   "short_name": "CodeBreaker",
   "description": "暗号解読パズルゲーム CodeBreaker",
-  "start_url": "./index.html",
+  "start_url": "/codebreaker-puzzle/index.html",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#fbbf24",
