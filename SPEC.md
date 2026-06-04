@@ -3,11 +3,15 @@
 ## 概要
 
 **サービス名**: Codebreaker Puzzle
-**バージョン**: 2.1.0
-**更新日**: 2026-06-02
+**バージョン**: 2.2.0
+**更新日**: 2026-06-04
 **URL**: https://appadaycreator.com/codebreaker-puzzle/
 
 シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。
+
+## v2.2.0 変更点
+
+- **バグ修正（P1）**: manifest.json 及び全HTML（index.html / contact.html / howto.html / lp.html / privacy-policy.html / terms.html / usage.html）の PWA `theme_color`/`meta[name="theme-color"]` を `#fbbf24`（ゴールド）→ `#0f172a`（背景色=ダーク）に統一。PWAインストール時のChromeアドレスバーが背景色に統一されるよう修正
 
 ## v2.1.0 変更点
 
