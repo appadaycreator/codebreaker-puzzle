@@ -13,7 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#fbbf24">
+<meta name="theme-color" content="#070b16">
     <meta name="description" content="シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。登録不要・完全無料でご利用いただけます。">
     <meta name="keywords" content="暗号解読,パズルゲーム,謎解き,シーザー暗号,論理的思考,無料ゲーム">
     <meta name="robots" content="index, follow">
@@ -33,7 +33,8 @@
     <meta name="twitter:image" content="https://appadaycreator.com/codebreaker-puzzle/ogp.png">
     
     <!-- PWA設定 -->
-            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="コードブレイカー">
         
@@ -53,6 +54,8 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TXQGZRF9');</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDPNYD2875"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZDPNYD2875',{send_page_view:false});</script>
     <!-- End Google Tag Manager -->
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
@@ -88,7 +91,7 @@
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+            background: #070b16;
             color: var(--text-light);
             margin: 0;
             padding: 0;
@@ -188,6 +191,18 @@
             outline: none;
             border-color: var(--accent-gold);
             box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+        }
+
+        /* アクセシビリティ: キーボード操作ユーザー向けフォーカスインジケータ */
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        .btn-primary:focus-visible,
+        .btn-secondary:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--accent-gold);
+            outline-offset: 2px;
         }
 
         .hint-box {
@@ -834,8 +849,8 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <span data-lang="en" style="display: none;">Language</span>
                 </h3>
                 <div class="language-switcher">
-                    <button class="language-btn active" data-lang-btn="ja">日本語</button>
-                    <button class="language-btn" data-lang-btn="en">English</button>
+                    <button class="language-btn active" data-lang-btn="ja" aria-label="日本語を選択">日本語</button>
+                    <button class="language-btn" data-lang-btn="en" aria-label="英語を選択">English</button>
                 </div>
             </div>
             <!-- フォントサイズ -->
@@ -845,11 +860,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <span data-lang="en" style="display: none;">Font Size</span>
                 </h3>
                 <div class="font-size-controls">
-                    <button class="font-size-btn" data-font-size="xs">極小</button>
-                    <button class="font-size-btn" data-font-size="sm">小</button>
-                    <button class="font-size-btn active" data-font-size="md">標準</button>
-                    <button class="font-size-btn" data-font-size="lg">大</button>
-                    <button class="font-size-btn" data-font-size="xl">特大</button>
+                    <button class="font-size-btn" data-font-size="xs" aria-label="極小サイズに変更">極小</button>
+                    <button class="font-size-btn" data-font-size="sm" aria-label="小サイズに変更">小</button>
+                    <button class="font-size-btn active" data-font-size="md" aria-label="標準サイズに変更">標準</button>
+                    <button class="font-size-btn" data-font-size="lg" aria-label="大サイズに変更">大</button>
+                    <button class="font-size-btn" data-font-size="xl" aria-label="特大サイズに変更">特大</button>
                 </div>
             </div>
             <!-- 統計情報 -->
@@ -876,16 +891,16 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             </div>
             <!-- シェアボタン -->
             <div class="share-buttons">
-                <button class="share-btn" onclick="shareToTwitter()">
+                <button class="share-btn" onclick="shareToTwitter()" aria-label="Twitterでシェア">
                     <span>𝕏</span>
                 </button>
-                <button class="share-btn" onclick="shareToFacebook()">
+                <button class="share-btn" onclick="shareToFacebook()" aria-label="Facebookでシェア">
                     <span>f</span>
                 </button>
-                <button class="share-btn" onclick="shareToLine()">
+                <button class="share-btn" onclick="shareToLine()" aria-label="LINEでシェア">
                     <span>💬</span>
                 </button>
-                <button class="share-btn" onclick="copyToClipboard()">
+                <button class="share-btn" onclick="copyToClipboard()" aria-label="クリップボードにコピー">
                     <span>📋</span>
                 </button>
             </div>
@@ -951,11 +966,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <span data-lang="ja">シーザー暗号から高度な暗号まで、段階的に挑戦する本格謎解きパズルゲーム</span>
                     <span data-lang="en" style="display: none;">From Caesar cipher to advanced cryptography, challenge yourself with authentic puzzle games</span>
                 </p>
-                <button class="btn-primary mr-4" onclick="startGame()">
+                <button class="btn-primary mr-4" onclick="startGame()" aria-label="ゲームを開始">
                     <span data-lang="ja">今すぐプレイ</span>
                     <span data-lang="en" style="display: none;">Play Now</span>
                 </button>
-                <button class="btn-secondary" onclick="showTutorial()">
+                <button class="btn-secondary" onclick="showTutorial()" aria-label="チュートリアルを表示">
                     <span data-lang="ja">チュートリアル</span>
                     <span data-lang="en" style="display: none;">Tutorial</span>
                 </button>
@@ -984,10 +999,10 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <!-- 難易度フィルタ -->
                     <div id="diffFilterRow" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
                         <span style="font-size:0.8rem;color:#94a3b8;font-weight:600;">絞り込み:</span>
-                        <button class="diff-filter-btn active" data-diff="all" onclick="filterLevelsByDifficulty('all')">全て</button>
-                        <button class="diff-filter-btn" data-diff="easy" onclick="filterLevelsByDifficulty('easy')">初級</button>
-                        <button class="diff-filter-btn" data-diff="medium" onclick="filterLevelsByDifficulty('medium')">中級</button>
-                        <button class="diff-filter-btn" data-diff="hard" onclick="filterLevelsByDifficulty('hard')">上級</button>
+                        <button class="diff-filter-btn active" data-diff="all" onclick="filterLevelsByDifficulty('all')" aria-label="全ての難易度を表示">全て</button>
+                        <button class="diff-filter-btn" data-diff="easy" onclick="filterLevelsByDifficulty('easy')" aria-label="初級の問題を表示">初級</button>
+                        <button class="diff-filter-btn" data-diff="medium" onclick="filterLevelsByDifficulty('medium')" aria-label="中級の問題を表示">中級</button>
+                        <button class="diff-filter-btn" data-diff="hard" onclick="filterLevelsByDifficulty('hard')" aria-label="上級の問題を表示">上級</button>
                     </div>
                     <div class="flex items-center gap-3 flex-wrap">
                         <label class="text-sm text-gray-400 font-semibold" for="levelSelect">
@@ -1046,20 +1061,20 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 </div>
                 
                 <div class="flex flex-wrap gap-4 mb-6">
-                    <button class="btn-primary" onclick="checkAnswer()">
+                    <button class="btn-primary" onclick="checkAnswer()" aria-label="答えをチェック">
                         <span data-lang="ja">解答チェック</span>
                         <span data-lang="en" style="display: none;">Check Answer</span>
                     </button>
-                    <button class="btn-secondary" onclick="getHint()">
+                    <button class="btn-secondary" onclick="getHint()" aria-label="ヒントを表示">
                         <span data-lang="ja">ヒント</span>
                         <span data-lang="en" style="display: none;">Hint</span>
                         <span class="ml-2" id="hintsLeft">(3)</span>
                     </button>
-                    <button id="toggleTypeBtn" class="btn-secondary" type="button">
+                    <button id="toggleTypeBtn" class="btn-secondary" type="button" aria-label="暗号タイプを見る">
                         <span data-lang="ja">暗号タイプを見る</span>
                         <span data-lang="en" style="display: none;">Show Cipher Type</span>
                     </button>
-                    <button class="btn-secondary" onclick="skipCipher()">
+                    <button class="btn-secondary" onclick="skipCipher()" aria-label="暗号をスキップ">
                         <span data-lang="ja">スキップ</span>
                         <span data-lang="en" style="display: none;">Skip</span>
                     </button>
@@ -1079,7 +1094,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <h4 style="color:#fbbf24;font-weight:700;font-size:0.9rem;margin-bottom:8px;">🔧 Base64デコード補助</h4>
                     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
                         <input type="text" id="base64Input" placeholder="Base64文字列を入力" style="flex:1;min-width:160px;background:rgba(15,23,42,0.8);border:1px solid rgba(251,191,36,0.3);color:#f1f5f9;padding:8px 10px;border-radius:6px;font-size:14px;font-family:monospace;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                        <button onclick="decodeBase64Tool()" style="background:linear-gradient(45deg,#fbbf24,#d97706);color:#111;border:none;padding:8px 14px;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">デコード</button>
+                        <button onclick="decodeBase64Tool()" style="background:#f0f9ff;color:#111;border:none;padding:8px 14px;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">デコード</button>
                     </div>
                     <div id="base64Result" style="margin-top:8px;font-family:monospace;font-size:1rem;color:#4ade80;font-weight:700;letter-spacing:0.05em;display:none;"></div>
                 </div>
@@ -1369,7 +1384,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
      data-ad-slot="auto"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<script>try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}</script>
 </div>
 <div style="text-align:center;margin:16px auto;max-width:728px;">
 <ins class="adsbygoogle"
@@ -1378,7 +1393,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
      data-ad-slot="auto"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<script>try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}</script>
 </div>
 <div style="text-align:center;margin:16px auto;max-width:728px;">
 <ins class="adsbygoogle"
@@ -1387,11 +1402,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
      data-ad-slot="auto"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<script>try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}</script>
 </div>
 
-<section style="margin:32px auto;max-width:640px;padding:0 16px;" aria-labelledby="faq-h">
-  <h2 id="faq-h" style="font-size:1.15rem;font-weight:700;margin-bottom:10px;border-left:4px solid #7c3aed;padding-left:10px;">よくある質問</h2>
+<section aria-labelledby="faq-h" class="bg-white rounded-2xl shadow-md p-4 mb-4">
+  <h2 id="faq-h" style="font-size:1.05rem;font-weight:700;margin-bottom:12px;border-left:4px solid #22c55e;padding-left:10px;">よくある質問</h2>
   <dl style="line-height:1.8;">
     <dt style="font-weight:600;margin-top:12px;">Q: 暗号解読パズルは無料ですか？</dt>
     <dd style="margin-left:16px;color:#d1d5db;">はい、完全無料・登録不要でご利用いただけます。</dd>
@@ -1909,6 +1924,8 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             const ua = document.getElementById('userAnswer');
             ua.value = '';
             ua.classList.remove('cb-success', 'cb-shake');
+            // プレースホルダーを各レベルの正解例で動的に設定
+            ua.placeholder = `大文字で解読文を入力（例: ${cipher.decrypted}）`;
             document.getElementById('hintArea').style.display = 'none';
             document.getElementById('resultArea').style.display = 'none';
 
@@ -1934,6 +1951,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             updateProgress();
             updateLevelSelect();
             startTimer();
+            // モバイルUX: ゲーム開始時に入力欄を自動フォーカス
+            setTimeout(() => {
+                const userAnswer = document.getElementById('userAnswer');
+                if (userAnswer) userAnswer.focus();
+            }, 100);
         }
 
         // 暗号タイプ名取得
@@ -2574,7 +2596,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
   <div class="spinner" style="width:40px;height:40px;border:4px solid rgba(251,191,36,0.3);border-top-color:#fbbf24;border-radius:50%;animation:spin-cb 0.8s linear infinite;"></div>
   <p class="loading-text" style="margin-top:12px;font-size:0.85rem;color:#f1f5f9;">読み込み中...</p>
 </div>
-<div class="skeleton" style="display:none;height:3px;background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%);background-size:200% 100%;animation:skeleton-cb 1.5s infinite;"></div>
+<div class="skeleton" style="display:none;height:3px;background:#f0f9ff;background-size:200% 100%;animation:skeleton-cb 1.5s infinite;"></div>
 <style>@keyframes spin-cb{to{transform:rotate(360deg)}} @keyframes skeleton-cb{0%{background-position:200% 0}100%{background-position:-200% 0}}</style>
 <div style="display:none">
   <input type="text" name="cb_name" required minlength="1" maxlength="50" placeholder="name" aria-label="name">
@@ -2587,17 +2609,19 @@ window.cbSafeSet=function(k,v){try{localStorage.setItem(k,JSON.stringify(v));ret
 window.cbSafeRm=function(k){try{localStorage.removeItem(k);return true;}catch(e){return false;}};
 window.cbSafeCp=function(t){try{if(navigator.clipboard){navigator.clipboard.writeText(t);}else{var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");document.body.removeChild(a);};}catch(e){}};
 window.cbSave=function(d){try{var h=JSON.parse(localStorage.getItem("cb_hist")||"[]");h.unshift({d:d,t:Date.now()});if(h.length>100)h.pop();localStorage.setItem("cb_hist",JSON.stringify(h));}catch(e){}};
-document.addEventListener("DOMContentLoaded",function(){try{var l=document.getElementById("page-loader-cb");if(l){l.style.opacity="0";l.style.transition="opacity 0.3s";setTimeout(function(){try{l.remove();}catch(e){}},350);}}catch(e){}});
+(function(){try{var l=document.getElementById("page-loader-cb");if(l){l.style.opacity="0";l.style.transition="opacity 0.3s";setTimeout(function(){try{l.remove();}catch(e){}},350);}}catch(e){}})();
 </script>
 
 <div style="text-align:center;margin:14px auto;max-width:800px;padding:0 16px;">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8427583028015858" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<script>try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}</script>
 </div>
-<section style="max-width:800px;margin:0 auto 14px;padding:12px;background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.3);border-radius:12px;"><h2 style="font-size:0.85rem;font-weight:bold;color:#fbbf24;margin-bottom:8px;text-align:center;">🔐 パズル・プログラミングサービス</h2><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"><a href="https://appadaycreator.com/nanpure-quest/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🔢</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">数独ゲーム</div></a><a href="https://appadaycreator.com/chemical-quest/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🔬</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">化学クエスト</div></a><a href="https://appadaycreator.com/math-maze-puzzle/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🧮</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">計算ゲーム</div></a></div></section>
+<div class="max-w-2xl mx-auto px-4 mb-4">
+<section style="max-width:800px;padding:12px;background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.3);border-radius:12px;"><h2 style="font-size:0.85rem;font-weight:bold;color:#fbbf24;margin-bottom:8px;text-align:center;">🔐 パズル・プログラミングサービス</h2><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"><a href="https://appadaycreator.com/nanpure-quest/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🔢</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">数独ゲーム</div></a><a href="https://appadaycreator.com/chemical-quest/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🔬</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">化学クエスト</div></a><a href="https://appadaycreator.com/math-maze-puzzle/" style="background:rgba(15,23,42,0.8);border:2px solid rgba(251,191,36,0.4);border-radius:10px;padding:9px 12px;text-decoration:none;text-align:center;min-width:95px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.4)'"><div style="font-size:1.2rem;">🧮</div><div style="font-size:0.72rem;font-weight:bold;color:#f1f5f9;margin-top:2px;">計算ゲーム</div></a></div></section>
+</div>
 <div style="text-align:center;margin:14px auto;max-width:800px;padding:0 16px;">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8427583028015858" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<script>try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}</script>
 </div>
 
 <style>
@@ -2638,7 +2662,7 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
         '<p style="margin:0 0 20px;font-size:15px;color:#f1f5f9;line-height:1.6;">'+msg+'</p>'+
         '<div style="display:flex;gap:8px;justify-content:flex-end;">'+
         '<button id="_cc-cancel" style="padding:8px 16px;border:1px solid rgba(251,191,36,0.4);border-radius:8px;background:transparent;color:#cbd5e1;cursor:pointer;font-size:14px;">キャンセル</button>'+
-        '<button id="_cc-ok" style="padding:8px 16px;background:linear-gradient(45deg,#fbbf24,#d97706);color:#111;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;">OK</button>'+
+        '<button id="_cc-ok" style="padding:8px 16px;background:#f0f9ff;color:#111;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;">OK</button>'+
         '</div></div>';
       document.body.appendChild(ov);
       ov.querySelector('#_cc-ok').addEventListener('click',function(){document.body.removeChild(ov);resolve(true);});
@@ -2654,7 +2678,8 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
 })();
 </script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"暗号解読パズル【コードブレイカー】無料で楽しめる謎解きゲーム","description":"シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。","url":"https://appadaycreator.com/codebreaker-puzzle/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":"ja","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
-    <!-- phase8-social-proof -->
+    <div class="max-w-2xl mx-auto px-4">
+<!-- phase8-social-proof -->
     <div style="background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.3);border-radius:12px;padding:20px;margin:12px 0;">
       <h3 style="font-weight:bold;color:#fbbf24;margin-bottom:12px;font-size:0.9rem;">💬 こんなふうに活用できます</h3>
       <div style="display:flex;flex-direction:column;gap:10px;">
@@ -2680,7 +2705,8 @@ document.addEventListener("DOMContentLoaded",function(){try{var l=document.getEl
         </a>
       </div>
     </div>
-    <!-- rakuten-affiliate-block -->
+</div>
+<!-- rakuten-affiliate-block -->
     <div style="background:rgba(30,41,59,0.9);border:1px solid rgba(191,0,0,0.5);border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
       <p style="font-size:0.85rem;color:#cbd5e1;margin-bottom:8px;">🛒 関連商品を楽天市場で探す</p>
       <a href="https://hb.afl.rakuten.co.jp/ichiba/541ad0d2.ce2bed12.541ad0d3.a1a2318c/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2Fcodebreaker%2520%25E3%2582%25B2%25E3%2583%25BC%25E3%2583%25A0%2F&link_type=text" target="_blank" rel="nofollow sponsored noopener"
