@@ -13,9 +13,10 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f172a">
-    <meta name="description" content="無料の暗号解読パズルゲーム。シーザー暗号から高度な暗号まで15段階で挑戦。論理思考力を鍛える本格的な謎解きゲーム。登録不要で即プレイできます。">
-<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#fbbf24">
+    <meta name="description" content="シーザー暗号・ヴィジュネル暗号など様々な暗号を解読するパズルゲーム。論理思考力・語彙力が鍛えられる無料の謎解きゲーム。登録不要・完全無料でご利用いただけます。">
+    <meta name="keywords" content="暗号解読,パズルゲーム,謎解き,シーザー暗号,論理的思考,無料ゲーム">
+    <meta name="robots" content="index, follow">
     <meta name="author" content="AppADayCreator">
     
     <!-- OGP設定 -->
@@ -40,12 +41,12 @@
     <!-- Favicon -->
         
     <!-- 外部ライブラリ -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Chart.js for result visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet"></noscript>
     
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -53,8 +54,6 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TXQGZRF9');</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDPNYD2875"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZDPNYD2875',{send_page_view:false});</script>
     <!-- End Google Tag Manager -->
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
@@ -90,7 +89,7 @@
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background: #0a0f23;
+            background: #f8fafc;
             color: var(--text-light);
             margin: 0;
             padding: 0;
@@ -190,18 +189,6 @@
             outline: none;
             border-color: var(--accent-gold);
             box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
-        }
-
-        /* アクセシビリティ: キーボード操作ユーザー向けフォーカスインジケータ */
-        button:focus-visible,
-        input:focus-visible,
-        select:focus-visible,
-        textarea:focus-visible,
-        .btn-primary:focus-visible,
-        .btn-secondary:focus-visible,
-        a:focus-visible {
-            outline: 3px solid var(--accent-gold);
-            outline-offset: 2px;
         }
 
         .hint-box {
@@ -422,47 +409,17 @@
             .hamburger {
                 display: flex;
             }
-
+            
             .desktop-nav {
                 display: none;
             }
-
+            
             .game-area {
                 padding: 16px;
             }
-
+            
             .stats-grid {
                 grid-template-columns: 1fr;
-            }
-
-            /* P2: レベルセレクトボックスのモバイルUX改善 */
-            #levelSelect {
-                font-size: 18px !important;
-                padding: 14px !important;
-                min-height: 44px;
-                line-height: 2.5;
-            }
-
-            #levelSelect option {
-                line-height: 2.5;
-            }
-
-            /* P2: 設定モーダルのスマートフォン最適化 */
-            .modal-content .close-btn {
-                position: sticky;
-                top: 0;
-                z-index: 10;
-            }
-
-            .modal-content {
-                padding: 16px;
-            }
-
-            /* P2: モバイルでタイマーを sticky 化して常に見える位置に */
-            #timerDisplay {
-                position: sticky;
-                top: 100px;
-                z-index: 50;
             }
         }
 
@@ -486,41 +443,6 @@
         .font-md { font-size: 16px; }
         .font-lg { font-size: 18px; }
         .font-xl { font-size: 20px; }
-
-        /* P2: 暗号文コピーボタンのUI改善 */
-        .btn-copy {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(30, 41, 59, 0.9);
-            border: 1px solid rgba(251, 191, 36, 0.4);
-            color: #fbbf24;
-            border-radius: 6px;
-            padding: 8px 10px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            min-height: 36px;
-            min-width: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-        }
-
-        .btn-copy:hover {
-            background: rgba(251, 191, 36, 0.2);
-            border-color: var(--accent-gold);
-        }
-
-        @media (max-width: 768px) {
-            .btn-copy {
-                min-height: 44px;
-                min-width: 44px;
-                font-size: 1rem;
-                padding: 10px 12px;
-            }
-        }
 
         .modal {
             position: fixed;
@@ -775,7 +697,7 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
 </style>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"コードブレイカー - 暗号解読パズルゲーム","url":"https://appadaycreator.com/codebreaker-puzzle/","description":"暗号解読で論理的思考力を鍛える本格謎解きパズルゲーム。シーザー暗号から高度な暗号まで段階的に挑戦。無料でプレイ可能。","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://appadaycreator.com/"}, {"@type": "ListItem", "position": 2, "name": "コードブレイカー - 暗号解読パズルゲーム", "item": "https://appadaycreator.com/codebreaker-puzzle/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"コードブレイカーパズルとは？","acceptedAnswer":{"@type":"Answer","text":"シーザー暗号・モールス信号・ヴィジュネル暗号など15種類の暗号を解読するパズルゲームです。暗号文を分析して元の文章を推理し、論理的思考力を鍛えながら楽しめます。無料でプレイできます。"}},{"@type":"Question","name":"何人でプレイできますか？","acceptedAnswer":{"@type":"Answer","text":"1人用のソロゲームです。ブラウザ上で動作するため、インストール不要で即プレイできます。"}},{"@type":"Question","name":"どのような人が使っていますか？","acceptedAnswer":{"@type":"Answer","text":"論理思考力を鍛えたい方、暗号や歴史に興味がある方、プログラミングの基礎を楽しく学びたい方に特におすすめです。小学生から大人まで幅広くご利用いただけます。"}},{"@type":"Question","name":"クリア結果をシェアできますか？","acceptedAnswer":{"@type":"Answer","text":"はい、全15問クリア後に結果をX（旧Twitter）・LINE・Facebookでシェアできます。ベストタイムも表示されます。"}},{"@type":"Question","name":"有料プランはありますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ、すべての機能を完全無料でご利用いただけます。"}},{"@type":"Question","name":"スコアは保存されますか？","acceptedAnswer":{"@type":"Answer","text":"各レベルのベストタイムとクリア状況がブラウザのローカルストレージに保存されます。ブラウザのデータを削除するとリセットされます。"}},{"@type":"Question","name":"オフラインで遊べますか？","acceptedAnswer":{"@type":"Answer","text":"はい、PWA対応のため初回アクセス後はオフラインでもプレイできます。ホーム画面に追加するとアプリのように使えます。"}},{"@type":"Question","name":"一番難しい暗号は何ですか？","acceptedAnswer":{"@type":"Answer","text":"Lv.15のバイナリコード＋数字変換です。複数のルールが組み合わさっており、論理的思考力を最大限に要求されます。"}},{"@type":"Question","name":"時間制限はありますか？","acceptedAnswer":{"@type":"Answer","text":"時間制限はありません。タイマーはあなたのペースを知るためのものです。焦らずじっくり考えて解読できます。"}},{"@type":"Question","name":"何度でもプレイできますか？","acceptedAnswer":{"@type":"Answer","text":"はい、何度でも無制限にプレイできます。ベストタイムを更新することで、さらに楽しさが広がります。"}},{"@type":"Question","name":"ヒント機能は使えますか？","acceptedAnswer":{"@type":"Answer","text":"はい、問題ごとに3段階のヒントが用意されています。ノーヒント達成で『天才』バッジがもらえます。"}}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"コードブレイカーパズルとは？","acceptedAnswer":{"@type":"Answer","text":"シーザー暗号・モールス信号・ヴィジュネル暗号など15種類の暗号を解読するパズルゲームです。暗号文を分析して元の文章を推理し、論理的思考力を鍛えながら楽しめます。無料でプレイできます。"}},{"@type":"Question","name":"何人でプレイできますか？","acceptedAnswer":{"@type":"Answer","text":"1人用のソロゲームです。ブラウザ上で動作するため、インストール不要で即プレイできます。"}},{"@type":"Question","name":"どのような人が使っていますか？","acceptedAnswer":{"@type":"Answer","text":"論理思考力を鍛えたい方、暗号や歴史に興味がある方、プログラミングの基礎を楽しく学びたい方に特におすすめです。小学生から大人まで幅広くご利用いただけます。"}},{"@type":"Question","name":"クリア結果をシェアできますか？","acceptedAnswer":{"@type":"Answer","text":"はい、全10問クリア後に結果をX（旧Twitter）・LINE・Facebookでシェアできます。ベストタイムも表示されます。"}},{"@type":"Question","name":"有料プランはありますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ、すべての機能を完全無料でご利用いただけます。"}},{"@type":"Question","name":"スコアは保存されますか？","acceptedAnswer":{"@type":"Answer","text":"各レベルのベストタイムとクリア状況がブラウザのローカルストレージに保存されます。ブラウザのデータを削除するとリセットされます。"}},{"@type":"Question","name":"オフラインで遊べますか？","acceptedAnswer":{"@type":"Answer","text":"はい、PWA対応のため初回アクセス後はオフラインでもプレイできます。ホーム画面に追加するとアプリのように使えます。"}}]}</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -823,15 +745,6 @@ button:active,[class*=btn]:active{opacity:.75;transform:scale(.98);}
 select,input[type=text],input[type=number],input[type=email],textarea{min-height:44px;font-size:16px;}
 [id*=result]:not(style):not(script),[id*=output]:not(style):not(script){border-left:4px solid #6366f1;padding-left:16px;margin-top:16px;}
 @media(max-width:640px){[class*=max-w],[class*=container],[class*=wrapper]{padding:12px 16px!important;}button,[class*=btn]{width:100%;font-size:15px;}}
-@media(max-width:768px){#levelSelect{font-size:18px!important;padding:14px!important;line-height:2.5;}}
-@media print {
-  header, nav, .sidebar, .overlay, footer, [class*="share"], button:not(.no-print-hide) { display: none !important; }
-  body { background: white; color: black; margin: 0; padding: 0; }
-  .game-area { max-width: 100%; }
-  h1, h2, h3 { color: black; }
-  .stats-grid, .difficulty-badge, [style*="background:rgba"] { border: 1px solid #000; background: white !important; color: black; }
-  .text-yellow-400, [style*="color:#fbbf24"], [style*="color:#ffe066"] { color: #333 !important; }
-}
 </style>
 </head>
 <body class="bg-pattern"><a href="#main" class="sr-only">本文へスキップ</a>
@@ -902,14 +815,6 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             </div>
         </div>
     </header>
-<div style="background:#4338ca;padding:5px 12px;text-align:right;font-size:.78rem"><a href="/blog/" style="color:#c7d2fe;text-decoration:none;font-weight:600">📖 コラム</a>&nbsp;｜&nbsp;<a href="/" style="color:#c7d2fe;text-decoration:none">ホーム</a></div>
-<!-- r21-breadcrumb -->
-<nav aria-label="パンくずリスト" style="background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:5px 16px;font-size:.78rem;color:#6b7280;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">
-  <a href="/" style="color:#4f46e5;text-decoration:none">ホーム</a>
-  <span style="margin:0 .35rem;color:#9ca3af">›</span>
-  <span style="color:#374151">暗号解読パズル【コードブレイカー】無料で楽しめる謎解きゲーム</span>
-</nav>
-
 
     <!-- 設定モーダル -->
     <div id="settingsModal" class="modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
@@ -1047,11 +952,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <span data-lang="ja">シーザー暗号から高度な暗号まで、段階的に挑戦する本格謎解きパズルゲーム</span>
                     <span data-lang="en" style="display: none;">From Caesar cipher to advanced cryptography, challenge yourself with authentic puzzle games</span>
                 </p>
-                <button class="btn-primary mr-4" onclick="startGame()" aria-label="ゲームを開始">
+                <button class="btn-primary mr-4" onclick="startGame()">
                     <span data-lang="ja">今すぐプレイ</span>
                     <span data-lang="en" style="display: none;">Play Now</span>
                 </button>
-                <button class="btn-secondary" onclick="showTutorial()" aria-label="チュートリアルを表示">
+                <button class="btn-secondary" onclick="showTutorial()">
                     <span data-lang="ja">チュートリアル</span>
                     <span data-lang="en" style="display: none;">Tutorial</span>
                 </button>
@@ -1072,37 +977,6 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             </div>
         </section>
 
-        <!-- ゲーム特徴セクション（P1改善） -->
-        <section class="container mx-auto px-4 py-12">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold orbitron mb-8" style="color:#ffe066;">
-                    ⭐ このゲームの特徴
-                </h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div class="cipher-card" style="padding:24px;">
-                    <div style="font-size:2.5rem;margin-bottom:12px;text-align:center;">📚</div>
-                    <h3 class="text-lg font-bold text-center mb-3" style="color:#fffbe0;">暗号解読で論理思考力を鍛える</h3>
-                    <p style="font-size:0.9rem;color:#cbd5e1;text-align:center;line-height:1.6;">シーザー暗号・換字式暗号など15種類の暗号を解読。分析力・推理力・パターン認識能力を自然に身につけられます。</p>
-                </div>
-                <div class="cipher-card" style="padding:24px;">
-                    <div style="font-size:2.5rem;margin-bottom:12px;text-align:center;">🎓</div>
-                    <h3 class="text-lg font-bold text-center mb-3" style="color:#fffbe0;">段階的な難易度設定</h3>
-                    <p style="font-size:0.9rem;color:#cbd5e1;text-align:center;line-height:1.6;">初級から超上級まで、15段階の段階的学習。初心者でも安心してスタートできます。</p>
-                </div>
-                <div class="cipher-card" style="padding:24px;">
-                    <div style="font-size:2.5rem;margin-bottom:12px;text-align:center;">📱</div>
-                    <h3 class="text-lg font-bold text-center mb-3" style="color:#fffbe0;">無料・登録不要でプレイ</h3>
-                    <p style="font-size:0.9rem;color:#cbd5e1;text-align:center;line-height:1.6;">スマートフォン・タブレット・PC全対応。アカウント登録や課金なしで、いますぐ楽しめます。</p>
-                </div>
-            </div>
-            <div class="text-center">
-                <a href="lp.html" class="btn-secondary" style="display:inline-block;" aria-label="詳しく見る">
-                    詳しく見る →
-                </a>
-            </div>
-        </section>
-
         <!-- ゲームエリア -->
         <section id="game" class="container mx-auto px-4 py-8">
             <div class="game-area">
@@ -1111,17 +985,17 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <!-- 難易度フィルタ -->
                     <div id="diffFilterRow" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
                         <span style="font-size:0.8rem;color:#94a3b8;font-weight:600;">絞り込み:</span>
-                        <button class="diff-filter-btn active" data-diff="all" onclick="filterLevelsByDifficulty('all')" aria-label="全ての難易度を表示">全て</button>
-                        <button class="diff-filter-btn" data-diff="easy" onclick="filterLevelsByDifficulty('easy')" aria-label="初級の問題を表示">初級</button>
-                        <button class="diff-filter-btn" data-diff="medium" onclick="filterLevelsByDifficulty('medium')" aria-label="中級の問題を表示">中級</button>
-                        <button class="diff-filter-btn" data-diff="hard" onclick="filterLevelsByDifficulty('hard')" aria-label="上級の問題を表示">上級</button>
+                        <button class="diff-filter-btn active" data-diff="all" onclick="filterLevelsByDifficulty('all')">全て</button>
+                        <button class="diff-filter-btn" data-diff="easy" onclick="filterLevelsByDifficulty('easy')">初級</button>
+                        <button class="diff-filter-btn" data-diff="medium" onclick="filterLevelsByDifficulty('medium')">中級</button>
+                        <button class="diff-filter-btn" data-diff="hard" onclick="filterLevelsByDifficulty('hard')">上級</button>
                     </div>
                     <div class="flex items-center gap-3 flex-wrap">
                         <label class="text-sm text-gray-400 font-semibold" for="levelSelect">
                             <span data-lang="ja">レベル選択:</span>
                             <span data-lang="en" style="display:none;">Level:</span>
                         </label>
-                        <select id="levelSelect" class="cipher-input" style="width:auto;font-family:'Noto Sans JP',sans-serif;padding:12px;" aria-label="レベル選択">
+                        <select id="levelSelect" class="cipher-input" style="width:auto;font-family:'Noto Sans JP',sans-serif;font-size:14px;padding:6px 10px;" aria-label="レベル選択">
                         </select>
                     </div>
                 </div>
@@ -1155,7 +1029,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     </label>
                     <div class="bg-gray-800 p-4 rounded-lg border border-yellow-400 border-opacity-30" style="overflow-x:auto;position:relative;">
                         <p class="text-lg orbitron text-yellow-400" id="cipherText" style="word-break:break-all;white-space:pre-wrap;padding-right:2.5rem;">KHOOR ZRUOG</p>
-                        <button class="btn-copy" onclick="copyCipherText()" title="暗号文をコピー" aria-label="暗号文をクリップボードにコピー">📋</button>
+                        <button onclick="copyCipherText()" title="暗号文をコピー" aria-label="暗号文をクリップボードにコピー" style="position:absolute;top:8px;right:8px;background:rgba(30,41,59,0.9);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;border-radius:6px;padding:6px 8px;font-size:0.75rem;cursor:pointer;transition:all 0.2s;min-height:32px;min-width:32px;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(251,191,36,0.2)'" onmouseout="this.style.background='rgba(30,41,59,0.9)'">📋</button>
                     </div>
                 </div>
                 
@@ -1173,20 +1047,20 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                 </div>
                 
                 <div class="flex flex-wrap gap-4 mb-6">
-                    <button class="btn-primary" onclick="checkAnswer()" aria-label="答えをチェック">
+                    <button class="btn-primary" onclick="checkAnswer()">
                         <span data-lang="ja">解答チェック</span>
                         <span data-lang="en" style="display: none;">Check Answer</span>
                     </button>
-                    <button class="btn-secondary" onclick="getHint()" aria-label="ヒントを表示">
+                    <button class="btn-secondary" onclick="getHint()">
                         <span data-lang="ja">ヒント</span>
                         <span data-lang="en" style="display: none;">Hint</span>
                         <span class="ml-2" id="hintsLeft">(3)</span>
                     </button>
-                    <button id="toggleTypeBtn" class="btn-secondary" type="button" aria-label="暗号タイプを見る">
+                    <button id="toggleTypeBtn" class="btn-secondary" type="button">
                         <span data-lang="ja">暗号タイプを見る</span>
                         <span data-lang="en" style="display: none;">Show Cipher Type</span>
                     </button>
-                    <button class="btn-secondary" onclick="skipCipher()" aria-label="暗号をスキップ">
+                    <button class="btn-secondary" onclick="skipCipher()">
                         <span data-lang="ja">スキップ</span>
                         <span data-lang="en" style="display: none;">Skip</span>
                     </button>
@@ -1539,65 +1413,7 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
     <dt style="font-weight:600;margin-top:12px;">Q: 入力データはサーバーに送信されますか？</dt>
     <dd style="margin-left:16px;color:#d1d5db;">いいえ。すべての処理はブラウザ内で完結し、データの外部送信は行いません。</dd>
   </dl>
-</section><div id="tool-desc-box" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1.5rem 1.75rem;margin:1.5rem 0">
-  <p style="color:#374151;margin:0 0 .75rem;line-height:1.75;font-size:.92rem">暗号解読パズル【コードブレイカー】無料で楽しめる謎解きゲームは、AppADayCreatorが提供する完全無料のゲーム・クイズです。登録・ログイン不要で、すぐにご利用いただけます。</p>
-  <p style="color:#374151;margin:0 0 .75rem;line-height:1.75;font-size:.92rem">【遊び方】ページを開いたらすぐにスタートできます。スマートフォンにも対応しています。</p>
-  <p style="color:#4b5563;margin:0;line-height:1.75;font-size:.9rem">当ツールで入力したデータはお使いのブラウザ内にのみ保存され、外部サーバーへ送信されることはありません。安心してご利用ください。</p>
-</div>
-<div style="background:#f0f7ff;border:2px solid #bfdbfe;border-radius:12px;padding:1.5rem 1.75rem;margin:2rem 0">
-  <h2 style="font-size:1.1rem;font-weight:800;color:#1e3a5f;margin:0 0 1rem;padding-bottom:.75rem;border-bottom:2px solid #bfdbfe">論理パズルで鍛える思考力：暗号解読とプログラミング的思考</h2>
-  <h3 style="font-size:1rem;font-weight:700;color:#1e3a5f;margin:1.25rem 0 .5rem">論理パズルの種類と認知機能への効果</h3>
-  <p style="font-size:.9375rem;color:#374151;line-height:1.8;margin:0 0 1rem">コードブレーカー（暗号解読）パズルは複数の認知機能を同時に使う総合的な知的トレーニングです。活性化される認知機能として：①帰納的推論（手がかりから規則を発見する）②演繹的推論（既知の規則を個別事例に適用する）③ワーキングメモリ（複数の手がかりを同時に保持する）④問題分解（大きな問題を小さなステップに分割する）があります。ロンドン大学の研究では、論理パズルを週4時間解くグループは6ヶ月後の推論能力テストで対照群より15%高いスコアを達成しました。また、ゲームとしての楽しさが学習への抵抗感を下げ、継続率向上に寄与します。</p>
-  <h3 style="font-size:1rem;font-weight:700;color:#1e3a5f;margin:1.25rem 0 .5rem">暗号解読とプログラミング的思考の共通点</h3>
-  <p style="font-size:.9375rem;color:#374151;line-height:1.8;margin:0 0 1rem">暗号解読とプログラミングは「問題をアルゴリズムとして解く」という点で本質的に同じ思考プロセスを使います。共通するスキルとして：①パターン認識（繰り返す要素を見つける）②条件分岐（if/else的思考：「もし○○ならAを試す、そうでなければB」）③ループ思考（同じ操作を体系的に繰り返す）④バックトラッキング（行き詰まったら仮定を取り消して別のアプローチを試す）があります。数学オリンピック・情報オリンピックの問題にも暗号・論理パズルが多く含まれており、プログラミング学習の入口としてコードブレーカーゲームを活用する学校・塾も増えています。</p>
-  <h3 style="font-size:1rem;font-weight:700;color:#1e3a5f;margin:1.25rem 0 .5rem">集中力・問題解決力の強化とゲームの使い方</h3>
-  <p style="font-size:.9375rem;color:#374151;line-height:1.8;margin:0 0 1rem">コードブレーカーなどの論理パズルを集中力トレーニングとして活用するコツを紹介します。①ポモドーロ法との組み合わせ：25分集中→5分休憩のサイクルでパズルを解くことで、深い集中状態（フロー）に入りやすくなります。②難易度の段階的調整：初心者は3〜4文字の短い暗号から始め、徐々に長くする。③制限時間の設定：タイマーを使うことで焦りへの耐性とスピード感が鍛えられます。④解法の言語化：解けた後に「どうやって解いたか」を言葉で説明する習慣が、メタ認知能力（自分の思考を客観視する力）を高め、応用力の向上につながります。</p>
-</div>
-
-<!-- r22-editorial -->
-<div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:.75rem;padding:1.5rem;margin:1.5rem 0">
-  <h2 style="font-size:1.05rem;font-weight:800;color:#581c87;margin:0 0 1rem;border-left:4px solid #7c3aed;padding-left:.75rem">ゲーム・脳トレの効果と活用データ</h2>
-  <p style="font-size:.88rem;color:#4b5563;margin:0 0 .75rem">脳科学研究や国内調査をもとに、ゲーム・パズル・脳トレの認知機能への効果を整理しました。</p>
-  <table style="width:100%;border-collapse:collapse;font-size:.83rem">
-    <thead>
-      <tr style="background:#e9d5ff">
-        <th style="padding:.5rem .75rem;text-align:left;border:1px solid #e9d5ff;color:#581c87">項目</th>
-        <th style="padding:.5rem .75rem;text-align:left;border:1px solid #e9d5ff;color:#581c87">データ</th>
-        <th style="padding:.5rem .75rem;text-align:left;border:1px solid #e9d5ff;color:#581c87">出典</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background:#fdf4ff">
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">ゲームの認知機能改善効果</td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>問題解決型ゲームは注意・記憶・処理速度の改善に寄与（複数研究）</strong></td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">認知心理学・神経科学の研究知見</td>
-      </tr>
-      <tr style="">
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">成人の平均スクリーンタイム（スマホ）</td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>約4〜5時間/日（2023年推計）</strong></td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">総務省「情報通信白書」2023年</td>
-      </tr>
-      <tr style="background:#fdf4ff">
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">国内ゲーム市場規模</td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>約2.1兆円（2023年・モバイル含む）</strong></td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">一般社団法人コンピュータエンターテインメント協会</td>
-      </tr>
-      <tr style="">
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">脳トレの推奨頻度</td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>毎日短時間（10〜20分）の継続が効果的とされる</strong></td>
-        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">認知科学研究より</td>
-      </tr>
-    </tbody>
-  </table>
-  <p style="font-size:.78rem;color:#6b7280;margin:.5rem 0 0">※ 記載データは各出典の公表時点の情報です。最新情報は各公的機関の公式サイトをご確認ください。</p>
-</div>
-<!-- r20-tool-links -->
-<div id="tool-disclaimer" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1.25rem 1.5rem;margin:1.5rem 0;font-size:.875rem">
-  <p style="font-weight:700;color:#374151;margin:0 0 .5rem">⚠️ 計算結果の活用にあたって</p>
-  <p style="color:#4b5563;margin:0 0 .5rem;line-height:1.75">計算結果は参考値です。入力値や前提条件によって結果が変わります。重要な判断の際は最新の公式情報をご確認ください。</p>
-  <ul style="margin:0;padding-left:1.25rem;color:#4b5563;line-height:1.9"><li><a href="https://www.caa.go.jp/" target="_blank" rel="noopener noreferrer" style="color:#4f46e5;font-size:.85rem">消費者庁「くらしの安心ガイド」</a></li></ul>
-</div>
-</main>
+</section></main>
 
     <script>
         // ゲーム状態管理
@@ -2089,18 +1905,11 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             if (checkBtn) { checkBtn.disabled = false; checkBtn.style.opacity = ''; }
 
             // UI更新
-            // P2: バイナリコードのモバイル対応（16文字ごとに改行）
-            let displayText = cipher.encrypted;
-            if (cipher.type === 'binary') {
-                displayText = displayText.replace(/(.{1,16})/g, '$1\n').trim();
-            }
-            document.getElementById('cipherText').textContent = displayText;
+            document.getElementById('cipherText').textContent = cipher.encrypted;
             document.getElementById('cipherType').textContent = getCipherTypeName(cipher.type);
             const ua = document.getElementById('userAnswer');
             ua.value = '';
             ua.classList.remove('cb-success', 'cb-shake');
-            // プレースホルダーを各レベルの正解例で動的に設定
-            ua.placeholder = `大文字で解読文を入力（例: ${cipher.decrypted}）`;
             document.getElementById('hintArea').style.display = 'none';
             document.getElementById('resultArea').style.display = 'none';
 
@@ -2126,11 +1935,6 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             updateProgress();
             updateLevelSelect();
             startTimer();
-            // モバイルUX: ゲーム開始時に入力欄を自動フォーカス
-            setTimeout(() => {
-                const userAnswer = document.getElementById('userAnswer');
-                if (userAnswer) userAnswer.focus();
-            }, 100);
         }
 
         // 暗号タイプ名取得
@@ -2537,7 +2341,6 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
             const totalCiphers = Object.keys(ciphers).length;
             // レベル別ベストタイム一覧
             let bestTimesRows = '';
-            const chartData = { labels: [], times: [], colors: [] };
             for (let i = 1; i <= totalCiphers; i++) {
                 const best = getBestTime(i);
                 const bestStr = best !== null ? (best >= 60 ? `${Math.floor(best/60)}分${best%60}秒` : `${best}秒`) : '未解読';
@@ -2552,10 +2355,6 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                     <td style="padding:5px 10px;font-family:monospace;color:${best !== null ? '#4ade80' : '#6b7280'};">${bestStr}</td>
                     <td style="padding:5px 10px;color:#fbbf24;font-size:0.9rem;">${starsStr}</td>
                 </tr>`;
-                chartData.labels.push(`Lv.${i}`);
-                chartData.times.push(best !== null ? best : 0);
-                const diffColor = c ? ({'easy':'#10b981','medium':'#f59e0b','hard':'#ef4444'}[c.difficulty] || '#6b7280') : '#6b7280';
-                chartData.colors.push(diffColor);
             }
             // スター合計計算
             let totalStars = 0, maxStars = totalCiphers * 3;
@@ -2606,124 +2405,19 @@ select,input[type=text],input[type=number],input[type=email],textarea{min-height
                             ${bestTimesRows}
                         </table>
                     </div>
-                    <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:16px;margin-bottom:20px;max-width:600px;margin-left:auto;margin-right:auto;">
-                        <h3 style="color:#fbbf24;font-weight:700;margin-bottom:12px;text-align:center;font-size:0.95rem;">📈 解読時間グラフ</h3>
-                        <canvas id="bestTimesChart" style="max-height:400px;"></canvas>
-                    </div>
-                    <div class="share-buttons justify-center" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
-                        <button class="btn-primary" onclick="shareResult()">📤 結果をシェア</button>
-                        <button class="btn-primary" onclick="printResult()">🖨️ 印刷</button>
-                        <button class="btn-primary" onclick="downloadCSV()">⬇️ CSV</button>
-                        <button class="btn-secondary" onclick="resetGame()">🔄 もう一度プレイ</button>
-                    </div>
-                    <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(251,191,36,0.2);">
-                        <h3 style="text-center;color:#ffe066;font-weight:700;margin-bottom:16px;font-size:1rem;">他のおすすめパズル</h3>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:400px;margin:0 auto;">
-                            <a href="https://appadaycreator.com/bmi-body-tracker/" style="background:rgba(30,41,59,0.8);border:1px solid rgba(251,191,36,0.3);border-radius:10px;padding:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.3)'">
-                                <div style="font-size:1.8rem;">⚖️</div>
-                                <span style="color:#f1f5f9;font-size:0.85rem;text-align:center;font-weight:600;">BMI・体重管理</span>
-                            </a>
-                            <a href="https://appadaycreator.com/sleep-quality-checker/" style="background:rgba(30,41,59,0.8);border:1px solid rgba(251,191,36,0.3);border-radius:10px;padding:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.3)'">
-                                <div style="font-size:1.8rem;">😴</div>
-                                <span style="color:#f1f5f9;font-size:0.85rem;text-align:center;font-weight:600;">睡眠診断</span>
-                            </a>
-                            <a href="https://appadaycreator.com/household-budget-analyzer/" style="background:rgba(30,41,59,0.8);border:1px solid rgba(251,191,36,0.3);border-radius:10px;padding:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.3)'">
-                                <div style="font-size:1.8rem;">💰</div>
-                                <span style="color:#f1f5f9;font-size:0.85rem;text-align:center;font-weight:600;">家計簿診断</span>
-                            </a>
-                            <a href="https://appadaycreator.com/" style="background:rgba(30,41,59,0.8);border:1px solid rgba(251,191,36,0.3);border-radius:10px;padding:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px;" onmouseover="this.style.borderColor='#fbbf24'" onmouseout="this.style.borderColor='rgba(251,191,36,0.3)'">
-                                <div style="font-size:1.8rem;">🎮</div>
-                                <span style="color:#f1f5f9;font-size:0.85rem;text-align:center;font-weight:600;">全サービス</span>
-                            </a>
-                        </div>
+                    <div class="share-buttons justify-center">
+                        <button class="btn-primary mr-4" onclick="shareResult()">結果をシェア</button>
+                        <button class="btn-secondary" onclick="resetGame()">もう一度プレイ</button>
                     </div>
                 </div>
             `;
-            setTimeout(() => {
-                if (typeof Chart !== 'undefined' && document.getElementById('bestTimesChart')) {
-                    const ctx = document.getElementById('bestTimesChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: chartData.labels,
-                            datasets: [{
-                                label: '秒',
-                                data: chartData.times,
-                                backgroundColor: chartData.colors,
-                                borderColor: chartData.colors,
-                                borderWidth: 0,
-                                borderRadius: 4
-                            }]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            responsive: true,
-                            maintainAspectRatio: true,
-                            plugins: {
-                                legend: { display: false }
-                            },
-                            scales: {
-                                x: {
-                                    beginAtZero: true,
-                                    grid: { color: 'rgba(251,191,36,0.1)' },
-                                    ticks: { color: '#cbd5e1', font: { size: 12 } }
-                                },
-                                y: {
-                                    grid: { display: false },
-                                    ticks: { color: '#fbbf24', font: { weight: 600, size: 11 } }
-                                }
-                            }
-                        }
-                    });
-                }
-            }, 100);
         }
 
         // 結果シェア
         function shareResult() {
             const hintMsg = gameState.hintsUsed === 0 ? 'ノーヒントで全制覇！🧠' : `ヒント${gameState.hintsUsed}回使用`;
-            // ベストタイム合計を計算してシェアテキストに追加
-            let totalBestSeconds = 0, allHaveBest = true;
-            const totalCiphers = Object.keys(ciphers).length;
-            for (let i = 1; i <= totalCiphers; i++) {
-                const b = getBestTime(i);
-                if (b !== null) totalBestSeconds += b;
-                else allHaveBest = false;
-            }
-            const totalBestStr = allHaveBest
-                ? (totalBestSeconds >= 60 ? `${Math.floor(totalBestSeconds / 60)}分${totalBestSeconds % 60}秒` : `${totalBestSeconds}秒`)
-                : `${Math.floor(totalBestSeconds / 60)}分${totalBestSeconds % 60}秒+`;
-            const text = `🔐 コードブレイカー 全15暗号制覇！\n${hintMsg}\n🏅 ベストタイム: ${totalBestStr}\n解読数: ${gameState.totalSolved}問\n#コードブレイカー #暗号解読 #謎解き`;
+            const text = `🔐 コードブレイカー 全15暗号制覇！\n${hintMsg}\n解読数: ${gameState.totalSolved}問\n#コードブレイカー #暗号解読 #謎解き`;
             shareToTwitter(text);
-        }
-
-        // 結果を印刷
-        function printResult() {
-            window.print();
-        }
-
-        // 結果をCSVダウンロード
-        function downloadCSV() {
-            const totalCiphers = Object.keys(ciphers).length;
-            let csvContent = 'レベル,難易度,ベストタイム,スター\n';
-            for (let i = 1; i <= totalCiphers; i++) {
-                const best = getBestTime(i);
-                const bestStr = best !== null ? (best >= 60 ? `${Math.floor(best/60)}分${best%60}秒` : `${best}秒`) : '未解読';
-                const c = ciphers[i];
-                const diffLabel = c ? ({'easy':'初級','medium':'中級','hard':'上級'}[c.difficulty] || '') : '';
-                const levelStars = getStars(i);
-                const starsStr = levelStars !== null ? levelStars : '-';
-                csvContent += `Lv.${i},${diffLabel},${bestStr},${starsStr}\n`;
-            }
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `codebreaker-results-${new Date().toISOString().slice(0,10)}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
 
         // ゲームリセット
@@ -3087,10 +2781,6 @@ document.readyState==='loading'?document.addEventListener('DOMContentLoaded',ini
                             <span data-lang="en" style="display: none;">Links</span>
                         </h4>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="lp.html" class="text-gray-400 hover:text-yellow-400">
-                                <span data-lang="ja">ゲームについて</span>
-                                <span data-lang="en" style="display: none;">About Game</span>
-                            </a></li>
                             <li><a href="howto.html" class="text-gray-400 hover:text-yellow-400">
                                 <span data-lang="ja">使い方</span>
                                 <span data-lang="en" style="display: none;">How to Play</span>
@@ -3136,27 +2826,5 @@ document.readyState==='loading'?document.addEventListener('DOMContentLoaded',ini
   <strong>免責事項</strong>：本ツールの計算・診断結果はあくまで参考情報です。本サービスの利用により生じた損害について、当サイトは一切の責任を負いません。
 </div>
 </footer>
-<div style="text-align:center;padding:10px 16px 14px;background:#eef2ff;border-top:2px solid #c7d2fe;margin-top:8px">
-<a href="/blog/" style="color:#4f46e5;font-size:.85rem;font-weight:700">📖 マネー・育児・キャリアのコラムを読む →</a>
-</div>
-<div style="background:#eef2ff;border-left:4px solid #4f46e5;border-radius:.5rem;padding:1rem 1.25rem;margin:1.5rem auto;max-width:760px;font-size:.875rem">
-<p style="margin:0 0 .5rem;font-weight:700;color:#3730a3">📖 お役立ちコラム</p>
-<ul style="margin:0;padding-left:1.25rem;color:#4f46e5;line-height:2">
-<li><a href="/blog/stock-investment-beginner/" style="color:#4f46e5">株式投資の始め方【初心者完全ガイド】</a></li>
-<li><a href="/blog/nisa-comparison/" style="color:#4f46e5">新NISA vs iDeCo 徹底比較</a></li>
-<li><a href="/blog/investment-risk-management/" style="color:#4f46e5">投資のリスク管理入門</a></li>
-</ul>
-</div>
-<!-- r17-mobile-ux -->
-<a href="#top" id="back-to-top" aria-label="ページトップへ戻る" style="display:none;position:fixed;bottom:24px;right:20px;background:#4f46e5;color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.4rem;line-height:48px;text-align:center;text-decoration:none;box-shadow:0 4px 12px rgba(79,70,229,.4);z-index:9000;cursor:pointer" title="ページトップへ">↑</a>
-<script>
-(function(){
-  var btn = document.getElementById('back-to-top');
-  if(!btn) return;
-  window.addEventListener('scroll', function(){
-    btn.style.display = window.scrollY > 400 ? 'block' : 'none';
-  }, {passive:true});
-})();
-</script>
 </body>
 </html>

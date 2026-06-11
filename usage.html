@@ -87,6 +87,51 @@
                 <li>すべてのステージをクリアしてマスター暗号解読者を目指しましょう！</li>
             </ol>
 
+            <h2>シーザー暗号の例</h2>
+            <p>最も基本的な暗号「シーザー暗号」の解読方法を図解します：</p>
+            <div style="background: #f0f4f8; padding: 20px; border-radius: 12px; margin: 16px 0; text-align: center;">
+                <svg width="100%" height="200" viewBox="0 0 500 200" style="max-width: 100%; height: auto;">
+                    <!-- グリッド背景 -->
+                    <defs>
+                        <style>
+                            .cipher-char { font-family: 'Courier New', monospace; font-size: 18px; font-weight: bold; text-anchor: middle; }
+                            .cipher-arrow { stroke: #667eea; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+                            .cipher-label { font-size: 14px; fill: #555; font-weight: 600; }
+                        </style>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#667eea" />
+                        </marker>
+                    </defs>
+
+                    <!-- 元の文字 -->
+                    <text x="50" y="30" class="cipher-label">元：</text>
+                    <rect x="80" y="10" width="35" height="35" fill="white" stroke="#667eea" stroke-width="2" rx="4" />
+                    <text x="97" y="35" class="cipher-char">A</text>
+
+                    <!-- 矢印 -->
+                    <path class="cipher-arrow" d="M 130 27 L 170 27" />
+                    <text x="150" y="50" class="cipher-label" text-anchor="middle">+3ずらす</text>
+
+                    <!-- 暗号文字 -->
+                    <rect x="180" y="10" width="35" height="35" fill="#ffd4d4" stroke="#ef4444" stroke-width="2" rx="4" />
+                    <text x="197" y="35" class="cipher-char" fill="#ef4444">D</text>
+
+                    <!-- 次の例 -->
+                    <text x="50" y="110" class="cipher-label">元：</text>
+                    <rect x="80" y="90" width="35" height="35" fill="white" stroke="#667eea" stroke-width="2" rx="4" />
+                    <text x="97" y="115" class="cipher-char">H</text>
+
+                    <path class="cipher-arrow" d="M 130 107 L 170 107" />
+                    <text x="150" y="130" class="cipher-label" text-anchor="middle">+3ずらす</text>
+
+                    <rect x="180" y="90" width="35" height="35" fill="#ffd4d4" stroke="#ef4444" stroke-width="2" rx="4" />
+                    <text x="197" y="115" class="cipher-char" fill="#ef4444">K</text>
+
+                    <!-- 説明 -->
+                    <text x="50" y="180" style="font-size: 13px; fill: #555;">暗号文「DK」は元は「AH」。ずらし数が3だと判明すれば解読できます。</text>
+                </svg>
+            </div>
+
             <h2>使いこなしのヒント</h2>
             <ul>
                 <li>シーザー暗号は文字をずらすシンプルな暗号です。「ずらし数」がカギです。</li>
@@ -100,6 +145,8 @@
             <div>
                 <a href="index.html">トップ</a>
                 <a href="usage.html">使い方</a>
+                <a href="privacy-policy.html">プライバシーポリシー</a>
+                <a href="terms.html">利用規約</a>
             </div>
             <p>&copy; 2026 コードブレイカー - 暗号解読パズル</p>
         </footer>

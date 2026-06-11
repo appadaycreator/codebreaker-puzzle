@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コードブレイカー｜15種類の暗号に挑戦する本格パズルゲーム</title>
+<meta name="description" content="シーザー暗号・モールス信号・ヴィジュネル暗号・Base64など15種類の暗号を解読する本格パズルゲーム。論理思考力と観察力を鍛える完全無料の脳トレ。">
+<link rel="canonical" href="https://appadaycreator.com/codebreaker-puzzle/lp/">
+<meta property="og:title" content="コードブレイカー｜15種類の暗号に挑戦する本格パズルゲーム">
+<meta property="og:description" content="シーザー暗号からBase64まで、論理力と洞察力を試す本格パズルゲーム。完全無料・PWA対応。">
+<meta property="og:image" content="https://appadaycreator.com/codebreaker-puzzle/ogp.png">
+<meta property="og:url" content="https://appadaycreator.com/codebreaker-puzzle/lp/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0f172a">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TXQGZRF9');</script>
+<!-- End Google Tag Manager -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDPNYD2875"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZDPNYD2875');</script>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","s3t9vl8h3v");</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8427583028015858" crossorigin="anonymous"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#070b16; --bg-1:#0b1120;
+  --panel:rgba(15,23,42,0.90); --panel-2:rgba(30,41,59,0.80);
+  --line:rgba(148,163,184,0.16); --line-gold:rgba(251,191,36,0.28);
+  --gold:#fbbf24; --gold-deep:#f59e0b; --gold-soft:rgba(251,191,36,0.12);
+  --ink:#f1f5f9; --ink-mut:#94a3b8; --ink-dim:#64748b;
+  --d-beg:#3ddc97; --d-int:#38bdf8; --d-adv:#fb6f5b; --d-exp:#a78bfa;
+  --r:14px; --maxw:1240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans JP",sans-serif;color:var(--ink);background:var(--bg-0);-webkit-font-smoothing:antialiased;line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+.atmos{position:fixed;inset:0;z-index:-2;pointer-events:none}
+.atmos::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(251,191,36,0.14), transparent 60%),
+    radial-gradient(900px 700px at -10% 12%, rgba(56,189,248,0.10), transparent 55%),
+    radial-gradient(1200px 900px at 50% 120%, rgba(120,119,198,0.12), transparent 60%);
+}
+.atmos::after{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(148,163,184,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,0.05) 1px,transparent 1px);
+  background-size:46px 46px;mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 75%);
+}
+.cipher-rain{position:fixed;inset:0;z-index:-1;pointer-events:none;font-family:Orbitron,monospace;color:rgba(251,191,36,0.05);font-size:13px;letter-spacing:.32em;line-height:2.1;overflow:hidden;white-space:pre-wrap;word-break:break-all;padding:24px;user-select:none}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:28px}
+
+header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(7,11,22,0.92),rgba(7,11,22,0.72));backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:30px;height:74px}
+.brand{display:flex;align-items:center;gap:13px;color:var(--ink)}
+.brand .logo{width:42px;height:42px;flex:none;filter:drop-shadow(0 0 10px rgba(251,191,36,0.35))}
+.brand b{font-family:Orbitron;font-weight:800;font-size:21px;letter-spacing:.01em;line-height:1}
+.brand small{display:block;font-family:Orbitron;font-weight:600;font-size:10px;letter-spacing:.42em;color:var(--gold);margin-top:3px}
+.nav nav{display:flex;gap:26px;margin-left:14px}
+.nav nav a{color:var(--ink-mut);font-size:15px;font-weight:500;position:relative;transition:color .18s}
+.nav nav a:hover{color:var(--ink)}
+.nav nav a::after{content:"";position:absolute;left:0;bottom:-7px;height:2px;width:0;background:var(--gold);transition:width .22s}
+.nav nav a:hover::after{width:100%}
+.nav .spacer{flex:1}
+.btn{font-family:"Noto Sans JP";cursor:pointer;border:none;border-radius:11px;font-weight:700;display:inline-flex;align-items:center;gap:9px;transition:transform .15s,box-shadow .2s,background .2s}
+.btn-gold{background:linear-gradient(180deg,var(--gold),var(--gold-deep));color:#1a1205;padding:11px 20px;font-size:15px;box-shadow:0 6px 20px -6px rgba(251,191,36,0.6)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(251,191,36,0.7)}
+.btn-lg{padding:16px 28px;font-size:17px;border-radius:13px}
+.btn-ghost{background:var(--panel-2);color:var(--ink);border:1px solid var(--line-gold);padding:11px 20px;font-size:15px}
+.btn-ghost:hover{background:rgba(251,191,36,0.08);transform:translateY(-2px)}
+.lang{display:flex;align-items:center;gap:7px;color:var(--ink-mut);font-size:14px;border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:transparent}
+.lang:hover{border-color:var(--line-gold);color:var(--ink)}
+
+.hero{position:relative;padding:64px 0 30px}
+.hero-grid{display:grid;grid-template-columns:1.02fr 0.98fr;gap:40px;align-items:center}
+.eyebrow{font-family:Orbitron;font-weight:600;letter-spacing:.34em;font-size:13px;color:var(--gold);text-transform:uppercase}
+.h1{font-family:Orbitron;font-weight:900;font-size:clamp(46px,6.4vw,84px);line-height:0.98;letter-spacing:.005em;margin:14px 0 18px;background:linear-gradient(180deg,#fff 30%,#fcd66a);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 50px rgba(251,191,36,0.12)}
+.tagline{display:inline-block;font-weight:700;font-size:clamp(17px,2vw,22px);color:var(--gold);border-left:3px solid var(--gold);padding-left:14px;margin-bottom:22px}
+.lead{color:var(--ink-mut);font-size:17px;max-width:30em;margin-bottom:26px;text-wrap:pretty}
+.pills{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:30px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:500}
+.pill svg{width:16px;height:16px}
+.cta-row{display:flex;flex-wrap:wrap;gap:15px}
+
+.hero-art{position:relative;aspect-ratio:1/0.92;border-radius:24px;overflow:hidden;border:1px solid var(--line-gold);background:radial-gradient(120% 120% at 70% 20%,rgba(56,189,248,0.10),transparent 50%),linear-gradient(160deg,#0d1426,#0a0f1d);box-shadow:0 40px 90px -40px rgba(0,0,0,0.8),inset 0 0 80px rgba(251,191,36,0.05)}
+.hero-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;pointer-events:none}
+.hero-fallback .ring{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;border:1px dashed rgba(251,191,36,0.25);animation:spin 36s linear infinite}
+.hero-fallback .ring.r2{width:58%;border-style:solid;border-color:rgba(56,189,248,0.18);animation-duration:24s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-fallback svg{width:150px;height:150px;filter:drop-shadow(0 18px 30px rgba(0,0,0,0.6))}
+.hero-fallback span{font-size:13px;color:var(--ink-dim);font-family:Orbitron;letter-spacing:.2em}
+
+section.block{padding:62px 0}
+.sec-head{text-align:center;margin-bottom:46px}
+.sec-head .kicker{display:inline-flex;align-items:center;gap:14px;font-family:Orbitron;font-weight:700;font-size:clamp(22px,2.6vw,30px);color:var(--ink);white-space:nowrap}
+.sec-head .kicker::before,.sec-head .kicker::after{content:"";width:42px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.sec-head .kicker::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.sec-head p{color:var(--ink-mut);margin-top:10px;font-size:15px}
+
+.feat{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.feat .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px 18px;text-align:center;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative;overflow:hidden}
+.feat .card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(251,191,36,0.06),transparent 40%);opacity:0;transition:opacity .25s}
+.feat .card:hover{transform:translateY(-6px);border-color:var(--line-gold);box-shadow:0 24px 50px -28px rgba(251,191,36,0.4)}
+.feat .card:hover::before{opacity:1}
+.ic{width:62px;height:62px;margin:0 auto 16px;display:grid;place-items:center;border-radius:14px;background:radial-gradient(circle at 50% 35%,rgba(251,191,36,0.16),rgba(251,191,36,0.04));border:1px solid var(--line-gold)}
+.ic svg{width:34px;height:34px}
+.feat .card h3{font-size:16.5px;font-weight:700;margin-bottom:9px}
+.feat .card p{font-size:13px;color:var(--ink-mut);line-height:1.65}
+
+.types{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;max-width:1040px;margin-inline:auto}
+.type{display:flex;flex-direction:column;align-items:center;gap:12px;padding:22px 8px;border-radius:var(--r);border:1px solid transparent;transition:.2s}
+.type:hover{border-color:var(--line-gold);background:var(--panel)}
+.type .disc{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-gold);background:radial-gradient(circle at 50% 40%,rgba(251,191,36,0.10),rgba(15,23,42,0.6))}
+.type .disc svg{width:30px;height:30px}
+.type .disc .b64{font-family:Orbitron;font-weight:700;font-size:15px;color:var(--gold)}
+.type span{font-size:12.5px;color:var(--ink-mut);text-align:center;font-weight:500}
+
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tri .card{background:linear-gradient(160deg,var(--panel),rgba(15,23,42,0.75));border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px;transition:.2s}
+.tri .card:hover{border-color:var(--line-gold);transform:translateY(-4px)}
+.tri .card .top{display:flex;align-items:center;gap:14px}
+.tri .card .ic{margin:0}
+.tri .card h3{font-size:19px;font-weight:700}
+.tri .card p{color:var(--ink-mut);font-size:14px;flex:1}
+.tri .card a{color:var(--gold);font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;white-space:nowrap}
+.tri .card a:hover{gap:12px}
+
+.closing{text-align:center;padding:52px 0 30px}
+.closing .line{display:inline-flex;align-items:center;gap:14px;font-size:clamp(18px,2.4vw,26px);font-weight:700;color:var(--ink)}
+.closing .line svg{width:30px;height:30px}
+.closing .cta-row{justify-content:center;margin-top:30px}
+
+footer{border-top:1px solid var(--line);padding:34px 0;margin-top:30px}
+.foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;color:var(--ink-dim);font-size:13px}
+.foot a{color:var(--ink-mut);margin-right:18px}
+.foot a:hover{color:var(--gold)}
+
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr}.hero-art{order:-1;max-width:440px;margin-inline:auto}
+  .feat{grid-template-columns:repeat(2,1fr)}.types{grid-template-columns:repeat(4,1fr)}
+  .tri{grid-template-columns:1fr}.nav nav{display:none}
+}
+@media(max-width:560px){.feat{grid-template-columns:1fr}.types{grid-template-columns:repeat(2,1fr)}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"コードブレイカー","description":"15種類の暗号を解読する本格パズルゲーム","url":"https://appadaycreator.com/codebreaker-puzzle/","genre":"Puzzle","applicationCategory":"Game","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":"82","bestRating":"5","worstRating":"1"}}</script>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXQGZRF9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="atmos"></div>
+<div class="cipher-rain" id="rain" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../">
+      <svg class="logo" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="21" stroke="#fbbf24" stroke-width="2"/>
+        <circle cx="24" cy="24" r="15.5" stroke="#fbbf24" stroke-width="1" stroke-dasharray="2 3" opacity="0.7"/>
+        <path d="M24 3v6M24 39v6M3 24h6M39 24h6" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+        <path d="M19 22v-2a5 5 0 0 1 10 0v2" stroke="#fcd66a" stroke-width="2"/>
+        <rect x="16.5" y="22" width="15" height="12" rx="2.5" fill="#fbbf24"/>
+        <circle cx="24" cy="27" r="2.1" fill="#0b1120"/>
+        <rect x="23" y="28.5" width="2" height="3.5" rx="1" fill="#0b1120"/>
+      </svg>
+      <span><b>コードブレイカー</b><small>CODE BREAKER</small></span>
+    </a>
+    <nav>
+      <a href="#features">遊び方</a>
+      <a href="#types">暗号の種類</a>
+      <a href="../">プレイ</a>
+      <a href="../howto.html">ヘルプ</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="btn btn-gold" href="../">今すぐプレイ</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">暗号を解き明かせ</p>
+        <h1 class="h1">コード<br>ブレイカー</h1>
+        <span class="tagline">15種類の暗号に挑戦する本格パズルゲーム</span>
+        <p class="lead">シーザー暗号からBase64まで、様々な暗号を解読して頭を鍛えよう。論理的思考力と観察力が試される、最高の脳トレ体験をあなたに。</p>
+        <div class="pills">
+          <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>初心者OK</span>
+          <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m13.5-6.5L15 7M9 17l-1.5 1.5m0-13L9 7m6 10l1.5 1.5"/><circle cx="12" cy="12" r="3.5"/></svg>ヒント機能</span>
+          <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>タイマー付き</span>
+          <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg>PWA対応</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-gold btn-lg" href="../">今すぐゲームを始める ▶</a>
+          <a class="btn btn-ghost btn-lg" href="../howto.html">遊び方を見る 📖</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-fallback">
+          <div class="ring"></div><div class="ring r2"></div>
+          <svg viewBox="0 0 48 48" fill="none"><path d="M16 22v-5a8 8 0 0 1 16 0v5" stroke="#fcd66a" stroke-width="2.4"/><rect x="11" y="22" width="26" height="20" rx="4" fill="#fbbf24"/><circle cx="24" cy="31" r="3.4" fill="#0b1120"/><rect x="22.4" y="33.5" width="3.2" height="6" rx="1.6" fill="#0b1120"/></svg>
+          <span>HERO IMAGE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="features">
+    <div class="sec-head"><span class="kicker">ゲームの特徴</span></div>
+    <div class="feat" id="featGrid"></div>
+  </section>
+
+  <section class="block wrap" id="types">
+    <div class="sec-head"><span class="kicker">収録している暗号の種類</span></div>
+    <div class="types" id="typeGrid"></div>
+  </section>
+
+  <section class="block wrap">
+    <div class="tri" id="triGrid"></div>
+  </section>
+
+  <section class="closing wrap">
+    <div class="line">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2" fill="rgba(251,191,36,0.15)"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      論理力と洞察力で、すべての暗号を解き明かそう！
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-gold btn-lg" href="../">今すぐゲームを始める ▶</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div><b style="font-family:Orbitron;color:var(--gold)">CODE BREAKER</b> &nbsp;©2026 AppADayCreator</div>
+    <div>
+      <a href="../howto.html">遊び方</a>
+      <a href="../privacy-policy.html">プライバシー</a>
+      <a href="../terms.html">利用規約</a>
+      <a href="../contact.html">お問い合わせ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const FEATURES=[
+  {ic:`<svg viewBox="0 0 24 24" fill="none"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" stroke="#fbbf24" stroke-width="1.6" stroke-linejoin="round"/><text x="12" y="15" font-family="Orbitron" font-size="8" font-weight="800" fill="#fcd66a" text-anchor="middle">15</text></svg>`,t:'15種類の暗号',d:'シーザー、モールス、ヴィジュネル、Base64など多彩な暗号を収録'},
+  {ic:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.2 1 2.5h6c0-1.3.2-1.8 1-2.5A6 6 0 0 0 12 3z"/><path d="M12 7v4M10 9h4"/></svg>`,t:'段階的な難易度',d:'4つの難易度で初心者から上級者まで楽しめる設計'},
+  {ic:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M7.5 13.5A6 6 0 1 1 16.5 13.5c-.8.8-1.5 1.6-1.5 2.5H9c0-.9-.7-1.7-1.5-2.5z"/></svg>`,t:'ヒント機能',d:'3回までヒントを使用可能。行き詰まっても安心してプレイ'},
+  {ic:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="14" r="7.5"/><path d="M12 10.5V14l2.5 1.5M9.5 3.5h5M19 7l1.5-1.5M5 7 3.5 5.5"/></svg>`,t:'タイマー & 記録',d:'クリアタイムを計測してベストタイムを目指そう'},
+  {ic:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3.5l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.3 6.6 20l1-6L3.3 9.9l6-.9z" fill="rgba(251,191,36,0.18)"/></svg>`,t:'スター評価',d:'成績に応じて最大3つのスターを獲得'},
+];
+const TYPES=[
+  {name:'シーザー暗号',svg:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><g stroke-linecap="round"><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6.5 6.5l2 2M15.5 15.5l2 2M17.5 6.5l-2 2M8.5 15.5l-2 2"/></g><circle cx="12" cy="4" r="1.1" fill="#fbbf24"/><circle cx="20" cy="12" r="1.1" fill="#fbbf24"/><circle cx="12" cy="20" r="1.1" fill="#fbbf24"/><circle cx="4" cy="12" r="1.1" fill="#fbbf24"/></svg>`},
+  {name:'モールス信号',svg:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"><path d="M3 12h2M8 12h5M16 12h2M20.5 12h.5"/><circle cx="3.5" cy="12" r="0.6" fill="#fbbf24"/><circle cx="18.5" cy="12" r="0.6" fill="#fbbf24"/></svg>`},
+  {name:'ヴィジュネル暗号',svg:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"><path d="M8 4H5v16h3M16 4h3v16h-3"/><path d="M9 9l3 6 3-6" stroke-linecap="round"/></svg>`},
+  {name:'Base64',svg:`<span class="b64">B64</span>`,raw:true},
+  {name:'ビューフェア暗号',svg:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h16M4 14h16M9 4v16M14 4v16"/><circle cx="11.5" cy="11.5" r="1.4" fill="#fbbf24"/></svg>`},
+  {name:'アトバッシュ暗号',svg:`<svg viewBox="0 0 24 24" fill="none"><text x="6" y="15" font-family="Orbitron" font-size="9" font-weight="800" fill="#fbbf24" text-anchor="middle">A</text><path d="M10 16 L14 8" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round"/><text x="18" y="15" font-family="Orbitron" font-size="9" font-weight="800" fill="#fbbf24" text-anchor="middle">Z</text></svg>`},
+  {name:'エニグマ暗号',svg:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3" stroke-linecap="round"/><circle cx="12" cy="12" r="1.1" fill="#fbbf24"/></svg>`},
+  {name:'その他多数',svg:`<svg viewBox="0 0 24 24" fill="none"><g font-family="Orbitron" font-size="6.5" font-weight="700" fill="#fbbf24"><text x="5.5" y="9">01</text><text x="14.5" y="9">10</text><text x="5.5" y="20">10</text><text x="14.5" y="20">01</text></g></svg>`},
+];
+const TRI=[
+  {ic:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3M10 13h4M9 20h6M12 13v4" stroke-linecap="round"/></svg>`,t:'ランキングで競おう',d:'全国のプレイヤーとクリアタイムを競争！',link:'ランキングを見る ▶',href:'../'},
+  {ic:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round"><path d="M4 20V10M9 20V5M14 20v-7M19 20V8"/><path d="M3 7l5-3 4 3 5-4" stroke-width="1.4"/><circle cx="19" cy="3" r="1.3" fill="#fbbf24" stroke="none"/></svg>`,t:'進捗を記録',d:'プレイデータは自動保存。いつでも続きからプレイ可能',link:'統計を見る ▶',href:'../'},
+  {ic:`<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z" fill="rgba(251,191,36,0.12)"/><path d="M9 12l2 2 4-4.5" stroke-linecap="round"/></svg>`,t:'安心して遊べる',d:'個人情報の入力不要。完全無料で全機能を利用可能',link:'今すぐ始める ▶',href:'../'},
+];
+document.getElementById('featGrid').innerHTML=FEATURES.map(f=>`<article class="card"><div class="ic">${f.ic}</div><h3>${f.t}</h3><p>${f.d}</p></article>`).join('');
+document.getElementById('typeGrid').innerHTML=TYPES.map(t=>`<a class="type" href="../"><span class="disc">${t.svg}</span><span>${t.name}</span></a>`).join('');
+document.getElementById('triGrid').innerHTML=TRI.map(c=>`<article class="card"><div class="top"><div class="ic">${c.ic}</div><h3>${c.t}</h3></div><p>${c.d}</p><a href="${c.href}">${c.link}</a></article>`).join('');
+(function(){const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·—·—'.split('');let s='';for(let i=0;i<2400;i++){s+=chars[Math.floor(Math.random()*chars.length)];if(Math.random()<0.04)s+='\n'}document.getElementById('rain').textContent=s})();
+(function(){try{for(var i=0;i<document.querySelectorAll('.adsbygoogle').length;i++){(adsbygoogle=window.adsbygoogle||[]).push({})}}catch(e){}})();
+</script>
+</body>
+</html>
